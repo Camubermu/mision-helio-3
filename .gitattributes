@@ -1,0 +1,13 @@
+# Normaliza finales de línea (evita conflictos entre Mac y Windows)
+* text=auto eol=lf
+
+# Archivos binarios
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.wav binary
+*.ogg binary
+*.mp3 binary
+*.ttf binary
+*.otf binary
