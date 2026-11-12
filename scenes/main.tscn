@@ -1,8 +1,8 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cuv142txod8pj"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" unique_id=1119810482]
 
-[node name="Titulo" type="Label" parent="."]
+[node name="Titulo" type="Label" parent="." unique_id=965326170]
 offset_left = 440.0
 offset_top = 320.0
 offset_right = 840.0
