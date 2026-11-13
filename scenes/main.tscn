@@ -60,10 +60,17 @@ vertical_alignment = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5144296, 0)
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1168595001]
-transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 15, 36.140347, 7.5073757, -8.805583)
+transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 15, 42.287563, 9.136911, -8.805583)
 mesh = SubResource("BoxMesh_153fh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2" unique_id=913177664]
+shape = SubResource("BoxShape3D_153fh")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="." unique_id=1593593629]
+transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 15, 42.287563, 9.136911, -60.205692)
+mesh = SubResource("BoxMesh_153fh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D4" unique_id=1254143652]
 shape = SubResource("BoxShape3D_153fh")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=889422549]
