@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://b2agtfb62ll0k"]
+
+[ext_resource type="Script" uid="uid://cirr3mtawsplf" path="res://player/player.gd" id="1_oul6g"]
+[ext_resource type="Script" uid="uid://bkukmq2gu3vle" path="res://player/fp_cam.gd" id="2_rkbax"]
+[ext_resource type="Shader" uid="uid://btgniual5bu44" path="res://player/vignete.gdshader" id="3_g1dw6"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_34eh8"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v0nwu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_153fh"]
+font_size = 22
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_34eh8"]
+shader = ExtResource("3_g1dw6")
+
+[node name="player" type="CharacterBody3D" unique_id=332937270]
+script = ExtResource("1_oul6g")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2131033197]
+layers = 512
+mesh = SubResource("CapsuleMesh_34eh8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=219679096]
+shape = SubResource("CapsuleShape3D_v0nwu")
+
+[node name="head" type="Node3D" parent="." unique_id=1505152295]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4983397, 0)
+script = ExtResource("2_rkbax")
+
+[node name="Camera3D" type="Camera3D" parent="head" unique_id=1083345748]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1390988)
+cull_mask = 1048063
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1756174446]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=1953943937]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = -23.0
+offset_right = 17.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "."
+label_settings = SubResource("LabelSettings_153fh")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1741999620]
+visible = false
+material = SubResource("ShaderMaterial_34eh8")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
