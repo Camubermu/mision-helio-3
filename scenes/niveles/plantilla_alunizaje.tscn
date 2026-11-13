@@ -1,0 +1,72 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/nave/nave.tscn" id="1_nave"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="2_hud"]
+[ext_resource type="PackedScene" path="res://scenes/objetos/zona_gravedad.tscn" id="3_grav"]
+
+[sub_resource type="Environment" id="Environment_luna"]
+background_mode = 1
+background_color = Color(0.01, 0.01, 0.03, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.55, 0.6, 0.75, 1)
+ambient_light_energy = 0.35
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_suelo"]
+size = Vector3(400, 1, 400)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_suelo"]
+albedo_color = Color(0.5, 0.5, 0.52, 1)
+roughness = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_suelo"]
+material = SubResource("StandardMaterial3D_suelo")
+size = Vector3(400, 1, 400)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_plataforma"]
+size = Vector3(8, 0.4, 8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_plataforma"]
+albedo_color = Color(1, 0.55, 0.1, 1)
+emission_enabled = true
+emission = Color(1, 0.45, 0.05, 1)
+emission_energy_multiplier = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_plataforma"]
+material = SubResource("StandardMaterial3D_plataforma")
+size = Vector3(8, 0.4, 8)
+
+[node name="PlantillaAlunizaje" type="Node3D"]
+
+[node name="Ambiente" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_luna")
+
+[node name="Sol" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.354, 0.354, 0, 0.707, 0.707, -0.5, -0.612, 0.612, 0, 20, 0)
+light_energy = 1.4
+shadow_enabled = true
+
+[node name="Suelo" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Forma" type="CollisionShape3D" parent="Suelo"]
+shape = SubResource("BoxShape3D_suelo")
+
+[node name="Malla" type="MeshInstance3D" parent="Suelo"]
+mesh = SubResource("BoxMesh_suelo")
+
+[node name="Plataforma" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+
+[node name="Forma" type="CollisionShape3D" parent="Plataforma"]
+shape = SubResource("BoxShape3D_plataforma")
+
+[node name="Malla" type="MeshInstance3D" parent="Plataforma"]
+mesh = SubResource("BoxMesh_plataforma")
+
+[node name="ZonaGravedad" parent="." instance=ExtResource("3_grav")]
+
+[node name="Nave" parent="." instance=ExtResource("1_nave")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 40, -12)
+
+[node name="HUD" parent="." instance=ExtResource("2_hud")]
+mostrar_mira = false
