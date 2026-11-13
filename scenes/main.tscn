@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cuv142txod8pj"]
+[gd_scene format=3 uid="uid://bs7vj6aashxgi"]
 
 [ext_resource type="Texture2D" uid="uid://cgfkr4kir7kg6" path="res://icon.svg" id="1_o5qli"]
 
@@ -8,6 +8,7 @@ uv1_scale = Vector3(3, 2, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_153fh"]
 material = SubResource("StandardMaterial3D_sgp6g")
+size = Vector3(1, 1, 1.5683594)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_153fh"]
 
@@ -28,4 +29,11 @@ transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 15, -0.004719734, -2.3841858e-0
 mesh = SubResource("BoxMesh_153fh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D" unique_id=838700073]
+shape = SubResource("BoxShape3D_153fh")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1168595001]
+transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 15, 31.672844, 8.089929, -6.202505)
+mesh = SubResource("BoxMesh_153fh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2" unique_id=913177664]
 shape = SubResource("BoxShape3D_153fh")
