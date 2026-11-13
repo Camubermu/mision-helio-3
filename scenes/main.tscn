@@ -1,6 +1,13 @@
 [gd_scene format=3 uid="uid://cuv142txod8pj"]
 
+[ext_resource type="Texture2D" uid="uid://cgfkr4kir7kg6" path="res://icon.svg" id="1_o5qli"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sgp6g"]
+albedo_texture = ExtResource("1_o5qli")
+uv1_scale = Vector3(3, 2, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_153fh"]
+material = SubResource("StandardMaterial3D_sgp6g")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_153fh"]
 
@@ -17,6 +24,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1194795164]
+transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 15, -0.004719734, -2.3841858e-07, -0.0025999546)
 mesh = SubResource("BoxMesh_153fh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D" unique_id=838700073]
