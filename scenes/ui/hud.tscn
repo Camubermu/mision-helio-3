@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_hud"]
 
@@ -12,6 +12,27 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_combustible"]
+bg_color = Color(1, 0.55, 0.15, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_energia"]
+bg_color = Color(0.25, 0.7, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fondo_barra"]
+bg_color = Color(1, 1, 1, 0.15)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_hud")
@@ -41,6 +62,8 @@ custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_fondo_barra")
+theme_override_styles/fill = SubResource("StyleBoxFlat_combustible")
 value = 100.0
 show_percentage = false
 
@@ -57,6 +80,8 @@ custom_minimum_size = Vector2(170, 20)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_fondo_barra")
+theme_override_styles/fill = SubResource("StyleBoxFlat_energia")
 value = 100.0
 show_percentage = false
 

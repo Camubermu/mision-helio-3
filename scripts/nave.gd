@@ -20,7 +20,7 @@ signal choco
 ## Altura del suelo, para calcular la altura de la nave.
 @export var altura_suelo := 0.0
 ## Dónde queda la cámara respecto a la nave.
-@export var distancia_camara := Vector3(0, 6, 16)
+@export var distancia_camara := Vector3(0, 14, 22)
 
 enum Estado { VOLANDO, ATERRIZADA, ESTRELLADA }
 
@@ -103,4 +103,5 @@ func _mostrar_datos() -> void:
 func _mover_camara() -> void:
 	# La cámara sigue a la nave pero no se inclina con ella (así no marea).
 	_camara.global_position = global_position + distancia_camara
-	_camara.look_at(global_position, Vector3.UP)
+	# Mira un poco por debajo de la nave para que se vea el suelo y la plataforma.
+	_camara.look_at(global_position + Vector3(0, -10, 0), Vector3.UP)
