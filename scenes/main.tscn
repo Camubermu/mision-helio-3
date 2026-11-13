@@ -17,7 +17,6 @@ uv1_scale = Vector3(3, 2, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_153fh"]
 material = SubResource("StandardMaterial3D_sgp6g")
-size = Vector3(1, 1, 1.5683594)
 
 [sub_resource type="LabelSettings" id="LabelSettings_0wfyh"]
 font_size = 55
@@ -60,15 +59,8 @@ vertical_alignment = 1
 [node name="player" parent="." unique_id=332937270 instance=ExtResource("2_0wfyh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5144296, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1167158189]
-transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 15, -0.004719734, -2.3841858e-07, -0.0025999546)
-mesh = SubResource("BoxMesh_153fh")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D" unique_id=1818105660]
-shape = SubResource("BoxShape3D_153fh")
-
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1168595001]
-transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 15, 31.672844, 8.089929, -6.202505)
+transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 15, 36.140347, 7.5073757, -8.805583)
 mesh = SubResource("BoxMesh_153fh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2" unique_id=913177664]
