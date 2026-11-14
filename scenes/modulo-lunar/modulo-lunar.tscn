@@ -1,6 +1,6 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://bdltt7gpchdjn"]
 
-[ext_resource type="Script" path="res://scripts/nave.gd" id="1_nave"]
+[ext_resource type="Script" uid="uid://tsi0c1hn0rgf" path="res://scripts/nave.gd" id="1_nave"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nave"]
 size = Vector3(2.6, 2.4, 2.6)
@@ -44,42 +44,42 @@ top_radius = 0.35
 bottom_radius = 0.0
 height = 1.4
 
-[node name="Nave" type="CharacterBody3D" groups=["nave"]]
+[node name="Nave" type="CharacterBody3D" unique_id=1287145980 groups=["nave"]]
 script = ExtResource("1_nave")
 
-[node name="Forma" type="CollisionShape3D" parent="."]
+[node name="Forma" type="CollisionShape3D" parent="." unique_id=485309195]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 shape = SubResource("BoxShape3D_nave")
 
-[node name="Cuerpo" type="MeshInstance3D" parent="."]
+[node name="Cuerpo" type="MeshInstance3D" parent="." unique_id=577756205]
 mesh = SubResource("BoxMesh_cuerpo")
 
-[node name="Cabina" type="MeshInstance3D" parent="."]
+[node name="Cabina" type="MeshInstance3D" parent="." unique_id=676369186]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 mesh = SubResource("SphereMesh_cabina")
 
-[node name="Pata1" type="MeshInstance3D" parent="."]
+[node name="Pata1" type="MeshInstance3D" parent="." unique_id=1167858782]
 transform = Transform3D(0.94, -0.34, 0, 0.34, 0.94, 0, 0, 0, 1, 1.05, -0.75, 1.05)
 mesh = SubResource("CylinderMesh_pata")
 
-[node name="Pata2" type="MeshInstance3D" parent="."]
+[node name="Pata2" type="MeshInstance3D" parent="." unique_id=1320905080]
 transform = Transform3D(0.94, 0.34, 0, -0.34, 0.94, 0, 0, 0, 1, -1.05, -0.75, 1.05)
 mesh = SubResource("CylinderMesh_pata")
 
-[node name="Pata3" type="MeshInstance3D" parent="."]
+[node name="Pata3" type="MeshInstance3D" parent="." unique_id=864539682]
 transform = Transform3D(0.94, -0.34, 0, 0.34, 0.94, 0, 0, 0, 1, 1.05, -0.75, -1.05)
 mesh = SubResource("CylinderMesh_pata")
 
-[node name="Pata4" type="MeshInstance3D" parent="."]
+[node name="Pata4" type="MeshInstance3D" parent="." unique_id=587069036]
 transform = Transform3D(0.94, 0.34, 0, -0.34, 0.94, 0, 0, 0, 1, -1.05, -0.75, -1.05)
 mesh = SubResource("CylinderMesh_pata")
 
-[node name="Llama" type="MeshInstance3D" parent="."]
+[node name="Llama" type="MeshInstance3D" parent="." unique_id=184050332]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.3, 0)
 visible = false
 mesh = SubResource("CylinderMesh_llama")
 
-[node name="Camara" type="Camera3D" parent="."]
+[node name="Camara" type="Camera3D" parent="." unique_id=192560188]
 top_level = true
 current = true
 far = 2000.0
