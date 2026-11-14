@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://3ke0og1tcoxq"]
+
+[ext_resource type="Script" path="res://scripts/vehiculo.gd" id="1_vehiculo"]
+[ext_resource type="PackedScene" uid="uid://by6o0oe208ght" path="res://scenes/objetos/ExtractorHelio3/extractor_helio3.glb" id="2_modelo"]
+[ext_resource type="Script" path="res://scripts/punto_subir.gd" id="3_subir"]
+[ext_resource type="Script" path="res://scripts/excavadora.gd" id="4_excavadora"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cuerpo"]
+size = Vector3(5.8, 2.3, 7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_subir"]
+size = Vector3(10, 5, 12)
+
+[node name="VehiculoExtractor" type="CharacterBody3D" groups=["vehiculo"]]
+script = ExtResource("1_vehiculo")
+
+[node name="Modelo" parent="." instance=ExtResource("2_modelo")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+
+[node name="Forma" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, 0)
+shape = SubResource("BoxShape3D_cuerpo")
+
+[node name="Pivote" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+
+[node name="Brazo" type="SpringArm3D" parent="Pivote"]
+spring_length = 16.0
+margin = 0.3
+
+[node name="Camara" type="Camera3D" parent="Pivote/Brazo"]
+fov = 70.0
+
+[node name="PuntoBajada" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 1.5, 0)
+
+[node name="PuntoSubir" type="Area3D" parent="."]
+script = ExtResource("3_subir")
+texto_ayuda = "Presiona E para subir al vehículo extractor"
+
+[node name="Forma" type="CollisionShape3D" parent="PuntoSubir"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("BoxShape3D_subir")
+
+[node name="Excavadora" type="Node3D" parent="."]
+script = ExtResource("4_excavadora")
+
+[node name="PuntoExcavacion" type="Marker3D" parent="Excavadora"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -5.6)
+
+[node name="Cinta" type="Node3D" parent="Excavadora"]
+
+[node name="Paso1" type="Marker3D" parent="Excavadora/Cinta"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -5.6)
+
+[node name="Paso2" type="Marker3D" parent="Excavadora/Cinta"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -4.9)
+
+[node name="Paso3" type="Marker3D" parent="Excavadora/Cinta"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9, -3.6)
+
+[node name="Paso4" type="Marker3D" parent="Excavadora/Cinta"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, -3.1)
+
+[node name="Paso5" type="Marker3D" parent="Excavadora/Cinta"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3, -2.6)
+
+[node name="Paso6" type="Marker3D" parent="Excavadora/Cinta"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1, -1.6)

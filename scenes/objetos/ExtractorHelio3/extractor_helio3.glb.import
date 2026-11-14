@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://by6o0oe208ght"
-path="res://.godot/imported/extractorhelio3 (1).glb-ca26ce0588d4d0d249e3b4e7b203135c.scn"
+path="res://.godot/imported/extractor_helio3.glb-8243731b8dddffa3b910197c77e4e78a.scn"
 
 [deps]
 
-source_file="res://scenes/objetos/ExtractorHelio3/extractorhelio3 (1).glb"
-dest_files=["res://.godot/imported/extractorhelio3 (1).glb-ca26ce0588d4d0d249e3b4e7b203135c.scn"]
+source_file="res://scenes/objetos/ExtractorHelio3/extractor_helio3.glb"
+dest_files=["res://.godot/imported/extractor_helio3.glb-8243731b8dddffa3b910197c77e4e78a.scn"]
 
 [params]
 
