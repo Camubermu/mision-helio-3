@@ -1,0 +1,38 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/deposito_regolito.gd" id="1_dep"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_zona"]
+radius = 2.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_roca"]
+albedo_color = Color(0.48, 0.45, 0.42, 1)
+roughness = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_roca"]
+material = SubResource("StandardMaterial3D_roca")
+radius = 0.8
+height = 1.1
+radial_segments = 10
+rings = 6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_roca"]
+radius = 0.6
+
+[node name="DepositoRegolito" type="Area3D"]
+script = ExtResource("1_dep")
+
+[node name="Zona" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("SphereShape3D_zona")
+
+[node name="Roca" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+
+[node name="Malla" type="MeshInstance3D" parent="Roca"]
+mesh = SubResource("SphereMesh_roca")
+
+[node name="Cuerpo" type="StaticBody3D" parent="Roca"]
+
+[node name="Forma" type="CollisionShape3D" parent="Roca/Cuerpo"]
+shape = SubResource("SphereShape3D_roca")

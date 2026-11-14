@@ -1,0 +1,55 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/extractor_helio.gd" id="1_ext"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_zona"]
+size = Vector3(4.5, 3, 4.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_maquina"]
+size = Vector3(1.6, 2, 1.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_maquina"]
+albedo_color = Color(0.85, 0.45, 0.15, 1)
+metallic = 0.6
+roughness = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_maquina"]
+material = SubResource("StandardMaterial3D_maquina")
+size = Vector3(1.6, 2, 1.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_horno"]
+albedo_color = Color(1, 0.35, 0.1, 1)
+emission_enabled = true
+emission = Color(1, 0.35, 0.05, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_horno"]
+material = SubResource("StandardMaterial3D_horno")
+top_radius = 0.3
+bottom_radius = 0.3
+height = 0.8
+
+[node name="ExtractorHelio" type="Area3D"]
+script = ExtResource("1_ext")
+
+[node name="Zona" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("BoxShape3D_zona")
+
+[node name="Maquina" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Forma" type="CollisionShape3D" parent="Maquina"]
+shape = SubResource("BoxShape3D_maquina")
+
+[node name="Malla" type="MeshInstance3D" parent="Maquina"]
+mesh = SubResource("BoxMesh_maquina")
+
+[node name="Horno" type="MeshInstance3D" parent="Maquina"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+mesh = SubResource("CylinderMesh_horno")
+
+[node name="Luz" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+light_color = Color(1, 0.55, 0.2, 1)
+omni_range = 5.0
