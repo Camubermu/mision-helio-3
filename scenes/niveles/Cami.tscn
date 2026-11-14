@@ -23,6 +23,10 @@ data = PackedVector3Array(0, 1, 0.5, 0.049, 1, 0.4976, 0, 0.59999996, 0.5, 0.049
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." unique_id=853898183]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 39.03147, 19.788189, 0)
+shadow_enabled = true
+
 [node name="Cubo" type="StaticBody3D" parent="." unique_id=1738357838]
 transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 15, 37.777065, 7.787361, 23.81289)
 physics_material_override = SubResource("PhysicsMaterial_sv3wp")
