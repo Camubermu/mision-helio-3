@@ -1,5 +1,5 @@
 [gd_scene format=3 uid="uid://3ke0og1tcoxq"]
 
-[ext_resource type="PackedScene" uid="uid://by6o0oe208ght" path="res://scenes/objetos/ExtractorHelio3/extractorhelio3 (1).glb" id="1_pswoi"]
+[ext_resource type="PackedScene" uid="uid://by6o0oe208ght" path="res://scenes/objetos/ExtractorHelio3/extractorhelio3 (1).glb" id="1_roxlc"]
 
-[node name="extractorhelio3 (1)" unique_id=1982050565 instance=ExtResource("1_pswoi")]
+[node name="extractorhelio3 (1)" unique_id=1982050565 instance=ExtResource("1_roxlc")]
