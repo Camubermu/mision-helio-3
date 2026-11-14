@@ -1,0 +1,12 @@
+; Proyecto Godot 4 - Cosechadora lunar de Helio-3
+config_version=5
+
+[application]
+
+config/name="Cosechadora Helio-3 Lunar"
+run/main_scene="res://demo.tscn"
+config/features=PackedStringArray("4.3", "Forward Plus")
+
+[rendering]
+
+anti_aliasing/quality/msaa_3d=2

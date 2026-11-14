@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://pop0x2rfmj4d"]
+
+[ext_resource type="PackedScene" uid="uid://koymiq0gdw4v" path="res://scenes/objetos/EstacionEspacial/estacion_espacial.glb" id="1_ecn1k"]
+
+[node name="estacion_espacial" unique_id=549578037 instance=ExtResource("1_ecn1k")]

@@ -4,11 +4,14 @@
 
 [node name="cohete_kodland_completo" unique_id=425480311 instance=ExtResource("1_gynft")]
 
-[node name="Aleta_1" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(2116902731) index="21" unique_id=1409702180]
+[node name="Cohete_Kodland" parent="." index="0" unique_id=1551237158]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6064701, 0.9, 0)
+
+[node name="Aleta_1" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(1137870030) index="21" unique_id=1564230742]
 transform = Transform3D(0.83895385, 0, 0.5442025, 0, 1, 0, -0.5442025, 0, 0.83895385, 0, 0, 0)
 
-[node name="Aleta_2" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(2116902731) index="22" unique_id=1195292054]
+[node name="Aleta_2" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(1137870030) index="22" unique_id=366518786]
 transform = Transform3D(0.83895385, 0, 0.5442025, 0, 1, 0, -0.5442025, 0, 0.83895385, 0, 0, 0)
 
-[node name="Aleta_3" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(2116902731) index="23" unique_id=574468629]
+[node name="Aleta_3" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(1137870030) index="23" unique_id=1884457153]
 transform = Transform3D(0.83895385, 0, 0.5442025, 0, 1, 0, -0.5442025, 0, 0.83895385, 0, 0, 0)

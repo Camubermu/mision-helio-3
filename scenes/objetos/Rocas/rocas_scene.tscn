@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://dtwgpk1ea4xoj"]
+
+[ext_resource type="PackedScene" uid="uid://bruc1lavxjmbe" path="res://scenes/objetos/Rocas/moon_rocks.glb" id="1_aqtng"]
+
+[node name="Sketchfab_Scene" unique_id=133369718 instance=ExtResource("1_aqtng")]
