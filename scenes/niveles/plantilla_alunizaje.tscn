@@ -1,6 +1,6 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://b2t2g3c2djwt"]
 
-[ext_resource type="PackedScene" path="res://scenes/nave/nave.tscn" id="1_nave"]
+[ext_resource type="PackedScene" path="res://scenes/modulo-lunar/modulo-lunar.tscn" id="1_nave"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="2_hud"]
 [ext_resource type="PackedScene" path="res://scenes/objetos/zona_gravedad.tscn" id="3_grav"]
 
@@ -16,7 +16,6 @@ size = Vector3(400, 1, 400)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_suelo"]
 albedo_color = Color(0.5, 0.5, 0.52, 1)
-roughness = 1.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_suelo"]
 material = SubResource("StandardMaterial3D_suelo")
@@ -35,38 +34,38 @@ emission_energy_multiplier = 0.4
 material = SubResource("StandardMaterial3D_plataforma")
 size = Vector3(8, 0.4, 8)
 
-[node name="PlantillaAlunizaje" type="Node3D"]
+[node name="PlantillaAlunizaje" type="Node3D" unique_id=1707638813]
 
-[node name="Ambiente" type="WorldEnvironment" parent="."]
+[node name="Ambiente" type="WorldEnvironment" parent="." unique_id=1799679634]
 environment = SubResource("Environment_luna")
 
-[node name="Sol" type="DirectionalLight3D" parent="."]
+[node name="Sol" type="DirectionalLight3D" parent="." unique_id=865217810]
 transform = Transform3D(0.866, -0.354, 0.354, 0, 0.707, 0.707, -0.5, -0.612, 0.612, 0, 20, 0)
 light_energy = 1.4
 shadow_enabled = true
 
-[node name="Suelo" type="StaticBody3D" parent="."]
+[node name="Suelo" type="StaticBody3D" parent="." unique_id=411200824]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
-[node name="Forma" type="CollisionShape3D" parent="Suelo"]
+[node name="Forma" type="CollisionShape3D" parent="Suelo" unique_id=2049860077]
 shape = SubResource("BoxShape3D_suelo")
 
-[node name="Malla" type="MeshInstance3D" parent="Suelo"]
+[node name="Malla" type="MeshInstance3D" parent="Suelo" unique_id=610061756]
 mesh = SubResource("BoxMesh_suelo")
 
-[node name="Plataforma" type="StaticBody3D" parent="."]
+[node name="Plataforma" type="StaticBody3D" parent="." unique_id=1860523384]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 
-[node name="Forma" type="CollisionShape3D" parent="Plataforma"]
+[node name="Forma" type="CollisionShape3D" parent="Plataforma" unique_id=505208501]
 shape = SubResource("BoxShape3D_plataforma")
 
-[node name="Malla" type="MeshInstance3D" parent="Plataforma"]
+[node name="Malla" type="MeshInstance3D" parent="Plataforma" unique_id=474737214]
 mesh = SubResource("BoxMesh_plataforma")
 
-[node name="ZonaGravedad" parent="." instance=ExtResource("3_grav")]
+[node name="ZonaGravedad" parent="." unique_id=2062808338 instance=ExtResource("3_grav")]
 
-[node name="Nave" parent="." instance=ExtResource("1_nave")]
+[node name="Nave" parent="." unique_id=1152692962 instance=ExtResource("1_nave")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 40, -12)
 
-[node name="HUD" parent="." instance=ExtResource("2_hud")]
+[node name="HUD" parent="." unique_id=308832956 instance=ExtResource("2_hud")]
 mostrar_mira = false

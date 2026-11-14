@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cx1av5w35fpoc"]
+
+[ext_resource type="PackedScene" uid="uid://hc0l2ga8tqdu" path="res://scenes/niveles/cohete_kodland_completo.glb" id="1_gynft"]
+
+[node name="cohete_kodland_completo" unique_id=425480311 instance=ExtResource("1_gynft")]
+
+[node name="Aleta_1" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(2116902731) index="21" unique_id=1409702180]
+transform = Transform3D(0.83895385, 0, 0.5442025, 0, 1, 0, -0.5442025, 0, 0.83895385, 0, 0, 0)
+
+[node name="Aleta_2" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(2116902731) index="22" unique_id=1195292054]
+transform = Transform3D(0.83895385, 0, 0.5442025, 0, 1, 0, -0.5442025, 0, 0.83895385, 0, 0, 0)
+
+[node name="Aleta_3" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(2116902731) index="23" unique_id=574468629]
+transform = Transform3D(0.83895385, 0, 0.5442025, 0, 1, 0, -0.5442025, 0, 0.83895385, 0, 0, 0)
