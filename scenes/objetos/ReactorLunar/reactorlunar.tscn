@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://btk4qeniemash"]
+
+[ext_resource type="PackedScene" uid="uid://dhhlop7h4iqkx" path="res://scenes/objetos/ReactorLunar/reactor.glb" id="1_ybi40"]
+
+[node name="reactor" unique_id=2109122115 instance=ExtResource("1_ybi40")]
