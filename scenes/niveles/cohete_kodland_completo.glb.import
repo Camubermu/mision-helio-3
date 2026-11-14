@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://hc0l2ga8tqdu"
-path="res://.godot/imported/cohete_kodland_completo.glb-96fd843a2df5b329b444fc681077220a.scn"
+path="res://.godot/imported/cohete_kodland_completo.glb-86fab0f64602045b95075bc03d82bdd5.scn"
 
 [deps]
 
-source_file="res://scenes/cohete/cohete_kodland_completo.glb"
-dest_files=["res://.godot/imported/cohete_kodland_completo.glb-96fd843a2df5b329b444fc681077220a.scn"]
+source_file="res://scenes/niveles/cohete_kodland_completo.glb"
+dest_files=["res://.godot/imported/cohete_kodland_completo.glb-86fab0f64602045b95075bc03d82bdd5.scn"]
 
 [params]
 
