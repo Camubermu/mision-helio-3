@@ -16,6 +16,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Misión Helio-3"
 config/description="Juego para el NASA Space Apps Challenge 2026: viaja a la Luna, extrae helio-3 y vuelve a la Tierra."
+run/main_scene="uid://4vyplst1nyal"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 
 [autoload]
