@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bmp3a06lir12f"]
+[gd_scene format=3 uid="uid://de1cmys5oixiq"]
 
 [ext_resource type="PackedScene" uid="uid://b2agtfb62ll0k" path="res://player/player.tscn" id="1_xisp4"]
 [ext_resource type="PackedScene" uid="uid://p5dq3iasnl6" path="res://scenes/niveles/fnafmod.tscn" id="2_s3hun"]
