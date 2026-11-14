@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b15t6hae4i37a"
-path.s3tc="res://.godot/imported/sol_0.png-4d2aea36d1e470a44e92047e63a8de59.s3tc.ctex"
+uid="uid://xyekcdgpub0f"
+path.s3tc="res://.godot/imported/cohete_kodland_completo_ramp_a.jpg-b0c55847774333388d808f9163424d88.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "a3237b73b314fb7891acfc7c6b1ea287"
+"md5": "38d7143acde9114b1b7abff7a9f676e0"
 }
 
 [deps]
 
-source_file="res://models/sol_0.png"
-dest_files=["res://.godot/imported/sol_0.png-4d2aea36d1e470a44e92047e63a8de59.s3tc.ctex"]
+source_file="res://scenes/cohete/cohete_kodland_completo_ramp_a.jpg"
+dest_files=["res://.godot/imported/cohete_kodland_completo_ramp_a.jpg-b0c55847774333388d808f9163424d88.s3tc.ctex"]
 
 [params]
 

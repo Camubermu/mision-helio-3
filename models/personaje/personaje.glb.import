@@ -3,13 +3,12 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://xc7vuv20xgwy"
-path="res://.godot/imported/sol.glb-023100fab6281320ecfdfa732eafe55f.scn"
+uid="uid://beffv43fae42c"
+valid=false
 
 [deps]
 
-source_file="res://models/sol.glb"
-dest_files=["res://.godot/imported/sol.glb-023100fab6281320ecfdfa732eafe55f.scn"]
+source_file="res://models/personaje/personaje.glb"
 
 [params]
 

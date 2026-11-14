@@ -1,3 +1,17 @@
 [gd_scene format=3 uid="uid://dbpdv5v8mxgbu"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_88xtr"]
+size = Vector3(7.166992, 1, 9.820801)
+
+[sub_resource type="BoxMesh" id="BoxMesh_88xtr"]
+size = Vector3(533.8109, 0.001, 1031.1814)
+
 [node name="JoseMiguel" type="Node3D" unique_id=1963853381]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=324292188]
+transform = Transform3D(0.998041, 0, 0, 0, 1, 0, 0, 0, 1.0061408, -0.88388765, 0, -0.9218863)
+shape = SubResource("BoxShape3D_88xtr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=105447717]
+transform = Transform3D(1.9061592, 0, 0, 0, 1, 0, 0, 0, 1, -511.16492, -0.29218456, 521.1019)
+mesh = SubResource("BoxMesh_88xtr")
