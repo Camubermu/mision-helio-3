@@ -28,7 +28,7 @@ transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 15, 37.777065, 7.787361, 23.812
 physics_material_override = SubResource("PhysicsMaterial_sv3wp")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Cubo" unique_id=578784675]
-transform = Transform3D(1, 0, 0, 0, 0.2, 0, 0, 0, 1, 2.2227588, 87.77965, -3.9555116)
+transform = Transform3D(1, 0, 0, 0, 0.2, 0, 0, 0, 1, 9.684633, 113.79697, -3.9555116)
 mesh = SubResource("CylinderMesh_vlh1y")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cubo/MeshInstance3D" unique_id=689939226]
