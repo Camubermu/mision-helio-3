@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b2agtfb62ll0k" path="res://player/player.tscn" id="1_d4e1e"]
 [ext_resource type="Texture2D" uid="uid://cgfkr4kir7kg6" path="res://icon.svg" id="1_g7emj"]
-[ext_resource type="PackedScene" uid="uid://p5dq3iasnl6" path="res://scenes/niveles/fnafmod.tscn" id="2_vdrbb"]
+[ext_resource type="PackedScene" uid="uid://hc0l2ga8tqdu" path="res://scenes/niveles/cohete_kodland_completo.glb" id="3_5x81c"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sv3wp"]
 
@@ -46,4 +46,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.863841, 1.0725822, 24.3289
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=703014759]
 
-[node name="fnafmod" parent="." unique_id=61018718 instance=ExtResource("2_vdrbb")]
+[node name="fnafmod" parent="." unique_id=61018718]
+
+[node name="cohete_kodland_completo" parent="." unique_id=565953578 instance=ExtResource("3_5x81c")]
