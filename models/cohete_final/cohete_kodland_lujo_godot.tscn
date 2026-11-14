@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://cevnqteiqvdxt"]
+
+[ext_resource type="PackedScene" uid="uid://df56getmwywet" path="res://models/cohete_final/cohete_kodland_lujo_godot.glb" id="1_apa6s"]
+
+[node name="cohete_kodland_lujo_godot" unique_id=901167027 instance=ExtResource("1_apa6s")]
