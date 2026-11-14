@@ -44,7 +44,7 @@ shape = SubResource("ConcavePolygonShape3D_egyai")
 [node name="OmniLight3D" type="OmniLight3D" parent="Luminaria | fluorescente" parent_id_path=PackedInt32Array(1153539191) index="0" unique_id=778827966]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.22102642, 0)
 light_color = Color(0.827451, 1, 0.9411765, 1)
-light_energy = 1.713
+light_energy = 2.109
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Mesa | tablero rectangular" parent_id_path=PackedInt32Array(2036060091) index="0" unique_id=593296486]
 
