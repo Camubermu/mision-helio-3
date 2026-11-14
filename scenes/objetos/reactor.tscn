@@ -1,0 +1,58 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/reactor.gd" id="1_rea"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_zona"]
+size = Vector3(4.5, 3, 4.5)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_base"]
+height = 2.0
+radius = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_carcasa"]
+albedo_color = Color(0.75, 0.78, 0.82, 1)
+metallic = 0.8
+roughness = 0.3
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_carcasa"]
+material = SubResource("StandardMaterial3D_carcasa")
+top_radius = 0.9
+bottom_radius = 0.9
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nucleo"]
+albedo_color = Color(0.2, 0.6, 1, 1)
+emission_enabled = true
+emission = Color(0.2, 0.6, 1, 1)
+emission_energy_multiplier = 0.2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_nucleo"]
+top_radius = 0.5
+bottom_radius = 0.5
+height = 1.4
+
+[node name="Reactor" type="Area3D"]
+script = ExtResource("1_rea")
+
+[node name="Zona" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("BoxShape3D_zona")
+
+[node name="Base" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Forma" type="CollisionShape3D" parent="Base"]
+shape = SubResource("CylinderShape3D_base")
+
+[node name="TapaAbajo" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+mesh = SubResource("CylinderMesh_carcasa")
+
+[node name="TapaArriba" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+mesh = SubResource("CylinderMesh_carcasa")
+
+[node name="Nucleo" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+material_override = SubResource("StandardMaterial3D_nucleo")
+mesh = SubResource("CylinderMesh_nucleo")

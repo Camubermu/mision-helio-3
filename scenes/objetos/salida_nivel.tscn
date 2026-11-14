@@ -1,0 +1,34 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/salida_nivel.gd" id="1_sal"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_zona"]
+size = Vector3(3, 4, 3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_marca"]
+albedo_color = Color(0.2, 1, 0.45, 1)
+emission_enabled = true
+emission = Color(0.2, 1, 0.45, 1)
+emission_energy_multiplier = 1.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_marca"]
+material = SubResource("StandardMaterial3D_marca")
+top_radius = 1.5
+bottom_radius = 1.5
+height = 0.08
+
+[node name="SalidaNivel" type="Area3D"]
+script = ExtResource("1_sal")
+
+[node name="Zona" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("BoxShape3D_zona")
+
+[node name="Marca" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+mesh = SubResource("CylinderMesh_marca")
+
+[node name="Luz" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+light_color = Color(0.2, 1, 0.45, 1)
+omni_range = 4.0

@@ -1,0 +1,78 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" uid="uid://b2agtfb62ll0k" path="res://player/player.tscn" id="1_jug"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="2_hud"]
+[ext_resource type="PackedScene" path="res://scenes/objetos/zona_gravedad.tscn" id="3_grav"]
+[ext_resource type="PackedScene" path="res://scenes/objetos/deposito_regolito.tscn" id="4_dep"]
+[ext_resource type="PackedScene" path="res://scenes/objetos/extractor_helio.tscn" id="5_ext"]
+[ext_resource type="PackedScene" path="res://scenes/objetos/reactor.tscn" id="6_rea"]
+[ext_resource type="PackedScene" path="res://scenes/objetos/salida_nivel.tscn" id="7_sal"]
+
+[sub_resource type="Environment" id="Environment_luna"]
+background_mode = 1
+background_color = Color(0.01, 0.01, 0.03, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.55, 0.6, 0.75, 1)
+ambient_light_energy = 0.35
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_suelo"]
+size = Vector3(200, 1, 200)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_suelo"]
+albedo_color = Color(0.5, 0.5, 0.52, 1)
+roughness = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_suelo"]
+material = SubResource("StandardMaterial3D_suelo")
+size = Vector3(200, 1, 200)
+
+[node name="PlantillaLuna" type="Node3D"]
+
+[node name="Ambiente" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_luna")
+
+[node name="Sol" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.354, 0.354, 0, 0.707, 0.707, -0.5, -0.612, 0.612, 0, 20, 0)
+light_energy = 1.4
+shadow_enabled = true
+
+[node name="Suelo" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Forma" type="CollisionShape3D" parent="Suelo"]
+shape = SubResource("BoxShape3D_suelo")
+
+[node name="Malla" type="MeshInstance3D" parent="Suelo"]
+mesh = SubResource("BoxMesh_suelo")
+
+[node name="ZonaGravedad" parent="." instance=ExtResource("3_grav")]
+
+[node name="Jugador" parent="." instance=ExtResource("1_jug")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 6)
+
+[node name="HUD" parent="." instance=ExtResource("2_hud")]
+
+[node name="Depositos" type="Node3D" parent="."]
+
+[node name="DepositoRegolito" parent="Depositos" instance=ExtResource("4_dep")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -2)
+
+[node name="DepositoRegolito2" parent="Depositos" instance=ExtResource("4_dep")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -4)
+
+[node name="DepositoRegolito3" parent="Depositos" instance=ExtResource("4_dep")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -10)
+
+[node name="DepositoRegolito4" parent="Depositos" instance=ExtResource("4_dep")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -12)
+
+[node name="ExtractorHelio" parent="." instance=ExtResource("5_ext")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 2)
+
+[node name="Reactor" parent="." instance=ExtResource("6_rea")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 2)
+helio3_necesario = 1
+
+[node name="SalidaNivel" parent="." instance=ExtResource("7_sal")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
+necesita_energia_llena = true
