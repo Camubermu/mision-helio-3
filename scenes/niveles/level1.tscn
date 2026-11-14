@@ -51,6 +51,9 @@ light_energy = 1.713
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Mesa | tablero rectangular/StaticBody3D" index="0" unique_id=1796041649]
 shape = SubResource("ConcavePolygonShape3D_wlont")
 
+[node name="Object_2_002" parent="Mountains/ed6eee41274e48ca96696ab2e0a627f6_obj_cleaner_materialmerger_gl" parent_id_path=PackedInt32Array(1312529477) index="1" unique_id=961766474]
+transform = Transform3D(0.07493544, -0.008898849, 3.2171383e-15, -0.008898849, -0.074935436, -1.7763568e-15, -3.330669e-15, 0, 0.07546197, 128.2969, -328.51477, -3.5005689)
+
 [node name="StaticBody3D" type="StaticBody3D" parent="Pared derecha" parent_id_path=PackedInt32Array(1660750256) index="0" unique_id=146610289]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pared derecha/StaticBody3D" index="0" unique_id=722438646]

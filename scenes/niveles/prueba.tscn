@@ -1,3 +1,22 @@
 [gd_scene format=3 uid="uid://mimfcnvt1h5v"]
 
-[node name="Prueba" type="Node3D" unique_id=1015747128]
+[ext_resource type="PackedScene" uid="uid://b2agtfb62ll0k" path="res://player/player.tscn" id="2_fdq2y"]
+[ext_resource type="PackedScene" uid="uid://p5dq3iasnl6" path="res://scenes/niveles/fnafmod.tscn" id="3_fdq2y"]
+[ext_resource type="PackedScene" uid="uid://dhc4tje4p5mva" path="res://scenes/objetos/agena_target_vehicle.tscn" id="3_ngfxe"]
+
+[node name="Node3D" type="Node3D" unique_id=2015374004]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=403117401]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="player" parent="." unique_id=332937270 instance=ExtResource("2_fdq2y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5231223, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=685188203]
+
+[node name="fnafmod" parent="." unique_id=61018718 instance=ExtResource("3_fdq2y")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 4, 0, -17.89885)
+
+[node name="Agena Target Vehicle" parent="." unique_id=1344673111 instance=ExtResource("3_ngfxe")]
+transform = Transform3D(0.38915274, 0, -0.3139429, 0, 0.5, 0, 0.3139429, 0, 0.38915274, 1.7705126, 0, -23.526045)
