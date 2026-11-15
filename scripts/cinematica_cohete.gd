@@ -9,15 +9,19 @@ extends Node3D
 ## Espacio = saltar la escena.
 
 ## Segundos que dura el despegue desde la Tierra.
-@export var duracion_despegue_tierra := 9.0
+@export var duracion_despegue_tierra := 11.0
 ## Segundos que dura el despegue desde la Luna (el motor de helio-3 va al límite).
-@export var duracion_despegue_luna := 12.0
+@export var duracion_despegue_luna := 13.0
 ## Segundos que dura el alunizaje o el aterrizaje.
-@export var duracion_aterrizaje := 9.0
+@export var duracion_aterrizaje := 11.0
 ## Altura desde la que baja el cohete al aterrizar (metros).
 @export var altura_aterrizaje := 90.0
 ## La base de la Tierra (la escena level 1, puesta para que la plataforma quede en el centro).
 @export var base_tierra: Node3D
+## Plataforma de lanzamiento con brazos animados (se usa en la Tierra y en la Luna).
+@export var escena_plataforma: PackedScene = preload("res://models/Lanzamiento/plataforma_kodland.tscn")
+## Nombre de la animación de la plataforma que suelta el cohete.
+@export var animacion_soltar: StringName = &"liberar_cohete"
 
 var _cohete: Node3D
 var _plasma: Node3D
@@ -25,7 +29,12 @@ var _llama_quimica: Node3D
 var _luz_quimica: OmniLight3D
 var _camara: Camera3D
 var _suelo_luna: MeshInstance3D
-var _plataforma: MeshInstance3D
+var _plataforma: Node3D
+## Animación de los brazos de la plataforma y cuánto dura.
+var _anim_plataforma: AnimationPlayer
+var _largo_anim := 0.0
+## Altura de la cubierta de la plataforma, donde se apoya el cohete.
+var _altura_cubierta := 0.0
 var _polvo: CPUParticles3D
 var _material_polvo: StandardMaterial3D
 var _cielo_tierra: Environment
@@ -62,23 +71,28 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Despegue desde la base con el motor químico (llama azul). Falla al salir de la atmósfera.
 func despegar_de_la_tierra() -> void:
 	_preparar(false)
-	_camara.position = Vector3(-45, 3, 9)
+	_poner_brazos(false)
+	_camara.position = Vector3(-45, 6, 9)
 	_titulo.text = "MOTOR QUÍMICO · DESPEGUE DESDE LA BASE"
 	_nombre_barra_2.text = "Altitud (100 km)"
 	var duracion := duracion_despegue_tierra
+	# Cuenta regresiva mientras los brazos de la plataforma sueltan el cohete.
+	var encendido_en := 3.0
+	var arranque := 4.0
+	_mover_brazos(true, arranque)
 	var t := 0.0
 	while t < duracion and not _saltar:
 		t += _paso()
 		var falla := t > duracion - 2.5
-		var encendido := t > 1.5 and t < duracion - 1.0 and (not falla or randf() < 0.35)
+		var encendido := t > encendido_en and t < duracion - 1.0 and (not falla or randf() < 0.35)
 		_llama(_llama_quimica, encendido)
 		_luz_quimica.visible = encendido
-		var subida := maxf(t - 2.2, 0.0)
-		_cohete.position.y = 2.0 * subida * subida
-		var altitud := clampf((t - 2.2) / (duracion - 4.7), 0.0, 1.0)
-		_polvo.emitting = encendido and _cohete.position.y < 25.0
-		if t < 1.5:
-			_estado.text = "Cuenta regresiva: %d" % (3 - int(t * 2.0))
+		var subida := maxf(t - arranque, 0.0)
+		_poner_altura(2.0 * subida * subida)
+		var altitud := clampf((t - arranque) / (duracion - arranque - 2.5), 0.0, 1.0)
+		_polvo.emitting = encendido and _altura() < 25.0
+		if t < encendido_en:
+			_estado.text = "Cuenta regresiva: %d · soltando amarras" % (3 - int(t))
 			_estado.modulate = Color.WHITE
 		elif falla:
 			_estado.text = "¡FALLA DEL MOTOR QUÍMICO! Fuga de combustible"
@@ -89,7 +103,7 @@ func despegar_de_la_tierra() -> void:
 		_lineas.text = "Altitud: %d km   Combustible químico: %d %%" % [altitud * 100.0, 0 if falla else 100 - int(t * 6)]
 		_barra_1.value = 100.0 if encendido else 0.0
 		_barra_2.value = altitud * 100.0
-		_seguir_cohete(0.07 if encendido and _cohete.position.y < 40.0 else 0.02 if falla else 0.0)
+		_seguir_cohete(0.07 if encendido and _altura() < 40.0 else 0.02 if falla else 0.0)
 		if not await _siguiente_cuadro():
 			return
 	if not _saltar:
@@ -106,13 +120,15 @@ func alunizar() -> void:
 		return
 	if not _saltar:
 		Juego.mostrar_mensaje("Alunizaje logrado con lo último del helio-3")
-	_terminar()
+	_terminar(true)
 
 
 ## Prueba del motor de helio-3 para despegar: va al límite, pero vence la gravedad lunar.
 func despegar_de_la_luna() -> void:
 	_preparar(true)
-	_camara.position = Vector3(-34, 4, 28)
+	_poner_brazos(false)
+	_mover_brazos(true, 3.0)
+	_camara.position = Vector3(-38, 8, 30)
 	_titulo.text = "MOTOR DE HELIO-3 · DESPEGUE LUNAR"
 	_nombre_barra_2.text = "Velocidad de escape"
 	var duracion := duracion_despegue_luna
@@ -127,17 +143,18 @@ func despegar_de_la_luna() -> void:
 		_llama(_plasma, t > 1.0)
 		# Al principio casi no sube (va al límite); después vence la gravedad.
 		var aceleracion := 0.4 if t < 6.0 else 4.5
-		if t > 2.0:
+		# Sube cuando los brazos de la plataforma ya lo soltaron.
+		if t > 3.0:
 			velocidad += aceleracion * delta
 			altura += velocidad * delta
-		_cohete.position.y = altura
-		var escape := clampf((t - 2.0) / (duracion - 4.5), 0.0, 1.0)
+		_poner_altura(altura)
+		var escape := clampf((t - 3.0) / (duracion - 5.5), 0.0, 1.0)
 		_polvo.emitting = t > 1.0 and altura < 20.0
 		_barra_1.value = empuje
 		_barra_2.value = escape * 100.0
 		_lineas.text = "Temperatura: %d °C   Velocidad: %s de 2,38 km/s" % [temperatura, ("%.2f" % (escape * 2.38)).replace(".", ",")]
 		if t < 1.0:
-			_estado.text = "Encendiendo el motor de helio-3..."
+			_estado.text = "Soltando amarras. Encendiendo el motor de helio-3..."
 			_estado.modulate = Color.WHITE
 		elif escape < 1.0 and empuje > 95.0:
 			_estado.text = "¡MOTOR AL LÍMITE! Empuje 100 %"
@@ -163,7 +180,7 @@ func aterrizar_en_la_tierra() -> void:
 		return
 	if not _saltar:
 		Juego.mostrar_mensaje("¡Aterrizaje en la base! Misión cumplida: el motor de helio-3 funcionó")
-	_terminar()
+	_terminar(true)
 
 
 # --- Partes comunes -----------------------------------------------------------
@@ -171,25 +188,32 @@ func aterrizar_en_la_tierra() -> void:
 func _bajar(lugar_camara: Vector3, helio_inicio: float, helio_fin: float) -> void:
 	_camara.position = lugar_camara
 	_nombre_barra_2.text = "Helio-3 en tanque"
-	var bajada := duracion_aterrizaje - 1.5
+	# Llega con los brazos abiertos; al tocar la cubierta, los brazos lo sujetan.
+	_poner_brazos(true)
+	var sujetar := 3.0
+	var bajada := duracion_aterrizaje - sujetar
+	var sujetando := false
 	var t := 0.0
 	while t < duracion_aterrizaje and not _saltar:
 		t += _paso()
 		var avance := clampf(t / bajada, 0.0, 1.0)
 		# Baja rápido al principio y muy despacio al final.
-		_cohete.position.y = altura_aterrizaje * pow(1.0 - avance, 2.4)
+		_poner_altura(altura_aterrizaje * pow(1.0 - avance, 2.4))
 		var en_el_aire := avance < 1.0
+		if not en_el_aire and not sujetando:
+			sujetando = true
+			_mover_brazos(false, sujetar - 0.3)
 		_llama(_plasma, en_el_aire)
-		_polvo.emitting = en_el_aire and _cohete.position.y < 18.0
+		_polvo.emitting = en_el_aire and _altura() < 18.0
 		_barra_1.value = lerpf(60.0, 85.0, avance) if en_el_aire else 0.0
 		_barra_2.value = lerpf(helio_inicio, helio_fin, avance)
-		_lineas.text = "Altura: %d m   Helio-3: %d %%" % [_cohete.position.y, _barra_2.value]
-		_estado.text = "Frenando..." if en_el_aire else "Contacto con el suelo. Motor apagado"
+		_lineas.text = "Altura: %d m   Helio-3: %d %%" % [_altura(), _barra_2.value]
+		_estado.text = "Frenando..." if en_el_aire else "Sobre la plataforma. Motor apagado. Brazos sujetando"
 		_estado.modulate = Color(1, 0.85, 0.3) if en_el_aire else Color(0.4, 1, 0.5)
-		_seguir_cohete(0.04 if en_el_aire and _cohete.position.y < 20.0 else 0.0)
+		_seguir_cohete(0.04 if en_el_aire and _altura() < 20.0 else 0.0)
 		if not await _siguiente_cuadro():
 			return
-	_cohete.position = Vector3.ZERO
+	_poner_altura(0.0)
 	_llama(_plasma, false)
 
 
@@ -206,28 +230,62 @@ func _paso() -> float:
 	return get_process_delta_time()
 
 
+## Altura del cohete sobre la cubierta de la plataforma (0 = apoyado).
+func _poner_altura(metros: float) -> void:
+	_cohete.position = Vector3(0, _altura_cubierta + metros, 0)
+
+
+func _altura() -> float:
+	return _cohete.position.y - _altura_cubierta
+
+
+## Deja los brazos de la plataforma quietos: abiertos (cohete suelto) o cerrados (sujeto).
+func _poner_brazos(abiertos: bool) -> void:
+	if _anim_plataforma == null:
+		return
+	_anim_plataforma.speed_scale = 1.0
+	_anim_plataforma.play(animacion_soltar)
+	_anim_plataforma.seek(_largo_anim if abiertos else 0.0, true)
+	_anim_plataforma.pause()
+
+
+## Mueve los brazos en los segundos dados: abrir = soltar el cohete, cerrar = sujetarlo.
+func _mover_brazos(abrir: bool, segundos: float) -> void:
+	if _anim_plataforma == null:
+		return
+	_anim_plataforma.speed_scale = _largo_anim / maxf(segundos, 0.1)
+	if abrir:
+		_anim_plataforma.play(animacion_soltar)
+	else:
+		_anim_plataforma.play_backwards(animacion_soltar)
+
+
 func _preparar(en_la_luna: bool) -> void:
 	_saltar = false
 	visible = true
 	_panel.visible = true
-	_cohete.position = Vector3.ZERO
+	_poner_altura(0.0)
 	_llama(_plasma, false)
 	_llama(_llama_quimica, false)
 	_luz_quimica.visible = false
 	_suelo_luna.visible = en_la_luna
 	if base_tierra:
 		base_tierra.visible = not en_la_luna
-	_plataforma.visible = en_la_luna or base_tierra == null
 	_material_polvo.albedo_color = Color(0.6, 0.58, 0.55, 0.55) if en_la_luna else Color(0.85, 0.85, 0.85, 0.5)
 	# En la Tierra el cielo es azul; en la Luna se usa el cielo negro de la escena.
 	_camara.environment = null if en_la_luna else _cielo_tierra
 	_camara.make_current()
 
 
-func _terminar() -> void:
+## Al terminar una escena. Si "quedarse_en_la_plataforma" es verdadero (aterrizajes),
+## la vista se queda mostrando el cohete sujeto en la plataforma hasta el siguiente paso.
+func _terminar(quedarse_en_la_plataforma := false) -> void:
 	_polvo.emitting = false
 	_camara.h_offset = 0.0
 	_camara.v_offset = 0.0
+	_panel.visible = false
+	if quedarse_en_la_plataforma:
+		return
 	_cohete.position = Vector3.ZERO
 	_llama(_llama_quimica, false)
 	_luz_quimica.visible = false
@@ -346,6 +404,22 @@ static func _fila_barra(padre: Control, texto: String, color: Color) -> Array:
 	return [nombre, barra]
 
 
+## Plataforma de lanzamiento: el cohete se apoya en su cubierta (nodo "Punto_Cohete").
+func _armar_plataforma() -> void:
+	if escena_plataforma == null:
+		return
+	_plataforma = escena_plataforma.instantiate()
+	add_child(_plataforma)
+	var punto := _plataforma.find_child("Punto_Cohete", true, false) as Node3D
+	if punto:
+		_altura_cubierta = _plataforma.to_local(punto.global_position).y
+	_anim_plataforma = _plataforma.find_child("AnimationPlayer", true, false) as AnimationPlayer
+	if _anim_plataforma and _anim_plataforma.has_animation(animacion_soltar):
+		_largo_anim = _anim_plataforma.get_animation(animacion_soltar).length
+	else:
+		_anim_plataforma = null
+
+
 func _armar_escenario() -> void:
 	_suelo_luna = MeshInstance3D.new()
 	var plano := PlaneMesh.new()
@@ -357,17 +431,7 @@ func _armar_escenario() -> void:
 	_suelo_luna.material_override = material_suelo
 	add_child(_suelo_luna)
 
-	_plataforma = MeshInstance3D.new()
-	var disco := CylinderMesh.new()
-	disco.top_radius = 9.0
-	disco.bottom_radius = 9.5
-	disco.height = 0.3
-	_plataforma.mesh = disco
-	_plataforma.position.y = -0.12
-	var material_plataforma := StandardMaterial3D.new()
-	material_plataforma.albedo_color = Color(0.25, 0.25, 0.27)
-	_plataforma.material_override = material_plataforma
-	add_child(_plataforma)
+	_armar_plataforma()
 
 	_camara = Camera3D.new()
 	_camara.fov = 60.0

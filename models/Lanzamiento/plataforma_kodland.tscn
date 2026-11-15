@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://cxm3anngkp4d6"]
+
+[ext_resource type="PackedScene" uid="uid://bc437dnj58jvk" path="res://models/Lanzamiento/plataforma_kodland.glb" id="1_5ka7f"]
+
+[node name="plataforma_kodland" unique_id=2117202258 instance=ExtResource("1_5ka7f")]

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b2agtfb62ll0k" path="res://player/player.tscn" id="1_d4e1e"]
 [ext_resource type="Texture2D" uid="uid://cgfkr4kir7kg6" path="res://icon.svg" id="1_g7emj"]
-[ext_resource type="PackedScene" uid="uid://3ke0og1tcoxq" path="res://scenes/objetos/ExtractorHelio3/vehiculo_extractor.tscn" id="4_vehiculo"]
+[ext_resource type="PackedScene" uid="uid://cpnvwlmo0ixx7" path="res://scenes/objetos/ExtractorHelio3/vehiculo_extractor.tscn" id="4_vehiculo"]
 [ext_resource type="PackedScene" uid="uid://bwvtgwartxt0g" path="res://demo/assets/models/RockB.tscn" id="5_ap0q0"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_hud"]
 [ext_resource type="PackedScene" uid="uid://be6nrf0b8j4l0" path="res://demo/assets/models/RockA.tscn" id="5_rk5m2"]
