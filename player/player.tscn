@@ -31,7 +31,7 @@ script = ExtResource("2_rkbax")
 [node name="Camera3D" type="Camera3D" parent="head" unique_id=1083345748]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1390988)
 cull_mask = 1048063
-far = 1500.0
+far = 1000.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1756174446]
 
