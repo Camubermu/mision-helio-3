@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://c4xn3bfnglhx8"]
+
+[ext_resource type="PackedScene" uid="uid://d3li2y2gabelw" path="res://scenes/objetos/EstacionLunar/EstacionLunar.glb" id="1_p4oa5"]
+
+[node name="EstacionLunar" unique_id=1295587219 instance=ExtResource("1_p4oa5")]
