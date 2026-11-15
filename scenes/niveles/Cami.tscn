@@ -105,7 +105,7 @@ environment = SubResource("Environment_luz")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 278, 0, 286)
 
 [node name="PlataformaLuna" parent="." unique_id=474585162 node_paths=PackedStringArray("nave", "carga_nave") instance=ExtResource("22_plataforma")]
-transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 278, 0, 286)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 278, 0.05, 286)
 script = ExtResource("23_nave_plataforma")
 nave = NodePath("../NaveLuna")
 carga_nave = NodePath("../CargaNave")

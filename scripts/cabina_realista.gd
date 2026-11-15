@@ -165,8 +165,10 @@ func _crear_flotantes() -> void:
 		objetos.append([_gota(), 0.035])
 	for par in objetos:
 		var objeto: Node3D = par[0]
-		var radio: float = par[1]
 		add_child(objeto)
+		# La burbuja tiene que tapar todo el objeto aunque gire (por ejemplo, las
+		# esquinas de la lista): se mide la punta más lejana de sus piezas.
+		var radio: float = maxf(par[1], _radio_que_lo_tapa(objeto))
 		# Busca un lugar libre para que no empiece encimado con otro.
 		var inicio := Vector3.ZERO
 		for intento in 30:
@@ -202,11 +204,13 @@ func _mover_flotantes(delta: float) -> void:
 
 ## Los objetos chocan entre sí y con la cabeza del astronauta: rebotan en vez de atravesarse.
 func _chocar_flotantes() -> void:
-	for i in _flotantes.size():
-		var a: Dictionary = _flotantes[i]
-		for k in range(i + 1, _flotantes.size()):
-			_rebotar(a, _flotantes[k])
-		_rebotar_en_cabeza(a)
+	# Varias pasadas: si un objeto empuja a otro contra un tercero, también se separan.
+	for pasada in 4:
+		for i in _flotantes.size():
+			var a: Dictionary = _flotantes[i]
+			for k in range(i + 1, _flotantes.size()):
+				_rebotar(a, _flotantes[k])
+			_rebotar_en_cabeza(a)
 
 
 func _rebotar(a: Dictionary, b: Dictionary) -> void:
@@ -248,6 +252,25 @@ func _rebotar_en_cabeza(a: Dictionary) -> void:
 	var velocidad: Vector3 = a.velocidad
 	if velocidad.dot(normal) < 0.0:
 		a.velocidad = velocidad.bounce(normal)
+
+
+## Distancia desde el centro del objeto hasta su punta más lejana.
+static func _radio_que_lo_tapa(objeto: Node3D) -> float:
+	var radio := 0.0
+	var piezas: Array = objeto.find_children("*", "MeshInstance3D", true, false)
+	if objeto is MeshInstance3D:
+		piezas.append(objeto)
+	for pieza in piezas:
+		var m := pieza as MeshInstance3D
+		var hasta_objeto := Transform3D.IDENTITY
+		var nodo: Node3D = m
+		while nodo != objeto and nodo != null:
+			hasta_objeto = nodo.transform * hasta_objeto
+			nodo = nodo.get_parent() as Node3D
+		var caja := m.get_aabb()
+		for i in 8:
+			radio = maxf(radio, (hasta_objeto * caja.get_endpoint(i)).length())
+	return radio
 
 
 func _lugar_libre(punto: Vector3, radio: float) -> bool:

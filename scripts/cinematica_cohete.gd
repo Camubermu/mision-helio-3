@@ -9,7 +9,7 @@ extends Node3D
 ## Espacio = saltar la escena.
 
 ## Segundos que dura el despegue desde la Tierra.
-@export var duracion_despegue_tierra := 11.0
+@export var duracion_despegue_tierra := 14.0
 ## Segundos que dura el despegue desde la Luna (el motor de helio-3 va al límite).
 @export var duracion_despegue_luna := 13.0
 ## Segundos que dura el alunizaje o el aterrizaje.
@@ -79,9 +79,10 @@ func despegar_de_la_tierra() -> void:
 	_nombre_barra_2.text = "Altitud (100 km)"
 	var duracion := duracion_despegue_tierra
 	# Cuenta regresiva mientras los brazos de la plataforma sueltan el cohete.
-	var encendido_en := 3.0
-	var arranque := 4.0
-	_mover_brazos(true, arranque)
+	var encendido_en := 5.0
+	var arranque := 6.0
+	# Los brazos sueltan el cohete en los últimos 3 segundos de la cuenta atrás.
+	_brazos_despues(true, 3.0, arranque - 3.0)
 	var t := 0.0
 	while t < duracion and not _saltar:
 		t += _paso()
@@ -94,7 +95,8 @@ func despegar_de_la_tierra() -> void:
 		var altitud := clampf((t - arranque) / (duracion - arranque - 2.5), 0.0, 1.0)
 		_polvo.emitting = encendido and _altura() < 25.0
 		if t < encendido_en:
-			_estado.text = "Cuenta regresiva: %d · soltando amarras" % (3 - int(t))
+			var falta := 5 - int(t)
+			_estado.text = "Cuenta atrás: T-%d%s" % [falta, " · soltando amarras" if falta <= 3 else ""]
 			_estado.modulate = Color.WHITE
 		elif falla:
 			_estado.text = "¡FALLA DEL MOTOR QUÍMICO! Fuga de combustible"
@@ -251,6 +253,13 @@ func _poner_brazos(abiertos: bool) -> void:
 	_anim_plataforma.pause()
 
 
+## Igual que _mover_brazos, pero empieza después de "espera" segundos.
+func _brazos_despues(abrir: bool, segundos: float, espera: float) -> void:
+	var tiempo := create_tween()
+	tiempo.tween_interval(espera)
+	tiempo.tween_callback(_mover_brazos.bind(abrir, segundos))
+
+
 ## Mueve los brazos en los segundos dados: abrir = soltar el cohete, cerrar = sujetarlo.
 func _mover_brazos(abrir: bool, segundos: float) -> void:
 	if _anim_plataforma == null:
@@ -319,7 +328,7 @@ func _seguir_cohete(temblor: float) -> void:
 func _preparar_base_tierra() -> void:
 	if base_tierra == null:
 		return
-	for nombre in ["player", "WorldEnvironment"]:
+	for nombre in ["player", "WorldEnvironment", "BaseLanzamiento"]:
 		var nodo := base_tierra.get_node_or_null(nombre)
 		if nodo:
 			nodo.queue_free()
@@ -433,6 +442,8 @@ func _armar_escenario() -> void:
 	material_suelo.albedo_color = Color(0.3, 0.3, 0.3)
 	material_suelo.roughness = 1.0
 	_suelo_luna.material_override = material_suelo
+	# Un poco más abajo que la losa de la plataforma: si están a la misma altura, el suelo titila.
+	_suelo_luna.position.y = -0.06
 	add_child(_suelo_luna)
 
 	_armar_plataforma()

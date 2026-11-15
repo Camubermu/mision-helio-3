@@ -86,15 +86,19 @@ static func _preparar_biblioteca() -> void:
 			var animacion := reproductor.get_animation(reproductor.get_animation_list()[0]).duplicate() as Animation
 			animacion.loop_mode = Animation.LOOP_LINEAR
 			if nombre == "caminar":
-				_velocidad_caminar = _quitar_avance(animacion)
+				_velocidad_caminar = _quitar_avance(animacion, false)
+			elif nombre.ends_with("escaleras"):
+				# En la escalera la animación también sube (o baja) la cadera: se quita,
+				# porque el juego ya mueve al astronauta. Si no, sube o baja el doble.
+				_quitar_avance(animacion, true)
 			_biblioteca.add_animation(nombre, animacion)
 		nodo.free()
 	_colores = _colores_originales()
 
 
-## "Walking" de Mixamo avanza solo; el juego ya mueve al astronauta, así que se quita ese avance.
-## Devuelve cuántos metros por segundo avanzaba.
-static func _quitar_avance(animacion: Animation) -> float:
+## Las animaciones de Mixamo avanzan solas; el juego ya mueve al astronauta, así que se
+## quita ese avance (y la subida o bajada si "tambien_altura"). Devuelve los metros por segundo.
+static func _quitar_avance(animacion: Animation, tambien_altura: bool) -> float:
 	for pista in animacion.get_track_count():
 		if animacion.track_get_type(pista) != Animation.TYPE_POSITION_3D:
 			continue
@@ -105,13 +109,13 @@ static func _quitar_avance(animacion: Animation) -> float:
 			return 1.4
 		var inicio: Vector3 = animacion.track_get_key_value(pista, 0)
 		var fin: Vector3 = animacion.track_get_key_value(pista, claves - 1)
-		var avance := Vector3(fin.x - inicio.x, 0, fin.z - inicio.z)
+		var avance := Vector3(fin.x - inicio.x, (fin.y - inicio.y) if tambien_altura else 0.0, fin.z - inicio.z)
 		for k in claves:
 			var parte := animacion.track_get_key_time(pista, k) / animacion.length
 			var valor: Vector3 = animacion.track_get_key_value(pista, k)
 			animacion.track_set_key_value(pista, k, valor - avance * parte)
 		# El modelo de Mixamo viene 100 veces más chico (la escena lo agranda x100).
-		return maxf(avance.length() * ESCALA / animacion.length, 0.5)
+		return maxf(Vector2(avance.x, avance.z).length() * ESCALA / animacion.length, 0.5)
 	return 1.4
 
 

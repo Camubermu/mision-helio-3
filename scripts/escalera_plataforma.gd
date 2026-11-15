@@ -25,6 +25,8 @@ signal en_el_suelo
 @export var escalones_por_segundo := 2.6
 ## Metros por segundo al caminar.
 @export var velocidad_caminando := 1.6
+## En la Luna (gravedad 6 veces menor) el astronauta va más despacio y da saltitos.
+@export var gravedad_lunar := false
 
 const TRAMOS := 4
 const ESCALONES := 20
@@ -151,23 +153,37 @@ func _mover(desde: Vector3, hasta: Vector3, es_escalera: bool, bajando: bool) ->
 	var plano := Vector3(hasta.x - desde.x, 0, hasta.z - desde.z)
 	if plano.length() > 0.01:
 		_actor.rotation.y = atan2(-plano.x, -plano.z)
-	var duracion := plano.length() / velocidad_caminando
+	# En la Luna se camina más lento y a saltitos, y los escalones se toman con calma.
+	var caminando := velocidad_caminando * (0.75 if gravedad_lunar else 1.0)
+	var escalones := escalones_por_segundo * (0.7 if gravedad_lunar else 1.0)
+	var duracion := plano.length() / caminando
 	var nombre := animacion_caminar
 	if es_escalera:
-		duracion = ESCALONES / escalones_por_segundo
+		duracion = ESCALONES / escalones
 		nombre = animacion_bajar if bajando else animacion_subir
-	_poner_animacion(nombre, escalones_por_segundo if es_escalera else velocidad_caminando)
+	_poner_animacion(nombre, escalones if es_escalera else caminando)
 	var t := 0.0
 	while t < duracion:
 		if _saltar or not is_inside_tree():
 			return
 		t += get_process_delta_time()
 		var avance := clampf(t / duracion, 0.0, 1.0)
-		_actor.position = desde.lerp(hasta, avance)
+		_actor.position = desde.lerp(hasta, avance) + Vector3.UP * _flotar(t, es_escalera, escalones)
 		_balanceo(t, es_escalera, bajando)
 		_seguir_con_camara()
 		await get_tree().process_frame
 	_actor.position = hasta
+
+
+## Con poca gravedad cada paso es un pequeño salto que tarda en caer.
+func _flotar(t: float, es_escalera: bool, escalones: float) -> float:
+	if not gravedad_lunar:
+		return 0.0
+	if es_escalera:
+		# Cada escalón: el cuerpo se eleva un poquito y baja despacio.
+		return absf(sin(t * escalones * PI)) * 0.06
+	# Caminando: saltitos lunares de unos 15 cm, uno cada 0,6 s.
+	return absf(sin(t * PI / 0.6)) * 0.15
 
 
 ## Sin animaciones: el cuerpo sube y baja con cada paso y se inclina en la escalera.
@@ -252,7 +268,9 @@ func _armar() -> void:
 		_baranda(Vector3(x_descanso + (0.72 if hacia_mas_x else -0.72), y1, fondo), Vector3(0, 0, 3.0), amarillo)
 	# Pasarela de arriba hasta el brazo de acceso (y piso del brazo para caminar).
 	_caja(Vector3(1.5, 0.12, CARRIL_B + 0.6), Vector3(INICIO_X - 0.75, altura - 0.06, (CARRIL_B + 0.6) / 2.0), acero, true)
-	_baranda(Vector3(INICIO_X - 1.5, altura, (CARRIL_B + 0.6) / 2.0), Vector3(0, 0, CARRIL_B + 0.6), amarillo)
+	# La baranda deja libre la entrada al brazo de acceso (z de -0,8 a 0,8).
+	var largo_baranda := CARRIL_B + 0.6 - 0.8
+	_baranda(Vector3(INICIO_X - 1.5, altura, 0.8 + largo_baranda / 2.0), Vector3(0, 0, largo_baranda), amarillo)
 	var piso_brazo := StaticBody3D.new()
 	var forma := CollisionShape3D.new()
 	var caja := BoxShape3D.new()

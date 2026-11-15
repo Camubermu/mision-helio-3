@@ -10,6 +10,8 @@ extends Node3D
 @export var carga_nave: Node3D
 ## Animación de la plataforma que suelta el cohete (al revés, lo sujeta).
 @export var animacion_soltar: StringName = &"liberar_cohete"
+## Verdadero en la Luna: el astronauta sube y baja la escalera con poca gravedad.
+@export var gravedad_lunar := true
 
 
 func _ready() -> void:
@@ -53,6 +55,7 @@ func _poner_escalera() -> void:
 	var escalera := Node3D.new()
 	escalera.name = "Escalera"
 	escalera.set_script(load("res://scripts/escalera_plataforma.gd"))
+	escalera.set("gravedad_lunar", gravedad_lunar)
 	add_child(escalera)
 	var pie := Area3D.new()
 	pie.name = "PieEscalera"
