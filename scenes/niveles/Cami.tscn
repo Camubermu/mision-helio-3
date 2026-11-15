@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b2agtfb62ll0k" path="res://player/player.tscn" id="1_d4e1e"]
 [ext_resource type="Texture2D" uid="uid://cgfkr4kir7kg6" path="res://icon.svg" id="1_g7emj"]
-[ext_resource type="PackedScene" uid="uid://3ke0og1tcoxq" path="res://scenes/objetos/ExtractorHelio3/vehiculo_extractor.tscn" id="4_vehiculo"]
+[ext_resource type="PackedScene" uid="uid://cpnvwlmo0ixx7" path="res://scenes/objetos/ExtractorHelio3/vehiculo_extractor.tscn" id="4_vehiculo"]
 [ext_resource type="PackedScene" uid="uid://bwvtgwartxt0g" path="res://demo/assets/models/RockB.tscn" id="5_ap0q0"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_hud"]
 [ext_resource type="PackedScene" uid="uid://be6nrf0b8j4l0" path="res://demo/assets/models/RockA.tscn" id="5_rk5m2"]
@@ -17,7 +17,6 @@
 [ext_resource type="Script" uid="uid://cv24k8dtigjru" path="res://scripts/cinematica_cohete.gd" id="13_cinematica"]
 [ext_resource type="PackedScene" uid="uid://dfe5apeh28ijj" path="res://scenes/niveles/level1.tscn" id="14_level1"]
 [ext_resource type="Script" uid="uid://ci1sk25l6hxn5" path="res://scripts/brazos_astronauta.gd" id="15_brazos"]
-[ext_resource type="Script" uid="uid://cujruaulwmae4" path="res://scripts/piernas_astronauta.gd" id="16_piernas"]
 [ext_resource type="Script" uid="uid://da2otosaxmvfg" path="res://scripts/paso_lunar.gd" id="17_paso"]
 [ext_resource type="Script" uid="uid://bvejuomk4mqe1" path="res://scripts/cabina_realista.gd" id="18_cabina"]
 [ext_resource type="Script" uid="uid://dox7c3act1vcl" path="res://scripts/casco_astronauta.gd" id="19_casco"]
@@ -25,6 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://mc0mnjhd10ul" path="res://scenes/niveles/EEmil.tscn" id="21_superficie"]
 [ext_resource type="PackedScene" uid="uid://cxm3anngkp4d6" path="res://models/Lanzamiento/plataforma_kodland.tscn" id="22_plataforma"]
 [ext_resource type="Script" uid="uid://cfi2sahj53117" path="res://scripts/nave_en_plataforma.gd" id="23_nave_plataforma"]
+[ext_resource type="PackedScene" path="res://scenes/personajes/astronauta.tscn" id="24_astronauta"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sv3wp"]
 
@@ -87,9 +87,8 @@ debug_color = Color(0.80369407, 0.36144796, 0.5536212, 0.41960785)
 [node name="player" parent="." unique_id=332937270 instance=ExtResource("1_d4e1e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 295.136, 1.07258, 284.329)
 
-[node name="Piernas" type="Node3D" parent="player" unique_id=1140446876]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-script = ExtResource("16_piernas")
+[node name="Cuerpo" parent="player" instance=ExtResource("24_astronauta")]
+transform = Transform3D(0.911, 0, 0, 0, 0.911, 0, 0, 0, 0.911, 0, -1, 0.08)
 
 [node name="PasoLunar" type="Node" parent="player" unique_id=1841876302]
 script = ExtResource("17_paso")

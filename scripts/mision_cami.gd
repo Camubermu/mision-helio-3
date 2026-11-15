@@ -34,6 +34,9 @@ var _inicio_msec := 0
 
 func _ready() -> void:
 	_inicio_msec = Time.get_ticks_msec()
+	_poner_guantes()
+	if jugador.has_node("Cuerpo"):
+		_esconder_capsula()
 	if superficie:
 		_preparar_superficie()
 		var terrenos := superficie.find_children("*", "Terrain3D", true, false)
@@ -94,6 +97,31 @@ func _al_terminar_viaje() -> void:
 		espera.tween_interval(4.0)
 		await espera.finished
 		Juego.cambiar_nivel(escena_final)
+
+
+## Guantes del traje en la cámara del jugador. Se crean desde aquí (y no en la escena)
+## para que el editor no los borre al guardar. Como el jugador ya tiene cuerpo 3D
+## con sus manos, los guantes solo aparecen al estirar la mano para tocar algo (E).
+## La cápsula blanca de player.tscn es solo de prueba: se esconde porque el jugador
+## ya tiene el cuerpo del astronauta (nodo "Cuerpo").
+func _esconder_capsula() -> void:
+	for hijo in jugador.get_children():
+		if hijo is MeshInstance3D and (hijo as MeshInstance3D).mesh is CapsuleMesh:
+			(hijo as MeshInstance3D).visible = false
+
+
+func _poner_guantes() -> void:
+	var camara := jugador.find_child("Camera3D", true, false) as Camera3D
+	if camara == null or camara.has_node("Brazos"):
+		return
+	var brazos := Node3D.new()
+	brazos.name = "Brazos"
+	brazos.set_script(load("res://scripts/brazos_astronauta.gd"))
+	brazos.set("solo_al_alcanzar", true)
+	# Mismos colores que el traje naranja del astronauta (scenes/personajes/astronauta.tscn).
+	brazos.set("color_manga", Color(0.86, 0.5, 0.3))
+	brazos.set("color_mano", Color(0.9, 0.86, 0.78))
+	camara.add_child(brazos)
 
 
 ## Guarda el resultado de la misión para la pantalla de la base (scripts/pantalla_mision.gd).

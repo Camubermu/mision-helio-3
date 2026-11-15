@@ -8,6 +8,12 @@ extends Node3D
 ## Si es verdadero, las manos descansan abajo y relajadas (por ejemplo, sentado en la nave)
 ## y solo se levantan para tocar algo.
 @export var en_reposo := false
+## Si es verdadero, los guantes solo aparecen mientras la mano se estira para tocar algo
+## (por ejemplo, cuando el jugador ya tiene un cuerpo 3D con sus propias manos).
+@export var solo_al_alcanzar := false
+## Color de la manga del traje y de la mano (para que combinen con el cuerpo del personaje).
+@export var color_manga := BLANCO
+@export var color_mano := Color(0.66, 0.67, 0.68)
 
 const BLANCO := Color(0.74, 0.74, 0.72)
 const GRIS := Color(0.55, 0.57, 0.6)
@@ -39,6 +45,9 @@ func _ready() -> void:
 			brazo.rotation_degrees = _giro_reposo[brazo]
 	_derecho.position = _base_derecho
 	_izquierdo.position = _base_izquierdo
+	if solo_al_alcanzar:
+		_derecho.visible = false
+		_izquierdo.visible = false
 
 
 func _process(delta: float) -> void:
@@ -61,6 +70,7 @@ func alcanzar(punto_global = null) -> void:
 	if _estirando:
 		return
 	_estirando = true
+	_derecho.visible = true
 	var destino := _base_derecho + Vector3(-0.06, 0.08, -0.22)
 	if punto_global is Vector3:
 		var local: Vector3 = get_parent().to_local(punto_global)
@@ -76,7 +86,10 @@ func alcanzar(punto_global = null) -> void:
 	animacion.tween_property(_derecho, "position", _base_derecho, bajar).set_trans(Tween.TRANS_QUAD)
 	var giro_final: Vector3 = _giro_reposo[_derecho] if en_reposo else _giro_activo[_derecho]
 	animacion.parallel().tween_property(_derecho, "rotation_degrees", giro_final, bajar).set_trans(Tween.TRANS_QUAD)
-	animacion.tween_callback(func(): _estirando = false)
+	animacion.tween_callback(func():
+		_estirando = false
+		if solo_al_alcanzar:
+			_derecho.visible = false)
 
 
 func _velocidad_del_cuerpo() -> float:
@@ -97,9 +110,9 @@ func _crear_brazo(lado: float) -> Node3D:
 	# El antebrazo viene desde abajo y desde afuera, y el guante sube un poco.
 	brazo.rotation_degrees = Vector3(22, -18 * lado, 6 * lado)
 	add_child(brazo)
-	var tela := _material_tela(BLANCO)
+	var tela := _material_tela(color_manga)
 	# Antebrazo con pliegues (anillos) hacia atrás.
-	var antebrazo := _pieza(CylinderMesh.new(), BLANCO)
+	var antebrazo := _pieza(CylinderMesh.new(), color_manga)
 	(antebrazo.mesh as CylinderMesh).top_radius = 0.058
 	(antebrazo.mesh as CylinderMesh).bottom_radius = 0.07
 	(antebrazo.mesh as CylinderMesh).height = 0.42
@@ -108,7 +121,7 @@ func _crear_brazo(lado: float) -> Node3D:
 	antebrazo.position.z = 0.23
 	brazo.add_child(antebrazo)
 	for k in 4:
-		var pliegue := _pieza(TorusMesh.new(), BLANCO.darkened(0.1))
+		var pliegue := _pieza(TorusMesh.new(), color_manga.darkened(0.1))
 		(pliegue.mesh as TorusMesh).inner_radius = 0.055 + k * 0.003
 		(pliegue.mesh as TorusMesh).outer_radius = 0.07 + k * 0.003
 		pliegue.material_override = tela
@@ -137,7 +150,7 @@ func _crear_brazo(lado: float) -> Node3D:
 	(puno.mesh as CylinderMesh).top_radius = 0.055
 	(puno.mesh as CylinderMesh).bottom_radius = 0.045
 	(puno.mesh as CylinderMesh).height = 0.06
-	puno.material_override = _material_tela(Color(0.68, 0.69, 0.7))
+	puno.material_override = _material_tela(color_mano.lightened(0.03))
 	puno.rotation_degrees.x = 90
 	puno.position.z = -0.03
 	brazo.add_child(puno)
@@ -149,7 +162,7 @@ func _crear_brazo(lado: float) -> Node3D:
 	(palma.mesh as SphereMesh).radius = 0.05
 	(palma.mesh as SphereMesh).height = 0.1
 	palma.scale = Vector3(1.0, 0.45, 1.1)
-	palma.material_override = _material_tela(Color(0.66, 0.67, 0.68))
+	palma.material_override = _material_tela(color_mano)
 	mano.add_child(palma)
 	# Cuatro dedos un poco doblados, con puntas de goma oscura.
 	for d in 4:
