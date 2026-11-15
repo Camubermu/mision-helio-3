@@ -90,7 +90,7 @@ func despegar_de_la_tierra() -> void:
 		_barra_1.value = 100.0 if encendido else 0.0
 		_barra_2.value = altitud * 100.0
 		_seguir_cohete(0.07 if encendido and _cohete.position.y < 40.0 else 0.02 if falla else 0.0)
-		await get_tree().process_frame
+r		await get_tree().process_frame
 	if not _saltar:
 		Juego.mostrar_mensaje("¡El motor químico falló al salir de la atmósfera!")
 	_terminar()
