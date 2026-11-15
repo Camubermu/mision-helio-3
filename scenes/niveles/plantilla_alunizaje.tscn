@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b2t2g3c2djwt"]
 
-[ext_resource type="PackedScene" path="res://scenes/modulo-lunar/modulo-lunar.tscn" id="1_nave"]
+[ext_resource type="PackedScene" uid="uid://bdltt7gpchdjn" path="res://scenes/modulo-lunar/modulo-lunar.tscn" id="1_nave"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="2_hud"]
 [ext_resource type="PackedScene" path="res://scenes/objetos/zona_gravedad.tscn" id="3_grav"]
 

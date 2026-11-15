@@ -52,7 +52,7 @@ func desaparecer() -> void:
 
 
 static func es_jugador(cuerpo: Node) -> bool:
-	return cuerpo is CharacterBody3D and not cuerpo.is_in_group("nave")
+	return cuerpo is CharacterBody3D and not cuerpo.is_in_group("nave") and not cuerpo.is_in_group("vehiculo")
 
 
 func _al_entrar(cuerpo: Node3D) -> void:
