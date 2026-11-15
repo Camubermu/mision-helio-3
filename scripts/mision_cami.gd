@@ -32,6 +32,7 @@ var _terreno: Node3D
 
 func _ready() -> void:
 	if superficie:
+		_preparar_superficie()
 		var terrenos := superficie.find_children("*", "Terrain3D", true, false)
 		if not terrenos.is_empty():
 			_terreno = terrenos[0]
@@ -43,6 +44,19 @@ func _ready() -> void:
 			_viajar.call_deferred(0)
 		Inicio.VIAJE_A_LA_TIERRA:
 			_viajar.call_deferred(1)
+
+
+## De la escena de la superficie solo se usa el terreno: su cielo y sus otros
+## objetos se quitan para que manden el cielo y los objetos de esta escena.
+func _preparar_superficie() -> void:
+	for hijo in superficie.get_children():
+		if hijo.is_class("Terrain3D"):
+			continue
+		if hijo is WorldEnvironment:
+			hijo.queue_free()
+		elif hijo is Node3D:
+			(hijo as Node3D).visible = false
+			hijo.process_mode = Node.PROCESS_MODE_DISABLED
 
 
 func _physics_process(_delta: float) -> void:

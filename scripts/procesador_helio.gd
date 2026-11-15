@@ -10,6 +10,9 @@ const TrozoRegolito = preload("res://scripts/trozo_regolito.gd")
 
 ## El modelo del reactor que tiembla y brilla mientras procesa.
 @export var reactor: Node3D
+## Si es verdadero, la zona se pone sola donde está el reactor
+## (así puedes mover el reactor en el editor sin tener que mover también la zona).
+@export var seguir_al_reactor := true
 ## Cuánto regolito se necesita para 1 de helio-3.
 @export var regolito_por_helio := 3
 ## Segundos que tarda en hacer 1 de helio-3.
@@ -63,6 +66,9 @@ var _capsulas_creadas := 0
 
 func _ready() -> void:
 	body_entered.connect(_al_entrar)
+	if reactor and seguir_al_reactor:
+		var lugar := reactor.global_position
+		global_position = Vector3(lugar.x, global_position.y, lugar.z)
 	if reactor:
 		_posicion_reactor = reactor.position
 		_pintar_reactor()

@@ -95,13 +95,7 @@ script = ExtResource("17_paso")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=703014759]
 environment = SubResource("Environment_luz")
 
-[node name="SuperficieLunar" parent="." instance=ExtResource("21_superficie")]
-
-[node name="WorldEnvironment" parent="SuperficieLunar" index="0"]
-environment = null
-
-[node name="extractorhelio3 (1)" parent="SuperficieLunar" index="2"]
-visible = false
+[node name="SuperficieLunar" parent="." unique_id=112450009 instance=ExtResource("21_superficie")]
 
 [node name="NaveLuna" parent="." unique_id=1525601573 instance=ExtResource("10_cohete_lujo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 278, 0, 286)
@@ -136,7 +130,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 300, 0, 260)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 295.14, 0.05, 274)
 
 [node name="ProcesadorHelio" parent="." unique_id=544211651 node_paths=PackedStringArray("reactor") instance=ExtResource("8_procesador")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 492.954, 0, 180.248)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 354.17, 0, 237.36)
 reactor = NodePath("../SueloLunar/reactor")
 
 [node name="ColisionReactor" type="StaticBody3D" parent="ProcesadorHelio" unique_id=262790136]
