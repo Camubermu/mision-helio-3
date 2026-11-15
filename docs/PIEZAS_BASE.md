@@ -38,6 +38,15 @@ Para mover, girar o cambiar el tamaño de una pieza, selecciónala y usa las her
 | Reactor | `scenes/objetos/reactor.tscn` | Con **E** usa helio-3 y recarga la energía | `helio3_necesario` |
 | Salida | `scenes/objetos/salida_nivel.tscn` | Al pisarla, pasa al siguiente nivel | `siguiente_nivel`, `helio3_necesario`, `necesita_energia_llena` |
 | Nave | `scenes/nave/nave.tscn` | Módulo de aterrizaje: aterriza suave y derecho | `empuje`, `consumo`, `velocidad_segura`, `siguiente_nivel` |
+| Vehículo extractor | `scenes/objetos/ExtractorHelio3/vehiculo_extractor.tscn` | Con **E** te subes y lo manejas con la cámara detrás (W/S, A/D, mouse). Si su rueda toca una roca minable, excava regolito | `velocidad_maxima`, `distancia_camara`; en el nodo `Excavadora`: `capacidad`, `regolito_por_roca` |
+| Procesador de helio-3 | `scenes/objetos/procesador_helio.tscn` | Ponlo alrededor de un reactor. Si llegas con regolito, lo pinta, lo hace brillar y saca cápsulas de helio-3 (3 regolito = 1 cápsula) | `reactor` (elige el modelo), `regolito_por_helio`, `colores_reactor` |
+| Cápsula de helio-3 | `scenes/objetos/capsula_helio3.tscn` | Al tocarla (a pie o en el vehículo) se recoge: +1 helio-3 | — |
+| Carga de la nave | `scenes/objetos/carga_nave.tscn` | Ponla alrededor de la nave. Al llegar con cápsulas, se cargan en la nave | `helio3_necesario`, `siguiente_nivel` |
+
+**Rocas que se pueden excavar:** selecciona la roca → pestaña **Nodo** → **Grupos** → escribe `roca_minable` → **Añadir**.
+
+Para hacer otro vehículo: copia `vehiculo_extractor.tscn` y cambia el modelo dentro de `Modelo`.
+Mueve los puntos de `Excavadora/Cinta` para cambiar por dónde sube el material.
 
 **Todo nivel necesita:** un suelo, un HUD, una Zona de gravedad y un Jugador (o una Nave).
 

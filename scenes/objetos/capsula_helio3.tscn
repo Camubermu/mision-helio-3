@@ -1,0 +1,55 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/capsula_helio3.gd" id="1_capsula"]
+
+[sub_resource type="StandardMaterial3D" id="Material_vidrio"]
+albedo_color = Color(0.35, 0.95, 1, 1)
+emission_enabled = true
+emission = Color(0.2, 0.85, 1, 1)
+emission_energy_multiplier = 1.6
+roughness = 0.2
+
+[sub_resource type="StandardMaterial3D" id="Material_metal"]
+albedo_color = Color(0.78, 0.8, 0.84, 1)
+metallic = 0.8
+roughness = 0.3
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_vidrio"]
+material = SubResource("Material_vidrio")
+radius = 0.3
+height = 1.1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_anillo"]
+material = SubResource("Material_metal")
+top_radius = 0.34
+bottom_radius = 0.34
+height = 0.14
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_zona"]
+radius = 1.4
+
+[node name="CapsulaHelio3" type="Area3D"]
+script = ExtResource("1_capsula")
+
+[node name="Cuerpo" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+
+[node name="Vidrio" type="MeshInstance3D" parent="Cuerpo"]
+mesh = SubResource("CapsuleMesh_vidrio")
+
+[node name="AnilloArriba" type="MeshInstance3D" parent="Cuerpo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+mesh = SubResource("CylinderMesh_anillo")
+
+[node name="AnilloAbajo" type="MeshInstance3D" parent="Cuerpo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
+mesh = SubResource("CylinderMesh_anillo")
+
+[node name="Luz" type="OmniLight3D" parent="Cuerpo"]
+light_color = Color(0.3, 0.9, 1, 1)
+light_energy = 0.8
+omni_range = 2.5
+
+[node name="Forma" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SphereShape3D_zona")
