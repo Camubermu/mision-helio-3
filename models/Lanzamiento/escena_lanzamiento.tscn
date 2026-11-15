@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="PackedScene" path="res://models/plataforma/plataforma_kodland.glb" id="1_plat"]
+[ext_resource type="PackedScene" path="res://models/cohete_final/cohete_kodland_lujo_godot.glb" id="2_cohete"]
+[ext_resource type="Script" path="res://scripts/lanzamiento.gd" id="3_script"]
+
+[node name="Lanzamiento" type="Node3D"]
+script = ExtResource("3_script")
+plataforma = NodePath("Plataforma")
+cohete = NodePath("Cohete")
+camara = NodePath("Camara")
+
+[node name="Plataforma" parent="." instance=ExtResource("1_plat")]
+
+[node name="Cohete" parent="." instance=ExtResource("2_cohete")]
+
+[node name="Sol" type="DirectionalLight3D" parent="."]
+
+[node name="Entorno" type="WorldEnvironment" parent="."]
+
+[node name="Camara" type="Camera3D" parent="."]
