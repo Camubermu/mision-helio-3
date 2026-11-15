@@ -66,6 +66,11 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	# Estacionado se queda quieto: así no se hunde si el suelo de lejos aún no está armado
+	# (por ejemplo, un terreno grande que solo arma el suelo cerca del jugador).
+	if not conduciendo and is_zero_approx(_rapidez):
+		velocity = Vector3.ZERO
+		return
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 

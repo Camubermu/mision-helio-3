@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cmv8s8wbt3f81"]
+[gd_scene format=3 uid="uid://0nj8ee8xxru"]
 
 [ext_resource type="PackedScene" uid="uid://b2agtfb62ll0k" path="res://player/player.tscn" id="1_d4e1e"]
 [ext_resource type="Texture2D" uid="uid://cgfkr4kir7kg6" path="res://icon.svg" id="1_g7emj"]
@@ -22,6 +22,7 @@
 [ext_resource type="Script" uid="uid://bvejuomk4mqe1" path="res://scripts/cabina_realista.gd" id="18_cabina"]
 [ext_resource type="Script" uid="uid://dox7c3act1vcl" path="res://scripts/casco_astronauta.gd" id="19_casco"]
 [ext_resource type="Script" uid="uid://bikhkadk8jyrj" path="res://scripts/equipamiento_cabina.gd" id="20_equipo"]
+[ext_resource type="PackedScene" uid="uid://mc0mnjhd10ul" path="res://scenes/niveles/EEmil.tscn" id="21_superficie"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sv3wp"]
 
@@ -47,16 +48,6 @@ tonemap_exposure = 0.8
 glow_enabled = true
 glow_intensity = 0.6
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_suelo"]
-size = Vector3(620, 1, 820)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_suelo"]
-albedo_color = Color(0.3, 0.29, 0.28, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_suelo"]
-material = SubResource("StandardMaterial3D_suelo")
-size = Vector3(200, 1, 200)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_rocac"]
 size = Vector3(6, 14, 6)
 
@@ -78,7 +69,7 @@ light_energy = 0.35
 shadow_enabled = true
 
 [node name="Cubo" type="StaticBody3D" parent="." unique_id=1738357838]
-transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 15, 37.777065, 7.787361, 23.81289)
+transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 15, 337.777, 7.78736, 283.813)
 physics_material_override = SubResource("PhysicsMaterial_sv3wp")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Cubo" unique_id=578784675]
@@ -92,7 +83,7 @@ shape = SubResource("ConcavePolygonShape3D_vdrbb")
 debug_color = Color(0.80369407, 0.36144796, 0.5536212, 0.41960785)
 
 [node name="player" parent="." unique_id=332937270 instance=ExtResource("1_d4e1e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.863841, 1.0725822, 24.32894)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 295.136, 1.07258, 284.329)
 
 [node name="Piernas" type="Node3D" parent="player" unique_id=1140446876]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -101,72 +92,22 @@ script = ExtResource("16_piernas")
 [node name="PasoLunar" type="Node" parent="player" unique_id=1841876302]
 script = ExtResource("17_paso")
 
-[node name="Brazos" type="Node3D" parent="player/head/Camera3D"]
-script = ExtResource("15_brazos")
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=703014759]
 environment = SubResource("Environment_luz")
 
-[node name="NaveLuna" parent="." unique_id=1525601573 instance=ExtResource("10_cohete_lujo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 26)
+[node name="SuperficieLunar" parent="." instance=ExtResource("21_superficie")]
 
-[node name="Plasma" parent="NaveLuna/Cohete_Kodland/Exterior" index="0"]
+[node name="WorldEnvironment" parent="SuperficieLunar" index="0"]
+environment = null
+
+[node name="extractorhelio3 (1)" parent="SuperficieLunar" index="2"]
 visible = false
 
+[node name="NaveLuna" parent="." unique_id=1525601573 instance=ExtResource("10_cohete_lujo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 278, 0, 286)
+
 [node name="SueloLunar" type="StaticBody3D" parent="." unique_id=1172744402]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-
-[node name="Forma" type="CollisionShape3D" parent="SueloLunar" unique_id=946372519]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -97)
-shape = SubResource("BoxShape3D_suelo")
-
-[node name="Malla" type="MeshInstance3D" parent="SueloLunar" unique_id=1118478203]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021734238, -0.046959877, 0.019807816)
-mesh = SubResource("BoxMesh_suelo")
-
-[node name="Malla" type="MeshInstance3D" parent="SueloLunar/Malla" unique_id=634078277]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021734238, -0.046959877, 197.68094)
-mesh = SubResource("BoxMesh_suelo")
-
-[node name="Malla2" type="MeshInstance3D" parent="SueloLunar/Malla" unique_id=1613546861]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 199.27412, -0.046959877, 0.019807816)
-mesh = SubResource("BoxMesh_suelo")
-
-[node name="Malla" type="MeshInstance3D" parent="SueloLunar/Malla/Malla2" unique_id=1744058804]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021734238, -0.046959877, 197.68094)
-mesh = SubResource("BoxMesh_suelo")
-
-[node name="Malla2" type="MeshInstance3D" parent="SueloLunar/Malla/Malla2" unique_id=735364675]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -397.82346, -0.046959877, 0.019807816)
-mesh = SubResource("BoxMesh_suelo")
-
-[node name="Malla" type="MeshInstance3D" parent="SueloLunar/Malla/Malla2/Malla2" unique_id=95679785]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021734238, -0.046959877, 197.68094)
-mesh = SubResource("BoxMesh_suelo")
-
-[node name="Malla3" type="MeshInstance3D" parent="SueloLunar/Malla" unique_id=1062965569]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021734238, -0.046959877, -393.27185)
-mesh = SubResource("BoxMesh_suelo")
-
-[node name="Malla" type="MeshInstance3D" parent="SueloLunar/Malla/Malla3" unique_id=1825660461]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021734238, -0.046959877, 197.68094)
-mesh = SubResource("BoxMesh_suelo")
-
-[node name="Malla2" type="MeshInstance3D" parent="SueloLunar/Malla/Malla3" unique_id=1985860483]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 199.27412, -0.046959877, 0.019807816)
-mesh = SubResource("BoxMesh_suelo")
-
-[node name="Malla" type="MeshInstance3D" parent="SueloLunar/Malla/Malla3/Malla2" unique_id=174201815]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021734238, -0.046959877, 197.68094)
-mesh = SubResource("BoxMesh_suelo")
-
-[node name="Malla2" type="MeshInstance3D" parent="SueloLunar/Malla/Malla3/Malla2" unique_id=957647518]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -397.82346, -0.046959877, 0.019807816)
-mesh = SubResource("BoxMesh_suelo")
-
-[node name="Malla" type="MeshInstance3D" parent="SueloLunar/Malla/Malla3/Malla2/Malla2" unique_id=948687139]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021734238, -0.046959877, 197.68094)
-mesh = SubResource("BoxMesh_suelo")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 300, -0.5, 260)
 
 [node name="RockA" parent="SueloLunar" unique_id=1821114397 groups=["roca_minable"] instance=ExtResource("5_rk5m2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 136.46106, 0.5, 132.69165)
@@ -184,17 +125,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22, 0, 0)
 shape = SubResource("BoxShape3D_rocac")
 
 [node name="reactor" parent="SueloLunar" unique_id=2109122115 instance=ExtResource("7_ivofh")]
-transform = Transform3D(1.4590119, 0, 0, 0, 1.2433399, 0, 0, 0, 0.8654342, 193.03453, 0.42402053, -79.7101)
+transform = Transform3D(1.4590119, 0, 0, 0, 1.2433399, 0, 0, 0, 0.8654342, 54.250206, 0.47443485, -22.685108)
 
 [node name="ZonaGravedad" parent="." unique_id=1456210868 instance=ExtResource("6_gravedad")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 300, 0, 260)
 
 [node name="HUD" parent="." unique_id=1826479227 instance=ExtResource("5_hud")]
 
 [node name="VehiculoExtractor" parent="." unique_id=1551088528 instance=ExtResource("4_vehiculo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.86, 0.3, 14)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 295.14, 0.05, 274)
 
 [node name="ProcesadorHelio" parent="." unique_id=544211651 node_paths=PackedStringArray("reactor") instance=ExtResource("8_procesador")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 192.95435, 0, -79.75178)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 492.954, 0, 180.248)
 reactor = NodePath("../SueloLunar/reactor")
 
 [node name="ColisionReactor" type="StaticBody3D" parent="ProcesadorHelio" unique_id=262790136]
@@ -204,7 +146,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
 shape = SubResource("BoxShape3D_reactor")
 
 [node name="CargaNave" parent="." unique_id=851925788 instance=ExtResource("9_carga")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 26)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 278, 0, 286)
 
 [node name="ColisionCohete" type="StaticBody3D" parent="CargaNave" unique_id=1085348243]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 5.5, 0)
@@ -219,7 +161,7 @@ script = ExtResource("11_viaje")
 [node name="Cohete" parent="ViajeEspacial" unique_id=2102154127 instance=ExtResource("10_cohete_lujo")]
 
 [node name="Asiento" type="Node3D" parent="ViajeEspacial" unique_id=956387373]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.05, 2.85, -0.5)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.05, 2.85, 0)
 
 [node name="Camara" type="Camera3D" parent="ViajeEspacial/Asiento" unique_id=194071873]
 near = 0.03
@@ -254,12 +196,13 @@ script = ExtResource("18_cabina")
 [node name="Equipamiento" type="Node3D" parent="ViajeEspacial" unique_id=1704926250]
 script = ExtResource("20_equipo")
 
-[node name="Mision" type="Node" parent="." unique_id=1314332222 node_paths=PackedStringArray("viaje", "jugador", "carga_nave", "hud")]
+[node name="Mision" type="Node" parent="." unique_id=1314332222 node_paths=PackedStringArray("viaje", "jugador", "carga_nave", "hud", "superficie")]
 script = ExtResource("12_mision")
 viaje = NodePath("../ViajeEspacial")
 jugador = NodePath("../player")
 carga_nave = NodePath("../CargaNave")
 hud = NodePath("../HUD")
+superficie = NodePath("../SuperficieLunar")
 
 [node name="Casco" type="CanvasLayer" parent="." unique_id=508391925 node_paths=PackedStringArray("camaras_del_casco")]
 script = ExtResource("19_casco")
