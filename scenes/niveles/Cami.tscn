@@ -65,8 +65,10 @@ size = Vector3(7, 29, 6.5)
 [node name="Cami5" type="Node3D" unique_id=230549995]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=649537266]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+transform = Transform3D(-0.5150378, -0.8218692, 0.24344866, 4.9658812e-08, -0.2840153, -0.95881975, 0.8571675, -0.49382836, 0.14627863, 0, 0, 0)
 shadow_enabled = true
+shadow_bias = 0.0
+shadow_normal_bias = 0.0
 
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." unique_id=853898183]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 39.03147, 19.788189, 0)
@@ -78,7 +80,7 @@ transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 15, 337.777, 7.78736, 283.813)
 physics_material_override = SubResource("PhysicsMaterial_sv3wp")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Cubo" unique_id=578784675]
-transform = Transform3D(1, 0, 0, 0, 0.2, 0, 0, 0, 1, 9.684633, 113.79697, -3.9555116)
+transform = Transform3D(1, 0, 0, 0, 0.2, 0, 0, 0, 1, 10.292345, 2807.4492, -2.5026264)
 mesh = SubResource("CylinderMesh_vlh1y")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cubo/MeshInstance3D" unique_id=689939226]
@@ -105,7 +107,7 @@ environment = SubResource("Environment_luz")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 278, 0, 286)
 
 [node name="PlataformaLuna" parent="." unique_id=474585162 node_paths=PackedStringArray("nave", "carga_nave") instance=ExtResource("22_plataforma")]
-transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 278, 0.05, 286)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 278.04468, -0.030921172, 285.99283)
 script = ExtResource("23_nave_plataforma")
 nave = NodePath("../NaveLuna")
 carga_nave = NodePath("../CargaNave")
