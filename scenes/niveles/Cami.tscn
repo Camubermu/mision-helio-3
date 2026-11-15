@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b2agtfb62ll0k" path="res://player/player.tscn" id="1_d4e1e"]
 [ext_resource type="Texture2D" uid="uid://cgfkr4kir7kg6" path="res://icon.svg" id="1_g7emj"]
-[ext_resource type="PackedScene" uid="uid://cpnvwlmo0ixx7" path="res://scenes/objetos/ExtractorHelio3/vehiculo_extractor.tscn" id="4_vehiculo"]
+[ext_resource type="PackedScene" uid="uid://3ke0og1tcoxq" path="res://scenes/objetos/ExtractorHelio3/vehiculo_extractor.tscn" id="4_vehiculo"]
 [ext_resource type="PackedScene" uid="uid://bwvtgwartxt0g" path="res://demo/assets/models/RockB.tscn" id="5_ap0q0"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_hud"]
 [ext_resource type="PackedScene" uid="uid://be6nrf0b8j4l0" path="res://demo/assets/models/RockA.tscn" id="5_rk5m2"]
@@ -57,7 +57,7 @@ size = Vector3(13, 5, 3.4)
 [sub_resource type="BoxShape3D" id="BoxShape3D_cohete"]
 size = Vector3(7, 29, 6.5)
 
-[node name="Cami" type="Node3D" unique_id=230549995]
+[node name="Cami2" type="Node3D" unique_id=230549995]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=649537266]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
@@ -95,13 +95,7 @@ script = ExtResource("17_paso")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=703014759]
 environment = SubResource("Environment_luz")
 
-[node name="SuperficieLunar" parent="." instance=ExtResource("21_superficie")]
-
-[node name="WorldEnvironment" parent="SuperficieLunar" index="0"]
-environment = null
-
-[node name="extractorhelio3 (1)" parent="SuperficieLunar" index="2"]
-visible = false
+[node name="SuperficieLunar" parent="." unique_id=112450009 instance=ExtResource("21_superficie")]
 
 [node name="NaveLuna" parent="." unique_id=1525601573 instance=ExtResource("10_cohete_lujo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 278, 0, 286)
@@ -136,7 +130,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 300, 0, 260)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 295.14, 0.05, 274)
 
 [node name="ProcesadorHelio" parent="." unique_id=544211651 node_paths=PackedStringArray("reactor") instance=ExtResource("8_procesador")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 492.954, 0, 180.248)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 354.17, 0, 237.36)
 reactor = NodePath("../SueloLunar/reactor")
 
 [node name="ColisionReactor" type="StaticBody3D" parent="ProcesadorHelio" unique_id=262790136]
