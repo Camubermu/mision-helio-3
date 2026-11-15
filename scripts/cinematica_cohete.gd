@@ -90,7 +90,8 @@ func despegar_de_la_tierra() -> void:
 		_barra_1.value = 100.0 if encendido else 0.0
 		_barra_2.value = altitud * 100.0
 		_seguir_cohete(0.07 if encendido and _cohete.position.y < 40.0 else 0.02 if falla else 0.0)
-		await get_tree().process_frame
+		if not await _siguiente_cuadro():
+			return
 	if not _saltar:
 		Juego.mostrar_mensaje("¡El motor químico falló al salir de la atmósfera!")
 	_terminar()
@@ -101,6 +102,8 @@ func alunizar() -> void:
 	_preparar(true)
 	_titulo.text = "MOTOR DE HELIO-3 · ALUNIZAJE"
 	await _bajar(Vector3(34, 6, 30), 10.0, 4.0)
+	if not is_inside_tree():
+		return
 	if not _saltar:
 		Juego.mostrar_mensaje("Alunizaje logrado con lo último del helio-3")
 	_terminar()
@@ -146,7 +149,8 @@ func despegar_de_la_luna() -> void:
 			_estado.text = "¡GRAVEDAD LUNAR VENCIDA! El motor de helio-3 funciona"
 			_estado.modulate = Color(0.4, 1, 0.5)
 		_seguir_cohete(0.09 if empuje > 95.0 and escape < 1.0 else 0.03 if t > 1.0 else 0.0)
-		await get_tree().process_frame
+		if not await _siguiente_cuadro():
+			return
 	_terminar()
 
 
@@ -155,6 +159,8 @@ func aterrizar_en_la_tierra() -> void:
 	_preparar(false)
 	_titulo.text = "MOTOR DE HELIO-3 · ATERRIZAJE EN LA BASE"
 	await _bajar(Vector3(-42, 4, 9), 60.0, 30.0)
+	if not is_inside_tree():
+		return
 	if not _saltar:
 		Juego.mostrar_mensaje("¡Aterrizaje en la base! Misión cumplida: el motor de helio-3 funcionó")
 	_terminar()
@@ -181,9 +187,19 @@ func _bajar(lugar_camara: Vector3, helio_inicio: float, helio_fin: float) -> voi
 		_estado.text = "Frenando..." if en_el_aire else "Contacto con el suelo. Motor apagado"
 		_estado.modulate = Color(1, 0.85, 0.3) if en_el_aire else Color(0.4, 1, 0.5)
 		_seguir_cohete(0.04 if en_el_aire and _cohete.position.y < 20.0 else 0.0)
-		await get_tree().process_frame
+		if not await _siguiente_cuadro():
+			return
 	_cohete.position = Vector3.ZERO
 	_llama(_plasma, false)
+
+
+## Espera al siguiente cuadro. Devuelve false si la escena se cerró
+## (por ejemplo, al reiniciar con R): así la animación se detiene sin errores.
+func _siguiente_cuadro() -> bool:
+	if not is_inside_tree():
+		return false
+	await get_tree().process_frame
+	return is_inside_tree()
 
 
 func _paso() -> float:

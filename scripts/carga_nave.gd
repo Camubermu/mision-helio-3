@@ -70,7 +70,7 @@ func _al_entrar(cuerpo: Node3D) -> void:
 		nave_cargada.emit()
 		_avisar_que_puede_subir()
 		if not siguiente_nivel.is_empty():
-			await get_tree().create_timer(3.0).timeout
+			await _esperar(3.0)
 			Juego.cambiar_nivel(siguiente_nivel)
 	else:
 		Juego.mostrar_mensaje("Nave: %d/%d cápsulas de helio-3" % [cargado, helio3_necesario])
@@ -87,5 +87,12 @@ func _subir_capsulas(cuerpo: Node3D, cantidad: int) -> void:
 		var animacion := capsula.create_tween()
 		animacion.tween_property(capsula, "global_position", _entrada.global_position, 1.0)
 		animacion.tween_callback(capsula.queue_free)
-		await get_tree().create_timer(0.35).timeout
-	await get_tree().create_timer(1.0).timeout
+		await _esperar(0.35)
+	await _esperar(1.0)
+
+
+## Espera unos segundos. Si la escena se reinicia (tecla R), la espera se cancela sola.
+func _esperar(segundos: float) -> Signal:
+	var espera := create_tween()
+	espera.tween_interval(segundos)
+	return espera.finished

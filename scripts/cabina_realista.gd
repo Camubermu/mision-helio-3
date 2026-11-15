@@ -114,8 +114,9 @@ func _decir(texto: String) -> void:
 	_radio.text = "CONTROL DE MISIÓN (radio):  " + texto
 	_panel_radio.visible = true
 	_pitar(2525.0, 0.25)
-	var espera := get_tree().create_timer(6.0)
-	espera.timeout.connect(func():
+	var espera := create_tween()
+	espera.tween_interval(6.0)
+	espera.tween_callback(func():
 		if _radio.text.ends_with(texto):
 			_panel_radio.visible = false
 			_pitar(2475.0, 0.25))

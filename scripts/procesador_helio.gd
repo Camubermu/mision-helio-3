@@ -102,7 +102,7 @@ func _procesar(cuerpo: Node3D) -> void:
 
 	for i in lotes:
 		Juego.mostrar_mensaje("Procesando regolito... %d/%d" % [i + 1, lotes])
-		await get_tree().create_timer(segundos_por_helio).timeout
+		await _esperar(segundos_por_helio)
 		_sacar_capsula()
 
 	Juego.mostrar_mensaje("¡Listo! Salieron %d cápsulas de helio-3. Recógelas" % lotes)
@@ -119,8 +119,8 @@ func _descargar(cuerpo: Node3D, cantidad: int) -> void:
 		var animacion := trozo.create_tween()
 		animacion.tween_property(trozo, "global_position", _entrada.global_position, 0.8)
 		animacion.tween_callback(trozo.queue_free)
-		await get_tree().create_timer(0.12).timeout
-	await get_tree().create_timer(0.8).timeout
+		await _esperar(0.12)
+	await _esperar(0.8)
 
 
 ## Una cápsula sale del reactor y cae en fila junto a él.
@@ -172,3 +172,10 @@ func _brilla(nombre: String) -> bool:
 		if nombre.begins_with(inicio):
 			return true
 	return false
+
+
+## Espera unos segundos. Si la escena se reinicia (tecla R), la espera se cancela sola.
+func _esperar(segundos: float) -> Signal:
+	var espera := create_tween()
+	espera.tween_interval(segundos)
+	return espera.finished
