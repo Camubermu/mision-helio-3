@@ -26,7 +26,7 @@
 [ext_resource type="Script" uid="uid://cfi2sahj53117" path="res://scripts/nave_en_plataforma.gd" id="23_nave_plataforma"]
 [ext_resource type="PackedScene" path="res://scenes/personajes/astronauta_animado.tscn" id="24_astronauta"]
 [ext_resource type="Script" uid="uid://u6ejf4oe2xnx" path="res://scripts/planta_helio.gd" id="25_planta"]
-[ext_resource type="PackedScene" path="res://scenes/objetos/EstacionLunar/estacion_lunar.tscn" id="26_estacion"]
+[ext_resource type="PackedScene" uid="uid://c4xn3bfnglhx8" path="res://scenes/objetos/EstacionLunar/estacion_lunar.tscn" id="26_estacion"]
 [ext_resource type="Script" uid="uid://c38d3oqyyltp" path="res://scripts/estacion_planta.gd" id="27_estacion_planta"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sv3wp"]
@@ -62,7 +62,7 @@ size = Vector3(13, 5, 3.4)
 [sub_resource type="BoxShape3D" id="BoxShape3D_cohete"]
 size = Vector3(7, 29, 6.5)
 
-[node name="Cami4" type="Node3D" unique_id=230549995]
+[node name="Cami5" type="Node3D" unique_id=230549995]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=649537266]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
@@ -150,12 +150,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
 [node name="Forma" type="CollisionShape3D" parent="ProcesadorHelio/ColisionReactor" unique_id=218096300]
 shape = SubResource("BoxShape3D_reactor")
 
-
-[node name="PlantaHelio" type="Node" parent="." node_paths=PackedStringArray("reactor")]
+[node name="PlantaHelio" type="Node" parent="." unique_id=119802370 node_paths=PackedStringArray("reactor")]
 script = ExtResource("25_planta")
 reactor = NodePath("../ProcesadorHelio")
 
-[node name="EstacionLunar" parent="." node_paths=PackedStringArray("planta", "reactor") instance=ExtResource("26_estacion")]
+[node name="EstacionLunar" parent="." unique_id=904553470 node_paths=PackedStringArray("planta", "reactor") instance=ExtResource("26_estacion")]
 transform = Transform3D(2.2, 0, 0, 0, 2.2, 0, 0, 0, 2.2, 354, 0, 200)
 script = ExtResource("27_estacion_planta")
 planta = NodePath("../PlantaHelio")
