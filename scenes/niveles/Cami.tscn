@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b2agtfb62ll0k" path="res://player/player.tscn" id="1_d4e1e"]
 [ext_resource type="Texture2D" uid="uid://cgfkr4kir7kg6" path="res://icon.svg" id="1_g7emj"]
-[ext_resource type="PackedScene" uid="uid://cpnvwlmo0ixx7" path="res://scenes/objetos/ExtractorHelio3/vehiculo_extractor.tscn" id="4_vehiculo"]
+[ext_resource type="PackedScene" uid="uid://3ke0og1tcoxq" path="res://scenes/objetos/ExtractorHelio3/vehiculo_extractor.tscn" id="4_vehiculo"]
 [ext_resource type="PackedScene" uid="uid://bwvtgwartxt0g" path="res://demo/assets/models/RockB.tscn" id="5_ap0q0"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_hud"]
 [ext_resource type="PackedScene" uid="uid://be6nrf0b8j4l0" path="res://demo/assets/models/RockA.tscn" id="5_rk5m2"]
@@ -102,7 +102,7 @@ environment = SubResource("Environment_luz")
 [node name="NaveLuna" parent="." unique_id=1525601573 instance=ExtResource("10_cohete_lujo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 278, 0, 286)
 
-[node name="PlataformaLuna" parent="." node_paths=PackedStringArray("nave", "carga_nave") instance=ExtResource("22_plataforma")]
+[node name="PlataformaLuna" parent="." unique_id=474585162 node_paths=PackedStringArray("nave", "carga_nave") instance=ExtResource("22_plataforma")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 278, 0, 286)
 script = ExtResource("23_nave_plataforma")
 nave = NodePath("../NaveLuna")
