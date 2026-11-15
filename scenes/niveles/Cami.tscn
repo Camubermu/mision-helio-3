@@ -12,16 +12,16 @@
 [ext_resource type="PackedScene" path="res://scenes/objetos/procesador_helio.tscn" id="8_procesador"]
 [ext_resource type="PackedScene" path="res://scenes/objetos/carga_nave.tscn" id="9_carga"]
 [ext_resource type="PackedScene" uid="uid://cevnqteiqvdxt" path="res://models/cohete_final/cohete_kodland_lujo_godot.tscn" id="10_cohete_lujo"]
-[ext_resource type="Script" path="res://scripts/viaje_espacial.gd" id="11_viaje"]
-[ext_resource type="Script" path="res://scripts/mision_cami.gd" id="12_mision"]
-[ext_resource type="Script" path="res://scripts/cinematica_cohete.gd" id="13_cinematica"]
+[ext_resource type="Script" uid="uid://do1rr2q6hiejk" path="res://scripts/viaje_espacial.gd" id="11_viaje"]
+[ext_resource type="Script" uid="uid://bcnyyw0xox3k1" path="res://scripts/mision_cami.gd" id="12_mision"]
+[ext_resource type="Script" uid="uid://cv24k8dtigjru" path="res://scripts/cinematica_cohete.gd" id="13_cinematica"]
 [ext_resource type="PackedScene" uid="uid://dfe5apeh28ijj" path="res://scenes/niveles/level1.tscn" id="14_level1"]
-[ext_resource type="Script" path="res://scripts/brazos_astronauta.gd" id="15_brazos"]
-[ext_resource type="Script" path="res://scripts/piernas_astronauta.gd" id="16_piernas"]
-[ext_resource type="Script" path="res://scripts/paso_lunar.gd" id="17_paso"]
-[ext_resource type="Script" path="res://scripts/cabina_realista.gd" id="18_cabina"]
-[ext_resource type="Script" path="res://scripts/casco_astronauta.gd" id="19_casco"]
-[ext_resource type="Script" path="res://scripts/equipamiento_cabina.gd" id="20_equipo"]
+[ext_resource type="Script" uid="uid://ci1sk25l6hxn5" path="res://scripts/brazos_astronauta.gd" id="15_brazos"]
+[ext_resource type="Script" uid="uid://cujruaulwmae4" path="res://scripts/piernas_astronauta.gd" id="16_piernas"]
+[ext_resource type="Script" uid="uid://da2otosaxmvfg" path="res://scripts/paso_lunar.gd" id="17_paso"]
+[ext_resource type="Script" uid="uid://bvejuomk4mqe1" path="res://scripts/cabina_realista.gd" id="18_cabina"]
+[ext_resource type="Script" uid="uid://dox7c3act1vcl" path="res://scripts/casco_astronauta.gd" id="19_casco"]
+[ext_resource type="Script" uid="uid://bikhkadk8jyrj" path="res://scripts/equipamiento_cabina.gd" id="20_equipo"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sv3wp"]
 
@@ -52,7 +52,6 @@ size = Vector3(200, 1, 200)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_suelo"]
 albedo_color = Color(0.3, 0.29, 0.28, 1)
-roughness = 1.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_suelo"]
 material = SubResource("StandardMaterial3D_suelo")
@@ -95,14 +94,18 @@ debug_color = Color(0.80369407, 0.36144796, 0.5536212, 0.41960785)
 [node name="player" parent="." unique_id=332937270 instance=ExtResource("1_d4e1e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.863841, 1.0725822, 24.32894)
 
+[node name="Piernas" type="Node3D" parent="player" unique_id=952622483]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+script = ExtResource("16_piernas")
+
+[node name="PasoLunar" type="Node" parent="player" unique_id=717132310]
+script = ExtResource("17_paso")
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=703014759]
 environment = SubResource("Environment_luz")
 
-[node name="NaveLuna" parent="." instance=ExtResource("10_cohete_lujo")]
+[node name="NaveLuna" parent="." unique_id=864872808 instance=ExtResource("10_cohete_lujo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 26)
-
-[node name="Plasma" parent="NaveLuna/Cohete_Kodland/Exterior" index="0"]
-visible = false
 
 [node name="SueloLunar" type="StaticBody3D" parent="." unique_id=1172744402]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -114,11 +117,55 @@ shape = SubResource("BoxShape3D_suelo")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021734238, -0.046959877, 0.019807816)
 mesh = SubResource("BoxMesh_suelo")
 
+[node name="Malla" type="MeshInstance3D" parent="SueloLunar/Malla" unique_id=634078277]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021734238, -0.046959877, 197.68094)
+mesh = SubResource("BoxMesh_suelo")
+
+[node name="Malla2" type="MeshInstance3D" parent="SueloLunar/Malla" unique_id=1613546861]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 199.27412, -0.046959877, 0.019807816)
+mesh = SubResource("BoxMesh_suelo")
+
+[node name="Malla" type="MeshInstance3D" parent="SueloLunar/Malla/Malla2" unique_id=1744058804]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021734238, -0.046959877, 197.68094)
+mesh = SubResource("BoxMesh_suelo")
+
+[node name="Malla2" type="MeshInstance3D" parent="SueloLunar/Malla/Malla2" unique_id=735364675]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -397.82346, -0.046959877, 0.019807816)
+mesh = SubResource("BoxMesh_suelo")
+
+[node name="Malla" type="MeshInstance3D" parent="SueloLunar/Malla/Malla2/Malla2" unique_id=95679785]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021734238, -0.046959877, 197.68094)
+mesh = SubResource("BoxMesh_suelo")
+
+[node name="Malla3" type="MeshInstance3D" parent="SueloLunar/Malla" unique_id=1062965569]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021734238, -0.046959877, -393.27185)
+mesh = SubResource("BoxMesh_suelo")
+
+[node name="Malla" type="MeshInstance3D" parent="SueloLunar/Malla/Malla3" unique_id=1825660461]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021734238, -0.046959877, 197.68094)
+mesh = SubResource("BoxMesh_suelo")
+
+[node name="Malla2" type="MeshInstance3D" parent="SueloLunar/Malla/Malla3" unique_id=1985860483]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 199.27412, -0.046959877, 0.019807816)
+mesh = SubResource("BoxMesh_suelo")
+
+[node name="Malla" type="MeshInstance3D" parent="SueloLunar/Malla/Malla3/Malla2" unique_id=174201815]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021734238, -0.046959877, 197.68094)
+mesh = SubResource("BoxMesh_suelo")
+
+[node name="Malla2" type="MeshInstance3D" parent="SueloLunar/Malla/Malla3/Malla2" unique_id=957647518]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -397.82346, -0.046959877, 0.019807816)
+mesh = SubResource("BoxMesh_suelo")
+
+[node name="Malla" type="MeshInstance3D" parent="SueloLunar/Malla/Malla3/Malla2/Malla2" unique_id=948687139]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021734238, -0.046959877, 197.68094)
+mesh = SubResource("BoxMesh_suelo")
+
 [node name="RockA" parent="SueloLunar" unique_id=1821114397 groups=["roca_minable"] instance=ExtResource("5_rk5m2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 136.46106, 0.5, 132.69165)
 
 [node name="RockB" parent="SueloLunar" unique_id=626870087 groups=["roca_minable"] instance=ExtResource("5_ap0q0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.907898, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -256.18896, 0, -98.14244)
 
 [node name="RockC" parent="SueloLunar" unique_id=651222134 groups=["roca_minable"] instance=ExtResource("6_ivofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20.17008)
@@ -127,10 +174,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20.17008)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22, 0, 0)
 
 [node name="Forma" type="CollisionShape3D" parent="SueloLunar/RockC/ColisionRocaC" unique_id=864789670]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -286.27704)
 shape = SubResource("BoxShape3D_rocac")
 
 [node name="reactor" parent="SueloLunar" unique_id=2109122115 instance=ExtResource("7_ivofh")]
-transform = Transform3D(1.4590119, 0, 0, 0, 1.2433399, 0, 0, 0, 0.8654342, 22.980175, 0.42402053, 0.041675568)
+transform = Transform3D(1.4590119, 0, 0, 0, 1.2433399, 0, 0, 0, 0.8654342, 193.03453, 0.42402053, -79.7101)
 
 [node name="ZonaGravedad" parent="." unique_id=1456210868 instance=ExtResource("6_gravedad")]
 
@@ -140,7 +188,7 @@ transform = Transform3D(1.4590119, 0, 0, 0, 1.2433399, 0, 0, 0, 0.8654342, 22.98
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.86, 0.3, 14)
 
 [node name="ProcesadorHelio" parent="." unique_id=544211651 node_paths=PackedStringArray("reactor") instance=ExtResource("8_procesador")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.9, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 192.95435, 0, -79.75178)
 reactor = NodePath("../SueloLunar/reactor")
 
 [node name="ColisionReactor" type="StaticBody3D" parent="ProcesadorHelio" unique_id=262790136]
@@ -158,66 +206,55 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 5.5, 0)
 [node name="Forma" type="CollisionShape3D" parent="CargaNave/ColisionCohete" unique_id=1799662793]
 shape = SubResource("BoxShape3D_cohete")
 
-[node name="ViajeEspacial" type="Node3D" parent="."]
+[node name="ViajeEspacial" type="Node3D" parent="." unique_id=1493006363]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3000, 0, 0)
 script = ExtResource("11_viaje")
 
-[node name="Cohete" parent="ViajeEspacial" instance=ExtResource("10_cohete_lujo")]
+[node name="Cohete" parent="ViajeEspacial" unique_id=1445546036 instance=ExtResource("10_cohete_lujo")]
 
-[node name="Asiento" type="Node3D" parent="ViajeEspacial"]
+[node name="Asiento" type="Node3D" parent="ViajeEspacial" unique_id=599872345]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.05, 2.85, -0.5)
 
-[node name="Camara" type="Camera3D" parent="ViajeEspacial/Asiento"]
+[node name="Camara" type="Camera3D" parent="ViajeEspacial/Asiento" unique_id=1598275583]
 near = 0.03
-fov = 75.0
 
-[node name="LuzCabina" type="OmniLight3D" parent="ViajeEspacial"]
+[node name="Brazos" type="Node3D" parent="ViajeEspacial/Asiento/Camara" unique_id=829278604]
+script = ExtResource("15_brazos")
+alcanzar_con_e = false
+
+[node name="LuzCabina" type="OmniLight3D" parent="ViajeEspacial" unique_id=466260358]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.6, 0)
 light_color = Color(1, 0.95, 0.88, 1)
 light_energy = 1.3
 omni_range = 6.0
 
-[node name="LuzAlarma" type="OmniLight3D" parent="ViajeEspacial"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 4.0, 0)
+[node name="LuzAlarma" type="OmniLight3D" parent="ViajeEspacial" unique_id=1230293042]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 4, 0)
 light_color = Color(1, 0.1, 0.08, 1)
 light_energy = 0.0
 omni_range = 6.0
 
-[node name="Cinematica" type="Node3D" parent="ViajeEspacial" node_paths=PackedStringArray("base_tierra")]
+[node name="Cinematica" type="Node3D" parent="ViajeEspacial" unique_id=411156577 node_paths=PackedStringArray("base_tierra")]
 script = ExtResource("13_cinematica")
 base_tierra = NodePath("BaseTierra")
 
-[node name="BaseTierra" parent="ViajeEspacial/Cinematica" instance=ExtResource("14_level1")]
+[node name="BaseTierra" parent="ViajeEspacial/Cinematica" unique_id=906495603 instance=ExtResource("14_level1")]
 process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0.17, 12)
 
-[node name="Mision" type="Node" parent="." node_paths=PackedStringArray("viaje", "jugador", "carga_nave", "hud")]
+[node name="CabinaRealista" type="Node3D" parent="ViajeEspacial" unique_id=1453518775]
+script = ExtResource("18_cabina")
+
+[node name="Equipamiento" type="Node3D" parent="ViajeEspacial" unique_id=356044839]
+script = ExtResource("20_equipo")
+
+[node name="Mision" type="Node" parent="." unique_id=1416342699 node_paths=PackedStringArray("viaje", "jugador", "carga_nave", "hud")]
 script = ExtResource("12_mision")
 viaje = NodePath("../ViajeEspacial")
 jugador = NodePath("../player")
 carga_nave = NodePath("../CargaNave")
 hud = NodePath("../HUD")
 
-[node name="Brazos" type="Node3D" parent="player/head/Camera3D"]
-script = ExtResource("15_brazos")
-
-[node name="Piernas" type="Node3D" parent="player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-script = ExtResource("16_piernas")
-
-[node name="PasoLunar" type="Node" parent="player"]
-script = ExtResource("17_paso")
-
-[node name="CabinaRealista" type="Node3D" parent="ViajeEspacial"]
-script = ExtResource("18_cabina")
-
-[node name="Brazos" type="Node3D" parent="ViajeEspacial/Asiento/Camara"]
-script = ExtResource("15_brazos")
-alcanzar_con_e = false
-
-[node name="Casco" type="CanvasLayer" parent="." node_paths=PackedStringArray("camaras_del_casco")]
+[node name="Casco" type="CanvasLayer" parent="." unique_id=671177203 node_paths=PackedStringArray("camaras_del_casco")]
 script = ExtResource("19_casco")
 camaras_del_casco = [NodePath("../player/head/Camera3D"), NodePath("../ViajeEspacial/Asiento/Camara")]
-
-[node name="Equipamiento" type="Node3D" parent="ViajeEspacial"]
-script = ExtResource("20_equipo")
