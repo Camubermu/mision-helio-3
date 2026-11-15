@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://isb8whkagjc7"]
+
+[ext_resource type="PackedScene" uid="uid://c5jf52hfcoohc" path="res://scenes/objetos/RocasSinHelio3/rocasSinHelio3.glb" id="1_fq7wv"]
+
+[node name="rocasSinHelio3" unique_id=1643739986 instance=ExtResource("1_fq7wv")]
