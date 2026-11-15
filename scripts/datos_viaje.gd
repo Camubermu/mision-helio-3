@@ -46,12 +46,12 @@ static func distancia(avance: float) -> int:
 ## "Día 2, 07:30" según cuánto lleva del viaje de 3 días.
 static func reloj(avance: float) -> String:
 	var minutos := int(avance * HORAS_DE_VIAJE * 60.0)
-	return "Día %d, %02d:%02d" % [minutos / 1440 + 1, (minutos / 60) % 24, minutos % 60]
+	return "Día %d, %02d:%02d" % [floori(minutos / 1440.0) + 1, floori(minutos / 60.0) % 24, minutos % 60]
 
 
 static func falta(avance: float) -> String:
 	var minutos := int((1.0 - avance) * HORAS_DE_VIAJE * 60.0)
-	return "%d h %02d min" % [minutos / 60, minutos % 60]
+	return "%d h %02d min" % [floori(minutos / 60.0), minutos % 60]
 
 
 ## Afuera hace mucho calor al sol y mucho frío a la sombra (la nave gira despacio).
