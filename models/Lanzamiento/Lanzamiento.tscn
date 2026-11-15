@@ -1,3 +1,13 @@
 [gd_scene format=3 uid="uid://byx8q3sdwf7t"]
 
+[ext_resource type="PackedScene" uid="uid://bc437dnj58jvk" path="res://models/Lanzamiento/plataforma_kodland.glb" id="1_7cjoy"]
+[ext_resource type="PackedScene" path="res://models/Lanzamiento/escena_lanzamiento.tscn" id="2_e0muj"]
+
 [node name="Lanzamiento" type="Node3D" unique_id=962629481]
+
+[node name="plataforma_kodland" parent="." unique_id=445348169 instance=ExtResource("1_7cjoy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.246935, 0, -20.983522)
+
+[node name="Lanzamiento" parent="." unique_id=1873028628 instance=ExtResource("2_e0muj")]
+transform = Transform3D(0.99550265, 0, 0.09473343, 0, 1, 0, -0.09473343, 0, 0.99550265, -9.199661, 14.97031, -20.413765)
+script = null
