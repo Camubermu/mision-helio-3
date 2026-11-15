@@ -16,6 +16,11 @@
 [ext_resource type="Script" path="res://scripts/mision_cami.gd" id="12_mision"]
 [ext_resource type="Script" path="res://scripts/cinematica_cohete.gd" id="13_cinematica"]
 [ext_resource type="PackedScene" uid="uid://dfe5apeh28ijj" path="res://scenes/niveles/level1.tscn" id="14_level1"]
+[ext_resource type="Script" path="res://scripts/brazos_astronauta.gd" id="15_brazos"]
+[ext_resource type="Script" path="res://scripts/piernas_astronauta.gd" id="16_piernas"]
+[ext_resource type="Script" path="res://scripts/paso_lunar.gd" id="17_paso"]
+[ext_resource type="Script" path="res://scripts/cabina_realista.gd" id="18_cabina"]
+[ext_resource type="Script" path="res://scripts/casco_astronauta.gd" id="19_casco"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sv3wp"]
 
@@ -189,3 +194,24 @@ viaje = NodePath("../ViajeEspacial")
 jugador = NodePath("../player")
 carga_nave = NodePath("../CargaNave")
 hud = NodePath("../HUD")
+
+[node name="Brazos" type="Node3D" parent="player/head/Camera3D"]
+script = ExtResource("15_brazos")
+
+[node name="Piernas" type="Node3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+script = ExtResource("16_piernas")
+
+[node name="PasoLunar" type="Node" parent="player"]
+script = ExtResource("17_paso")
+
+[node name="CabinaRealista" type="Node3D" parent="ViajeEspacial"]
+script = ExtResource("18_cabina")
+
+[node name="Brazos" type="Node3D" parent="ViajeEspacial/Asiento/Camara"]
+script = ExtResource("15_brazos")
+alcanzar_con_e = false
+
+[node name="Casco" type="CanvasLayer" parent="." node_paths=PackedStringArray("camaras_del_casco")]
+script = ExtResource("19_casco")
+camaras_del_casco = [NodePath("../player/head/Camera3D"), NodePath("../ViajeEspacial/Asiento/Camara")]

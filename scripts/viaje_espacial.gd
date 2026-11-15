@@ -56,6 +56,8 @@ var _mirar := Vector2.ZERO
 @onready var _alarma: OmniLight3D = $LuzAlarma
 @onready var _cohete: Node3D = $Cohete
 @onready var _cinematica: Node = $Cinematica
+@onready var _cabina: Node = get_node_or_null("CabinaRealista")
+@onready var _brazos: Node = get_node_or_null("Asiento/Camara/Brazos")
 
 
 func _ready() -> void:
@@ -111,7 +113,14 @@ func _empezar_cabina() -> void:
 		_monitor.cambiar(MonitorCabina.Pagina.MOTORES)
 		_alarma_hasta = 0.0
 		Juego.mostrar_mensaje("¡El motor de helio-3 funcionó! Rumbo a casa. Teclas 1-4: revisa el monitor")
+	if _cabina:
+		_cabina.empezar(destino == Destino.LUNA, momento_cambio_plan)
 	set_process(true)
+
+
+## Verdadero mientras suena la alarma de la cabina.
+func alarma_activa() -> bool:
+	return viajando and _tiempo < _alarma_hasta
 
 
 func _process(delta: float) -> void:
@@ -142,8 +151,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		_aplicar_mirada()
 	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		_monitor.siguiente()
+		_tocar_monitor()
 	elif event is InputEventKey and event.pressed and not event.echo and event.physical_keycode >= KEY_1 and event.physical_keycode <= KEY_4:
 		_monitor.cambiar((event.physical_keycode - KEY_1) as MonitorCabina.Pagina)
+		_tocar_monitor()
 	elif event.is_action_pressed("propulsor"):
 		get_viewport().set_input_as_handled()
 		_terminar()
@@ -162,6 +173,13 @@ func _mirar_a_la_pantalla() -> void:
 func _aplicar_mirada() -> void:
 	_asiento.rotation = Vector3(0, _giro_base.y + deg_to_rad(_mirar.x), 0)
 	_camara.rotation = Vector3(_giro_base.x + deg_to_rad(_mirar.y), 0, 0)
+
+
+## La mano del astronauta se estira y toca el monitor.
+func _tocar_monitor() -> void:
+	var pieza := _cohete.find_child(nombre_monitor, true, false) as MeshInstance3D
+	if _brazos and pieza:
+		_brazos.alcanzar(pieza.global_transform * pieza.get_aabb().get_center())
 
 
 func _cambiar_plan() -> void:
@@ -193,6 +211,8 @@ func _terminar() -> void:
 	_camara.v_offset = 0.0
 	_vista.render_target_update_mode = SubViewport.UPDATE_DISABLED
 	_monitor.render_target_update_mode = SubViewport.UPDATE_DISABLED
+	if _cabina:
+		_cabina.terminar()
 	_fin_cabina.emit()
 
 
