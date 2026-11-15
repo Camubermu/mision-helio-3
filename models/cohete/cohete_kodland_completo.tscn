@@ -2,13 +2,254 @@
 
 [ext_resource type="PackedScene" uid="uid://hc0l2ga8tqdu" path="res://scenes/niveles/cohete_kodland_completo.glb" id="1_gynft"]
 
+[sub_resource type="Animation" id="Animation_gynft"]
+resource_name = "Puerta"
+length = 6.0
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cohete_Kodland/Exterior/Rampa")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = PackedFloat32Array()
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8c6es"]
+_data = {
+&"Puerta": SubResource("Animation_gynft")
+}
+
 [node name="cohete_kodland_completo" unique_id=425480311 instance=ExtResource("1_gynft")]
 
-[node name="Aleta_1" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(2116902731) index="21" unique_id=1409702180]
-transform = Transform3D(0.83895385, 0, 0.5442025, 0, 1, 0, -0.5442025, 0, 0.83895385, 0, 0, 0)
+[node name="Casco_Ext_0_0_0" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="0" unique_id=1420894301]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
 
-[node name="Aleta_2" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(2116902731) index="22" unique_id=1195292054]
-transform = Transform3D(0.83895385, 0, 0.5442025, 0, 1, 0, -0.5442025, 0, 0.83895385, 0, 0, 0)
+[node name="Casco_Ext_0_5_0" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="1" unique_id=10816842]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
 
-[node name="Aleta_3" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(2116902731) index="23" unique_id=574468629]
-transform = Transform3D(0.83895385, 0, 0.5442025, 0, 1, 0, -0.5442025, 0, 0.83895385, 0, 0, 0)
+[node name="Casco_Ext_2_0_0" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="2" unique_id=179117762]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Casco_Ext_2_0_1" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="3" unique_id=658671536]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Casco_Ext_2_3_0" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="4" unique_id=1754008423]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Casco_Ext_3_2_0" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="5" unique_id=504488123]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Puerta_Umbral" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="6" unique_id=171781883]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Puerta_Dintel" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="7" unique_id=7616541]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Puerta_Borde" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="8" unique_id=799559876]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Puerta_Borde2" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="9" unique_id=1580326517]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Mirador_Umbral" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="10" unique_id=840962290]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Mirador_Dintel" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="11" unique_id=851649483]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Mirador_Borde" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="12" unique_id=1394151787]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Mirador_Borde2" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="13" unique_id=1939338778]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Mirador_Vidrio" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="14" unique_id=1562779430]
+transform = Transform3D(0.99969757, 9.953789e-06, -0.02459247, -1.0411898e-05, 1, -1.848002e-05, 0.02459247, 1.8730745e-05, 0.99969757, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Borde_Inferior" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="15" unique_id=1229613493]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Nariz_Ext" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="16" unique_id=631135978]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Banda_1" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="17" unique_id=129286488]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Banda_2" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="18" unique_id=378025378]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Banda_3" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="19" unique_id=248262157]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Logo_K_Kodland_Helio3" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="20" unique_id=998700921]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Aleta_1" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="21" unique_id=1845578938]
+transform = Transform3D(0.97410667, 3.4982204e-06, 0.22608873, 1.3217726e-06, 1, -2.1170068e-05, -0.22608873, 2.0920834e-05, 0.97410667, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Aleta_2" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="22" unique_id=853574511]
+transform = Transform3D(0.8389396, 1.0411898e-05, 0.54422444, 1.3217714e-06, 1, -2.1170064e-05, -0.54422444, 1.848002e-05, 0.8389396, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Aleta_3" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="23" unique_id=1747021351]
+transform = Transform3D(0.85933965, 9.6901385e-06, 0.5114053, 1.3217713e-06, 1, -2.1170066e-05, -0.5114053, 1.8868492e-05, 0.85933965, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Rampa" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="24" unique_id=390145039]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Motor" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="25" unique_id=1468222215]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Llama" parent="Cohete_Kodland/Exterior" parent_id_path=PackedInt32Array(839103055) index="26" unique_id=2062900554]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Casco_Int_0_0_0" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="0" unique_id=1367879653]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Casco_Int_0_5_0" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="1" unique_id=1105337199]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Casco_Int_2_0_0" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="2" unique_id=176623468]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Casco_Int_2_0_1" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="3" unique_id=1614940522]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Casco_Int_2_3_0" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="4" unique_id=1993500521]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Casco_Int_3_2_0" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="5" unique_id=1382257525]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Nariz_Int" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="6" unique_id=641514197]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Suelo_Superior" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="7" unique_id=1281999937]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Suelo_Inferior" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="8" unique_id=826557649]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Suelo_Canto" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="9" unique_id=1164159497]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Techo" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="10" unique_id=1107445997]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Lampara_Techo" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="11" unique_id=1755008056]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Suelo_Anillo" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="12" unique_id=1039859906]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Consola_Base" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="13" unique_id=1138533064]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Consola_Panel" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="14" unique_id=2065564162]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Boton_0_0" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="15" unique_id=132479987]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Boton_0_1" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="16" unique_id=1912243732]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Boton_0_2" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="17" unique_id=871920707]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Boton_0_3" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="18" unique_id=156189064]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Boton_0_4" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="19" unique_id=1149843692]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Boton_0_5" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="20" unique_id=888026584]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Boton_1_0" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="21" unique_id=2145708084]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Boton_1_1" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="22" unique_id=375407042]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Boton_1_2" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="23" unique_id=1412955105]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Boton_1_3" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="24" unique_id=103913213]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Boton_1_4" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="25" unique_id=1683975152]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Boton_1_5" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="26" unique_id=326216548]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Boton_2_0" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="27" unique_id=1716043951]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Boton_2_1" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="28" unique_id=1308750127]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Boton_2_2" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="29" unique_id=1813819913]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Boton_2_3" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="30" unique_id=763300179]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Boton_2_4" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="31" unique_id=937328511]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Boton_2_5" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="32" unique_id=329105105]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Pantalla_Consola" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="33" unique_id=1810237797]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Asiento_Pedestal_0" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="34" unique_id=1992382697]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Asiento_Base_0" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="35" unique_id=889629341]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Asiento_Respaldo_0" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="36" unique_id=1697489472]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Asiento_Cabecera_0" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="37" unique_id=816563245]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Asiento_Brazo_0_-1" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="38" unique_id=116568114]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Asiento_Brazo_0_1" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="39" unique_id=211726917]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Asiento_Pedestal_1" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="40" unique_id=1305571337]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Asiento_Base_1" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="41" unique_id=553952462]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Asiento_Respaldo_1" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="42" unique_id=994672824]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Asiento_Cabecera_1" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="43" unique_id=899528452]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Asiento_Brazo_1_-1" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="44" unique_id=1409217893]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Asiento_Brazo_1_1" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="45" unique_id=1073757603]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Pantalla_Pared_1" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="46" unique_id=68301078]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Pantalla_Pared_2" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="47" unique_id=17854055]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Repisa" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="48" unique_id=172750325]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="Repisa_Luz" parent="Cohete_Kodland/Interior" parent_id_path=PackedInt32Array(1805212739) index="49" unique_id=1202637215]
+transform = Transform3D(1, 1.0411898e-05, 2.6151118e-05, -1.0411898e-05, 1, -1.848002e-05, -2.6151118e-05, 1.848002e-05, 1, -6.8265723e-12, 0, -1.2116445e-11)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1" unique_id=885048282]
+libraries/ = SubResource("AnimationLibrary_8c6es")
