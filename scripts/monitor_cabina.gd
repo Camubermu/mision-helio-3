@@ -139,7 +139,7 @@ func _navegacion(hacia_la_luna: bool, avance: float) -> String:
 
 
 static func _barra(porcentaje: int) -> String:
-	var llenos := clampi(porcentaje / 10, 0, 10)
+	var llenos := clampi(floori(porcentaje / 10.0), 0, 10)
 	return "[" + "|".repeat(llenos) + ".".repeat(10 - llenos) + "]"
 
 
