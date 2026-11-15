@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://cw0ig2bgtufww"]
+
+[sub_resource type="SphereMesh" id="EarthSphere"]
+radius = 2.0
+height = 4.0
+radial_segments = 128
+rings = 64
+
+[sub_resource type="StandardMaterial3D" id="EarthMaterial"]
+
+[sub_resource type="SphereMesh" id="CloudSphere"]
+radius = 2.035
+height = 4.07
+radial_segments = 128
+rings = 64
+
+[sub_resource type="StandardMaterial3D" id="CloudMaterial"]
+transparency = 1
+cull_mode = 1
+depth_draw_mode = 1
+shading_mode = 0
+
+[node name="PlanetaTierra" type="Node3D" unique_id=287262188]
+
+[node name="Tierra" type="MeshInstance3D" parent="." unique_id=1297161556]
+mesh = SubResource("EarthSphere")
+surface_material_override/0 = SubResource("EarthMaterial")
+
+[node name="Nubes" type="MeshInstance3D" parent="." unique_id=1165666505]
+mesh = SubResource("CloudSphere")
+surface_material_override/0 = SubResource("CloudMaterial")
