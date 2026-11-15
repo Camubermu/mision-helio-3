@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://3ke0og1tcoxq"]
+[gd_scene format=3 uid="uid://cpnvwlmo0ixx7"]
 
 [ext_resource type="Script" path="res://scripts/vehiculo.gd" id="1_vehiculo"]
 [ext_resource type="PackedScene" uid="uid://by6o0oe208ght" path="res://scenes/objetos/ExtractorHelio3/extractor_helio3.glb" id="2_modelo"]

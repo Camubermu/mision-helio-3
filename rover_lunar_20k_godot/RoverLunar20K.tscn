@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://dupg3q8xhldt4"]
+
+[ext_resource type="PackedScene" uid="uid://dyrhmerf6qggl" path="res://rover_lunar_20k_godot/RoverLunar20K.glb" id="1_ueuvs"]
+
+[sub_resource type="BoxShape3D" id="3"]
+size = Vector3(3.1, 2.5, 4.2)
+
+[sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_mmk6c"]
+_shader_parameters = {
+&"bias_distance": null,
+&"blend_sharpness": null,
+&"depth_blur": null,
+&"distant_normal_scale": null,
+&"flat_terrain_normals": null,
+&"general_uniforms": null,
+&"ground_level": null,
+&"mipmap_bias": null,
+&"mipmaps": null,
+&"private": null,
+&"region_blend": null
+}
+show_checkered = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wp2to"]
+transparency = 4
+cull_mode = 2
+vertex_color_use_as_albedo = true
+backlight_enabled = true
+backlight = Color(0.5, 0.5, 0.5, 1)
+distance_fade_mode = 1
+distance_fade_min_distance = 128.0
+distance_fade_max_distance = 96.0
+metadata/terrain3d_generated_material = true
+
+[sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_mqorn"]
+generated_type = 1
+height_offset = 0.5
+density = 10.0
+material_override = SubResource("StandardMaterial3D_wp2to")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 128.0
+
+[sub_resource type="Terrain3DAssets" id="Terrain3DAssets_0hw5i"]
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_mqorn")])
+
+[node name="RoverLunar20K" type="CharacterBody3D" unique_id=2029381941]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2125461316]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("3")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1776699916]
+transform = Transform3D(1, 0, 0, 0, 0.9396926, 0.34202012, 0, -0.34202012, 0.9396926, 0, 5.5, 10)
+current = true
+
+[node name="RoverLunar20K" parent="." unique_id=1771958075 instance=ExtResource("1_ueuvs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 4)
+
+[node name="Terrain3D" type="Terrain3D" parent="." unique_id=1926404197]
+material = SubResource("Terrain3DMaterial_mmk6c")
+assets = SubResource("Terrain3DAssets_0hw5i")
+displacement_sharpness = 0.5
+show_checkered = true
+top_level = true
+metadata/_edit_lock_ = true
