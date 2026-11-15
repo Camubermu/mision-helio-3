@@ -28,6 +28,8 @@ var _viaje: Node
 var _asiento: Node3D
 var _base_asiento := Vector3.ZERO
 var _flotantes: Array[Dictionary] = []
+## Tamaño de la cabeza (casco) del astronauta para que los objetos reboten en ella.
+const RADIO_CABEZA := 0.25
 var _luces: Array[Dictionary] = []
 var _estrellas: MultiMeshInstance3D
 var _radio: Label
@@ -157,15 +159,24 @@ func _crear_radio() -> void:
 func _crear_flotantes() -> void:
 	var azar := RandomNumberGenerator.new()
 	azar.seed = 3
-	var objetos: Array[Node3D] = [_lapiz(), _lista(), _muneco()]
+	# Cada objeto con el radio de la "burbuja" con la que choca.
+	var objetos: Array = [[_lapiz(), 0.08], [_lista(), 0.13], [_muneco(), 0.11]]
 	for i in 4:
-		objetos.append(_gota())
-	for objeto in objetos:
+		objetos.append([_gota(), 0.035])
+	for par in objetos:
+		var objeto: Node3D = par[0]
+		var radio: float = par[1]
 		add_child(objeto)
-		var inicio := zona_flotar.position + Vector3(azar.randf(), azar.randf(), azar.randf()) * zona_flotar.size
+		# Busca un lugar libre para que no empiece encimado con otro.
+		var inicio := Vector3.ZERO
+		for intento in 30:
+			inicio = zona_flotar.position + Vector3(azar.randf(), azar.randf(), azar.randf()) * zona_flotar.size
+			if _lugar_libre(inicio, radio):
+				break
 		objeto.position = inicio
 		_flotantes.append({
 			"nodo": objeto,
+			"radio": radio,
 			"inicio": inicio,
 			"velocidad": Vector3(azar.randf_range(-1, 1), azar.randf_range(-1, 1), azar.randf_range(-1, 1)).normalized() * azar.randf_range(0.04, 0.1),
 			"giro": Vector3(azar.randf_range(-1, 1), azar.randf_range(-1, 1), azar.randf_range(-1, 1)) * 0.6,
@@ -186,6 +197,66 @@ func _mover_flotantes(delta: float) -> void:
 			elif nodo.position[eje] > zona_flotar.end[eje] and velocidad[eje] > 0.0:
 				velocidad[eje] = -velocidad[eje]
 		objeto.velocidad = velocidad
+	_chocar_flotantes()
+
+
+## Los objetos chocan entre sí y con la cabeza del astronauta: rebotan en vez de atravesarse.
+func _chocar_flotantes() -> void:
+	for i in _flotantes.size():
+		var a: Dictionary = _flotantes[i]
+		for k in range(i + 1, _flotantes.size()):
+			_rebotar(a, _flotantes[k])
+		_rebotar_en_cabeza(a)
+
+
+func _rebotar(a: Dictionary, b: Dictionary) -> void:
+	var nodo_a: Node3D = a.nodo
+	var nodo_b: Node3D = b.nodo
+	var separacion := nodo_b.position - nodo_a.position
+	var distancia := separacion.length()
+	var minima: float = a.radio + b.radio
+	if distancia >= minima or distancia < 0.0001:
+		return
+	var normal := separacion / distancia
+	# Los separa para que no queden encimados.
+	var encimado := (minima - distancia) * 0.5
+	nodo_a.position -= normal * encimado
+	nodo_b.position += normal * encimado
+	# Si se acercan, intercambian la velocidad en la dirección del choque (como bolas de billar).
+	var va: Vector3 = a.velocidad
+	var vb: Vector3 = b.velocidad
+	var acercamiento := (va - vb).dot(normal)
+	if acercamiento > 0.0:
+		a.velocidad = va - normal * acercamiento
+		b.velocidad = vb + normal * acercamiento
+		a.giro = -(a.giro as Vector3)
+		b.giro = -(b.giro as Vector3)
+
+
+func _rebotar_en_cabeza(a: Dictionary) -> void:
+	if _asiento == null:
+		return
+	var cabeza := to_local(_asiento.global_position)
+	var nodo: Node3D = a.nodo
+	var separacion := nodo.position - cabeza
+	var minima: float = a.radio + RADIO_CABEZA
+	var distancia := separacion.length()
+	if distancia >= minima or distancia < 0.0001:
+		return
+	var normal := separacion / distancia
+	nodo.position = cabeza + normal * minima
+	var velocidad: Vector3 = a.velocidad
+	if velocidad.dot(normal) < 0.0:
+		a.velocidad = velocidad.bounce(normal)
+
+
+func _lugar_libre(punto: Vector3, radio: float) -> bool:
+	for otro in _flotantes:
+		if (otro.nodo as Node3D).position.distance_to(punto) < radio + (otro.radio as float) + 0.05:
+			return false
+	if _asiento and to_local(_asiento.global_position).distance_to(punto) < radio + RADIO_CABEZA + 0.05:
+		return false
+	return true
 
 
 func _lapiz() -> Node3D:

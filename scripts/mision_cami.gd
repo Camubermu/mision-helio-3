@@ -19,11 +19,23 @@ enum Inicio { VIAJE_A_LA_LUNA, SUPERFICIE_LUNAR, VIAJE_A_LA_TIERRA }
 @export var carga_nave: Node
 ## El HUD, para esconder los datos durante el viaje.
 @export var hud: CanvasLayer
+## La superficie lunar (terreno de Emil). Se esconde durante el viaje para que
+## no aparezca en las escenas del espacio ni de la Tierra.
+@export var superficie: Node3D
 ## Escena a la que se pasa al llegar a la Tierra (vacío = quedarse).
 @export_file("*.tscn") var escena_final := "res://scenes/niveles/level1.tscn"
 
 
+## Terreno de la superficie (Terrain3D). Solo arma el suelo sólido cerca de un punto.
+var _terreno: Node3D
+
+
 func _ready() -> void:
+	if superficie:
+		var terrenos := superficie.find_children("*", "Terrain3D", true, false)
+		if not terrenos.is_empty():
+			_terreno = terrenos[0]
+			_terreno.set("collision_radius", 128)
 	viaje.terminado.connect(_al_terminar_viaje)
 	carga_nave.nave_abordada.connect(_viajar.bind(1))
 	match empezar_en:
@@ -31,6 +43,19 @@ func _ready() -> void:
 			_viajar.call_deferred(0)
 		Inicio.VIAJE_A_LA_TIERRA:
 			_viajar.call_deferred(1)
+
+
+func _physics_process(_delta: float) -> void:
+	# El suelo sólido del terreno sigue al jugador (o al vehículo si lo maneja),
+	# no a la cámara: así nada se cae mientras la cámara está en el espacio.
+	if _terreno == null:
+		return
+	var objetivo: Node3D = jugador
+	for vehiculo in get_tree().get_nodes_in_group("vehiculo"):
+		if vehiculo.get("conduciendo"):
+			objetivo = vehiculo
+	if _terreno.get("collision_target") != objetivo:
+		_terreno.set("collision_target", objetivo)
 
 
 func _viajar(destino: int) -> void:
@@ -55,6 +80,8 @@ func _al_terminar_viaje() -> void:
 ## Prende o apaga al jugador de la superficie (y los datos del HUD).
 func _encender_jugador(encendido: bool) -> void:
 	jugador.visible = encendido
+	if superficie:
+		superficie.visible = encendido
 	jugador.process_mode = Node.PROCESS_MODE_INHERIT if encendido else Node.PROCESS_MODE_DISABLED
 	if hud:
 		for nombre in ["Panel", "Mira"]:

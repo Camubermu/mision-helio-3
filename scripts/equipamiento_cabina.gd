@@ -31,8 +31,8 @@ func _ready() -> void:
 	_letrero_escotilla(0.0)
 	_luces_de_techo()
 	_laptop()
-	for z in [-0.5, 0.5]:
-		_arnes(z)
+	_un_solo_asiento()
+	_arnes(0.0)
 
 
 # --- Utilidades ------------------------------------------------------------------
@@ -264,6 +264,23 @@ func _laptop() -> void:
 
 
 ## Arnés de 4 puntos en el respaldo de cada asiento.
+## El cohete trae dos asientos: quita el de la derecha (vacío) y centra el del jugador.
+func _un_solo_asiento() -> void:
+	var cohete := get_parent().get_node_or_null("Cohete") as Node3D
+	if cohete == null:
+		return
+	var al_centro := cohete.global_basis * Vector3(0, 0, 0.5)
+	for pieza in cohete.find_children("Asiento_*", "Node3D", true, false):
+		# Nombres como "Asiento_Base_0" o "Asiento_Brazo_1_-1": el número del asiento va en el tercer lugar.
+		var partes := String(pieza.name).split("_")
+		if partes.size() < 3:
+			continue
+		if partes[2] == "1":
+			pieza.visible = false
+		elif partes[2] == "0":
+			(pieza as Node3D).global_position += al_centro
+
+
 func _arnes(z: float) -> void:
 	var arnes := Node3D.new()
 	add_child(arnes)
