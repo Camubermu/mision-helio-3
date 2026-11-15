@@ -6,14 +6,14 @@ extends Node3D
 ## Si es verdadero, la mano derecha se estira al presionar E.
 @export var alcanzar_con_e := true
 
-const BLANCO := Color(0.92, 0.92, 0.9)
+const BLANCO := Color(0.74, 0.74, 0.72)
 const GRIS := Color(0.55, 0.57, 0.6)
 const AZUL := Color(0.15, 0.35, 0.8)
 
 var _derecho: Node3D
 var _izquierdo: Node3D
-var _base_derecho := Vector3(0.2, -0.24, -0.3)
-var _base_izquierdo := Vector3(-0.22, -0.26, -0.33)
+var _base_derecho := Vector3(0.17, -0.2, -0.36)
+var _base_izquierdo := Vector3(-0.19, -0.22, -0.39)
 var _tiempo := 0.0
 var _estirando := false
 
@@ -67,42 +67,119 @@ func _velocidad_del_cuerpo() -> float:
 	return 0.0
 
 
-## Manga blanca con franja azul y guante gris, apuntando hacia adelante.
+## Brazo del traje (como el de los trajes de caminata espacial):
+## antebrazo blanco con pliegues, anillo metálico de muñeca y guante con dedos.
+## El origen del brazo está en la muñeca; el guante va hacia adelante (-Z).
 func _crear_brazo(lado: float) -> Node3D:
 	var brazo := Node3D.new()
-	brazo.rotation_degrees = Vector3(4, 14 * lado, 0)
+	# El antebrazo viene desde abajo y desde afuera, y el guante sube un poco.
+	brazo.rotation_degrees = Vector3(22, -18 * lado, 6 * lado)
 	add_child(brazo)
-	var manga := _pieza(CapsuleMesh.new(), BLANCO)
-	(manga.mesh as CapsuleMesh).radius = 0.075
-	(manga.mesh as CapsuleMesh).height = 0.5
-	manga.rotation_degrees.x = 90
-	manga.position.z = 0.16
-	brazo.add_child(manga)
-	var franja := _pieza(CylinderMesh.new(), AZUL)
-	(franja.mesh as CylinderMesh).top_radius = 0.079
-	(franja.mesh as CylinderMesh).bottom_radius = 0.079
-	(franja.mesh as CylinderMesh).height = 0.04
-	franja.rotation_degrees.x = 90
-	franja.position.z = 0.05
-	brazo.add_child(franja)
-	var puno := _pieza(CylinderMesh.new(), GRIS)
-	(puno.mesh as CylinderMesh).top_radius = 0.07
-	(puno.mesh as CylinderMesh).bottom_radius = 0.08
+	var tela := _material_tela(BLANCO)
+	# Antebrazo con pliegues (anillos) hacia atrás.
+	var antebrazo := _pieza(CylinderMesh.new(), BLANCO)
+	(antebrazo.mesh as CylinderMesh).top_radius = 0.058
+	(antebrazo.mesh as CylinderMesh).bottom_radius = 0.07
+	(antebrazo.mesh as CylinderMesh).height = 0.42
+	antebrazo.material_override = tela
+	antebrazo.rotation_degrees.x = -90
+	antebrazo.position.z = 0.23
+	brazo.add_child(antebrazo)
+	for k in 4:
+		var pliegue := _pieza(TorusMesh.new(), BLANCO.darkened(0.1))
+		(pliegue.mesh as TorusMesh).inner_radius = 0.055 + k * 0.003
+		(pliegue.mesh as TorusMesh).outer_radius = 0.07 + k * 0.003
+		pliegue.material_override = tela
+		pliegue.rotation_degrees.x = 90
+		pliegue.position.z = 0.12 + k * 0.07
+		brazo.add_child(pliegue)
+	# Anillo de la muñeca: metal azul con borde plateado.
+	var anillo := _pieza(CylinderMesh.new(), Color(0.2, 0.32, 0.6))
+	(anillo.mesh as CylinderMesh).top_radius = 0.062
+	(anillo.mesh as CylinderMesh).bottom_radius = 0.062
+	(anillo.mesh as CylinderMesh).height = 0.035
+	(anillo.material_override as StandardMaterial3D).metallic = 0.7
+	(anillo.material_override as StandardMaterial3D).roughness = 0.3
+	anillo.rotation_degrees.x = 90
+	anillo.position.z = 0.02
+	brazo.add_child(anillo)
+	var borde := _pieza(TorusMesh.new(), Color(0.8, 0.82, 0.85))
+	(borde.mesh as TorusMesh).inner_radius = 0.058
+	(borde.mesh as TorusMesh).outer_radius = 0.068
+	(borde.material_override as StandardMaterial3D).metallic = 0.9
+	borde.rotation_degrees.x = 90
+	borde.position.z = 0.0
+	brazo.add_child(borde)
+	# Puño del guante (más ancho) y dorso.
+	var puno := _pieza(CylinderMesh.new(), GRIS.lightened(0.35))
+	(puno.mesh as CylinderMesh).top_radius = 0.055
+	(puno.mesh as CylinderMesh).bottom_radius = 0.045
 	(puno.mesh as CylinderMesh).height = 0.06
+	puno.material_override = _material_tela(Color(0.68, 0.69, 0.7))
 	puno.rotation_degrees.x = 90
-	puno.position.z = -0.1
+	puno.position.z = -0.03
 	brazo.add_child(puno)
-	var guante := _pieza(BoxMesh.new(), GRIS.darkened(0.15))
-	(guante.mesh as BoxMesh).size = Vector3(0.1, 0.055, 0.13)
-	guante.position = Vector3(0, -0.005, -0.18)
-	brazo.add_child(guante)
-	var pulgar := _pieza(CapsuleMesh.new(), GRIS.darkened(0.15))
-	(pulgar.mesh as CapsuleMesh).radius = 0.018
-	(pulgar.mesh as CapsuleMesh).height = 0.08
-	pulgar.rotation_degrees = Vector3(90, 0, 35 * lado)
-	pulgar.position = Vector3(-0.055 * lado, 0.0, -0.16)
-	brazo.add_child(pulgar)
+	var mano := Node3D.new()
+	mano.position.z = -0.1
+	mano.rotation_degrees.z = -20 * lado
+	brazo.add_child(mano)
+	var palma := _pieza(SphereMesh.new(), Color(0.8, 0.8, 0.8))
+	(palma.mesh as SphereMesh).radius = 0.05
+	(palma.mesh as SphereMesh).height = 0.1
+	palma.scale = Vector3(1.0, 0.45, 1.1)
+	palma.material_override = _material_tela(Color(0.66, 0.67, 0.68))
+	mano.add_child(palma)
+	# Cuatro dedos un poco doblados, con puntas de goma oscura.
+	for d in 4:
+		var x := (-0.033 + d * 0.022) * lado
+		var dedo := Node3D.new()
+		dedo.position = Vector3(x, -0.004, -0.045)
+		dedo.rotation_degrees.x = -25 - d * 4
+		mano.add_child(dedo)
+		var largo := 0.05 if d in [1, 2] else 0.042
+		var falange := _pieza(CapsuleMesh.new(), Color(0.66, 0.67, 0.68))
+		(falange.mesh as CapsuleMesh).radius = 0.011
+		(falange.mesh as CapsuleMesh).height = largo
+		falange.material_override = palma.material_override
+		falange.rotation_degrees.x = 90
+		falange.position.z = -largo * 0.4
+		dedo.add_child(falange)
+		var punta := _pieza(SphereMesh.new(), Color(0.25, 0.27, 0.32))
+		(punta.mesh as SphereMesh).radius = 0.0115
+		(punta.mesh as SphereMesh).height = 0.023
+		punta.position.z = -largo * 0.85
+		dedo.add_child(punta)
+	var pulgar := Node3D.new()
+	pulgar.position = Vector3(-0.045 * lado, -0.005, -0.005)
+	pulgar.rotation_degrees = Vector3(-15, 40 * lado, 0)
+	mano.add_child(pulgar)
+	var pulgar_malla := _pieza(CapsuleMesh.new(), Color(0.66, 0.67, 0.68))
+	(pulgar_malla.mesh as CapsuleMesh).radius = 0.012
+	(pulgar_malla.mesh as CapsuleMesh).height = 0.045
+	pulgar_malla.material_override = palma.material_override
+	pulgar_malla.rotation_degrees.x = 90
+	pulgar_malla.position.z = -0.02
+	pulgar.add_child(pulgar_malla)
 	return brazo
+
+
+static func _material_tela(color: Color) -> StandardMaterial3D:
+	var ruido := FastNoiseLite.new()
+	ruido.frequency = 0.25
+	var textura := NoiseTexture2D.new()
+	textura.noise = ruido
+	textura.width = 64
+	textura.height = 64
+	textura.seamless = true
+	var tonos := Gradient.new()
+	tonos.colors = PackedColorArray([color.darkened(0.12), color])
+	textura.color_ramp = tonos
+	var material := StandardMaterial3D.new()
+	material.albedo_texture = textura
+	material.uv1_triplanar = true
+	material.uv1_scale = Vector3.ONE * 18.0
+	material.roughness = 0.95
+	return material
 
 
 static func _pieza(malla: Mesh, color: Color) -> MeshInstance3D:

@@ -21,6 +21,7 @@
 [ext_resource type="Script" path="res://scripts/paso_lunar.gd" id="17_paso"]
 [ext_resource type="Script" path="res://scripts/cabina_realista.gd" id="18_cabina"]
 [ext_resource type="Script" path="res://scripts/casco_astronauta.gd" id="19_casco"]
+[ext_resource type="Script" path="res://scripts/equipamiento_cabina.gd" id="20_equipo"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sv3wp"]
 
@@ -50,7 +51,8 @@ glow_intensity = 0.6
 size = Vector3(200, 1, 200)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_suelo"]
-albedo_color = Color(0.55, 0.55, 0.58, 1)
+albedo_color = Color(0.3, 0.29, 0.28, 1)
+roughness = 1.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_suelo"]
 material = SubResource("StandardMaterial3D_suelo")
@@ -73,6 +75,7 @@ shadow_enabled = true
 
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." unique_id=853898183]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 39.03147, 19.788189, 0)
+light_energy = 0.35
 shadow_enabled = true
 
 [node name="Cubo" type="StaticBody3D" parent="." unique_id=1738357838]
@@ -215,3 +218,6 @@ alcanzar_con_e = false
 [node name="Casco" type="CanvasLayer" parent="." node_paths=PackedStringArray("camaras_del_casco")]
 script = ExtResource("19_casco")
 camaras_del_casco = [NodePath("../player/head/Camera3D"), NodePath("../ViajeEspacial/Asiento/Camara")]
+
+[node name="Equipamiento" type="Node3D" parent="ViajeEspacial"]
+script = ExtResource("20_equipo")

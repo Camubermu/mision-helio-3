@@ -11,19 +11,21 @@ var _tiempo := 0.0
 
 
 func _ready() -> void:
-	layer = 3
+	# Debajo del HUD (que queda encima) pero encima del mundo 3D.
+	layer = -1
 	var borde := TextureRect.new()
 	borde.set_anchors_preset(Control.PRESET_FULL_RECT)
 	borde.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	borde.stretch_mode = TextureRect.STRETCH_SCALE
 	var degradado := Gradient.new()
-	degradado.offsets = PackedFloat32Array([0.0, 0.62, 0.85, 1.0])
-	degradado.colors = PackedColorArray([Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0.02, 0.03, 0.05, 0.55), Color(0.01, 0.01, 0.02, 0.95)])
+	# Solo un borde fino y suave del visor; el centro queda limpio.
+	degradado.offsets = PackedFloat32Array([0.0, 0.8, 0.95, 1.0])
+	degradado.colors = PackedColorArray([Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0.05, 0.08, 0.12, 0.22), Color(0.03, 0.05, 0.08, 0.45)])
 	var textura := GradientTexture2D.new()
 	textura.gradient = degradado
 	textura.fill = GradientTexture2D.FILL_RADIAL
 	textura.fill_from = Vector2(0.5, 0.5)
-	textura.fill_to = Vector2(1.0, 0.5)
+	textura.fill_to = Vector2(1.05, 0.5)
 	textura.width = 256
 	textura.height = 256
 	borde.texture = textura
