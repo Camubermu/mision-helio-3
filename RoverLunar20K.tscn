@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bly8uimyxa2fu"]
+
+[sub_resource type="BoxShape3D" id="3"]
+size = Vector3(3.1, 2.5, 4.2)
+
+[node name="RoverLunar20K" type="CharacterBody3D" unique_id=1748303386]
+
+[node name="Modelo" parent="." unique_id=282160403]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1515211259]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("3")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1872693400]
+transform = Transform3D(1, 0, 0, 0, 0.9396926, 0.34202012, 0, -0.34202012, 0.9396926, 0, 5.5, 10)
+current = true
