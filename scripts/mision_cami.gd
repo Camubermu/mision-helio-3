@@ -28,9 +28,12 @@ enum Inicio { VIAJE_A_LA_LUNA, SUPERFICIE_LUNAR, VIAJE_A_LA_TIERRA }
 
 ## Terreno de la superficie (Terrain3D). Solo arma el suelo sólido cerca de un punto.
 var _terreno: Node3D
+## Cuándo empezó la misión (para la pantalla de resultados de la base).
+var _inicio_msec := 0
 
 
 func _ready() -> void:
+	_inicio_msec = Time.get_ticks_msec()
 	if superficie:
 		_preparar_superficie()
 		var terrenos := superficie.find_children("*", "Terrain3D", true, false)
@@ -84,11 +87,25 @@ func _al_terminar_viaje() -> void:
 	if viaje.destino == 0:
 		_encender_jugador(true)
 		Juego.mostrar_mensaje("Plan nuevo: produce helio-3. Sube al vehículo extractor, excava regolito y llévalo al reactor")
-	elif not escena_final.is_empty():
+	else:
+		_guardar_resultado()
+	if viaje.destino != 0 and not escena_final.is_empty():
 		var espera := create_tween()
 		espera.tween_interval(4.0)
 		await espera.finished
 		Juego.cambiar_nivel(escena_final)
+
+
+## Guarda el resultado de la misión para la pantalla de la base (scripts/pantalla_mision.gd).
+func _guardar_resultado() -> void:
+	Juego.set_meta("resultado_mision", {
+		"capsulas": carga_nave.get("cargado"),
+		"necesarias": carga_nave.get("helio3_necesario"),
+		# El aterrizaje en la base termina con el 30 % del tanque de helio-3.
+		"tanque_helio": 30,
+		"capsulas_extra": Juego.helio3,
+		"minutos": int((Time.get_ticks_msec() - _inicio_msec) / 60000.0),
+	})
 
 
 ## Prende o apaga al jugador de la superficie (y los datos del HUD).

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b2agtfb62ll0k" path="res://player/player.tscn" id="1_d4e1e"]
 [ext_resource type="Texture2D" uid="uid://cgfkr4kir7kg6" path="res://icon.svg" id="1_g7emj"]
-[ext_resource type="PackedScene" uid="uid://3ke0og1tcoxq" path="res://scenes/objetos/ExtractorHelio3/vehiculo_extractor.tscn" id="4_vehiculo"]
+[ext_resource type="PackedScene" uid="uid://cpnvwlmo0ixx7" path="res://scenes/objetos/ExtractorHelio3/vehiculo_extractor.tscn" id="4_vehiculo"]
 [ext_resource type="PackedScene" uid="uid://bwvtgwartxt0g" path="res://demo/assets/models/RockB.tscn" id="5_ap0q0"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_hud"]
 [ext_resource type="PackedScene" uid="uid://be6nrf0b8j4l0" path="res://demo/assets/models/RockA.tscn" id="5_rk5m2"]
@@ -23,6 +23,8 @@
 [ext_resource type="Script" uid="uid://dox7c3act1vcl" path="res://scripts/casco_astronauta.gd" id="19_casco"]
 [ext_resource type="Script" uid="uid://bikhkadk8jyrj" path="res://scripts/equipamiento_cabina.gd" id="20_equipo"]
 [ext_resource type="PackedScene" uid="uid://mc0mnjhd10ul" path="res://scenes/niveles/EEmil.tscn" id="21_superficie"]
+[ext_resource type="PackedScene" uid="uid://cxm3anngkp4d6" path="res://models/Lanzamiento/plataforma_kodland.tscn" id="22_plataforma"]
+[ext_resource type="Script" uid="uid://cfi2sahj53117" path="res://scripts/nave_en_plataforma.gd" id="23_nave_plataforma"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sv3wp"]
 
@@ -100,6 +102,12 @@ environment = SubResource("Environment_luz")
 [node name="NaveLuna" parent="." unique_id=1525601573 instance=ExtResource("10_cohete_lujo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 278, 0, 286)
 
+[node name="PlataformaLuna" parent="." node_paths=PackedStringArray("nave", "carga_nave") instance=ExtResource("22_plataforma")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 278, 0, 286)
+script = ExtResource("23_nave_plataforma")
+nave = NodePath("../NaveLuna")
+carga_nave = NodePath("../CargaNave")
+
 [node name="SueloLunar" type="StaticBody3D" parent="." unique_id=1172744402]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 300, -0.5, 260)
 
@@ -163,6 +171,7 @@ near = 0.03
 [node name="Brazos" type="Node3D" parent="ViajeEspacial/Asiento/Camara" unique_id=2128063016]
 script = ExtResource("15_brazos")
 alcanzar_con_e = false
+en_reposo = true
 
 [node name="LuzCabina" type="OmniLight3D" parent="ViajeEspacial" unique_id=1235949503]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.6, 0)
