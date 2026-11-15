@@ -36,45 +36,45 @@ glow_hdr_scale = 0.0
 
 [node name="level1" unique_id=1233149633 instance=ExtResource("1_0af81")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Base del piso" parent_id_path=PackedInt32Array(1959789097) index="0" unique_id=137794131]
+[node name="StaticBody3D" type="StaticBody3D" parent="Base del piso" parent_id_path=PackedInt32Array(1779500919) index="0" unique_id=137794131]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Base del piso/StaticBody3D" index="0" unique_id=223798995]
 shape = SubResource("ConcavePolygonShape3D_egyai")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Luminaria | fluorescente" parent_id_path=PackedInt32Array(2054694865) index="0" unique_id=778827966]
+[node name="OmniLight3D" type="OmniLight3D" parent="Luminaria | fluorescente" parent_id_path=PackedInt32Array(19937610) index="0" unique_id=778827966]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.22102642, 0)
 light_color = Color(0.827451, 1, 0.9411765, 1)
 light_energy = 2.109
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Mesa | tablero rectangular" parent_id_path=PackedInt32Array(184020853) index="0" unique_id=593296486]
+[node name="StaticBody3D" type="StaticBody3D" parent="Mesa | tablero rectangular" parent_id_path=PackedInt32Array(611135889) index="0" unique_id=593296486]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Mesa | tablero rectangular/StaticBody3D" index="0" unique_id=1796041649]
 shape = SubResource("ConcavePolygonShape3D_wlont")
 
-[node name="Object_2_002" parent="Mountains/ed6eee41274e48ca96696ab2e0a627f6_obj_cleaner_materialmerger_gl" parent_id_path=PackedInt32Array(495238939) index="1" unique_id=2056257809]
+[node name="Object_2_002" parent="Mountains/ed6eee41274e48ca96696ab2e0a627f6_obj_cleaner_materialmerger_gl" parent_id_path=PackedInt32Array(166499508) index="1" unique_id=2029138334]
 transform = Transform3D(0.07493544, -0.008898849, 3.2171383e-15, -0.008898849, -0.074935436, -1.7763568e-15, -3.330669e-15, 0, 0.07546197, 128.2969, -328.51477, -3.5005689)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Pared derecha" parent_id_path=PackedInt32Array(1589505482) index="0" unique_id=146610289]
+[node name="StaticBody3D" type="StaticBody3D" parent="Pared derecha" parent_id_path=PackedInt32Array(1194840981) index="0" unique_id=146610289]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pared derecha/StaticBody3D" index="0" unique_id=722438646]
 shape = SubResource("ConcavePolygonShape3D_m6f04")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Pared fondo | concreto texturizado" parent_id_path=PackedInt32Array(1795638045) index="0" unique_id=1642923565]
+[node name="StaticBody3D" type="StaticBody3D" parent="Pared fondo | concreto texturizado" parent_id_path=PackedInt32Array(342947976) index="0" unique_id=1642923565]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pared fondo | concreto texturizado/StaticBody3D" index="0" unique_id=1529046533]
 shape = SubResource("ConcavePolygonShape3D_j2lfh")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Pared frontal | concreto — visible" parent_id_path=PackedInt32Array(444178596) index="0" unique_id=95192322]
+[node name="StaticBody3D" type="StaticBody3D" parent="Pared frontal | concreto — visible" parent_id_path=PackedInt32Array(1323010304) index="0" unique_id=95192322]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pared frontal | concreto — visible/StaticBody3D" index="0" unique_id=1411440086]
 shape = SubResource("ConcavePolygonShape3D_53apn")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Pared izquierda" parent_id_path=PackedInt32Array(1190570853) index="0" unique_id=2100455295]
+[node name="StaticBody3D" type="StaticBody3D" parent="Pared izquierda" parent_id_path=PackedInt32Array(1403130496) index="0" unique_id=2100455295]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pared izquierda/StaticBody3D" index="0" unique_id=1575198765]
 shape = SubResource("ConcavePolygonShape3D_33lrx")
 
-[node name="Puerta | acero industrial" parent="." index="24" unique_id=1302503163]
+[node name="Puerta | acero industrial" parent="." index="24" unique_id=149106590]
 transform = Transform3D(0.28835785, 0, 1.0066055, 0, 1.0470935, 0, -1.0066055, 0, 0.28835785, 1.7426606, 1.0626984, -1.9688959)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Puerta | acero industrial" index="0" unique_id=2134360512]
@@ -82,13 +82,13 @@ transform = Transform3D(0.28835785, 0, 1.0066055, 0, 1.0470935, 0, -1.0066055, 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Puerta | acero industrial/StaticBody3D" index="0" unique_id=1131693327]
 shape = SubResource("ConcavePolygonShape3D_m1bj3")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Techo | concreto — visible" parent_id_path=PackedInt32Array(1851458966) index="0" unique_id=1172394782]
+[node name="StaticBody3D" type="StaticBody3D" parent="Techo | concreto — visible" parent_id_path=PackedInt32Array(831991492) index="0" unique_id=1172394782]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Techo | concreto — visible/StaticBody3D" index="0" unique_id=570615625]
 shape = SubResource("ConcavePolygonShape3D_84mpi")
 
 [node name="player" parent="." index="35" unique_id=332937270 instance=ExtResource("2_hr7yb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0198281, 0.35859448)
+transform = Transform3D(0.55511135, 0, 0, 0, 0.98228085, 0, 0, 0, 1, 0, 1.0198281, 0.35859448)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="36" unique_id=58270215]
 environment = SubResource("Environment_153fh")
