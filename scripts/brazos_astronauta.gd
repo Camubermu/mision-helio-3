@@ -5,6 +5,9 @@ extends Node3D
 
 ## Si es verdadero, la mano derecha se estira al presionar E.
 @export var alcanzar_con_e := true
+## Si es verdadero, las manos descansan abajo y relajadas (por ejemplo, sentado en la nave)
+## y solo se levantan para tocar algo.
+@export var en_reposo := false
 
 const BLANCO := Color(0.74, 0.74, 0.72)
 const GRIS := Color(0.55, 0.57, 0.6)
@@ -14,6 +17,9 @@ var _derecho: Node3D
 var _izquierdo: Node3D
 var _base_derecho := Vector3(0.17, -0.2, -0.36)
 var _base_izquierdo := Vector3(-0.19, -0.22, -0.39)
+## Giro del brazo al usar las manos y giro en reposo (más caído, muñeca relajada).
+var _giro_activo := {}
+var _giro_reposo := {}
 var _tiempo := 0.0
 var _estirando := false
 
@@ -21,6 +27,16 @@ var _estirando := false
 func _ready() -> void:
 	_derecho = _crear_brazo(1.0)
 	_izquierdo = _crear_brazo(-1.0)
+	if en_reposo:
+		# Manos abajo, sobre las piernas: casi fuera de la vista.
+		_base_derecho = Vector3(0.21, -0.46, -0.3)
+		_base_izquierdo = Vector3(-0.23, -0.47, -0.31)
+	for brazo in [_derecho, _izquierdo]:
+		var lado := 1.0 if brazo == _derecho else -1.0
+		_giro_activo[brazo] = brazo.rotation_degrees
+		_giro_reposo[brazo] = Vector3(48, -8 * lado, 22 * lado)
+		if en_reposo:
+			brazo.rotation_degrees = _giro_reposo[brazo]
 	_derecho.position = _base_derecho
 	_izquierdo.position = _base_izquierdo
 
@@ -50,10 +66,16 @@ func alcanzar(punto_global = null) -> void:
 		var local: Vector3 = get_parent().to_local(punto_global)
 		# No se estira más de lo que alcanza el brazo.
 		destino = local.limit_length(0.62) + Vector3(0.04, -0.1, 0.12)
+	# Desde el reposo la mano tarda un poco más en subir y vuelve a bajar relajada.
+	var subir := 0.3 if en_reposo else 0.18
+	var bajar := 0.45 if en_reposo else 0.25
 	var animacion := create_tween()
-	animacion.tween_property(_derecho, "position", destino, 0.18).set_trans(Tween.TRANS_QUAD)
-	animacion.tween_interval(0.12)
-	animacion.tween_property(_derecho, "position", _base_derecho, 0.25).set_trans(Tween.TRANS_QUAD)
+	animacion.tween_property(_derecho, "position", destino, subir).set_trans(Tween.TRANS_QUAD)
+	animacion.parallel().tween_property(_derecho, "rotation_degrees", _giro_activo[_derecho], subir).set_trans(Tween.TRANS_QUAD)
+	animacion.tween_interval(0.25 if en_reposo else 0.12)
+	animacion.tween_property(_derecho, "position", _base_derecho, bajar).set_trans(Tween.TRANS_QUAD)
+	var giro_final: Vector3 = _giro_reposo[_derecho] if en_reposo else _giro_activo[_derecho]
+	animacion.parallel().tween_property(_derecho, "rotation_degrees", giro_final, bajar).set_trans(Tween.TRANS_QUAD)
 	animacion.tween_callback(func(): _estirando = false)
 
 
