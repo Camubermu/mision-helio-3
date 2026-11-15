@@ -10,6 +10,9 @@ const TrozoRegolito = preload("res://scripts/trozo_regolito.gd")
 
 ## El modelo del reactor que tiembla y brilla mientras procesa.
 @export var reactor: Node3D
+## Planta de helio-3 (scripts/planta_helio.gd). Si hay planta, el reactor solo recibe el
+## regolito en su tolva y el proceso sigue etapa por etapa en las consolas de la estación.
+@export var planta: Node
 ## Si es verdadero, la zona se pone sola donde está el reactor
 ## (así puedes mover el reactor en el editor sin tener que mover también la zona).
 @export var seguir_al_reactor := true
@@ -93,6 +96,9 @@ func _al_entrar(cuerpo: Node3D) -> void:
 
 
 func _procesar(cuerpo: Node3D) -> void:
+	if planta:
+		_dejar_en_la_tolva(cuerpo)
+		return
 	var lotes := Juego.regolito / regolito_por_helio
 	if lotes == 0:
 		if Juego.regolito > 0:
@@ -112,6 +118,27 @@ func _procesar(cuerpo: Node3D) -> void:
 		_sacar_capsula()
 
 	Juego.mostrar_mensaje("¡Listo! Salieron %d cápsulas de helio-3. Recógelas" % lotes)
+	procesando = false
+
+
+## Con planta: el regolito vuela a la tolva y la planta sigue con las etapas.
+func _dejar_en_la_tolva(cuerpo: Node3D) -> void:
+	var cantidad := Juego.regolito
+	if cantidad <= 0:
+		Juego.mostrar_mensaje("Trae regolito con el vehículo extractor para llenar la tolva del reactor")
+		return
+	procesando = true
+	Juego.usar_regolito(cantidad)
+	Juego.mostrar_mensaje("Descargando regolito en la tolva del reactor...")
+	await _descargar(cuerpo, cantidad)
+	procesando = false
+	planta.recibir_regolito(cantidad)
+
+
+## El reactor brilla y tiembla unos segundos (lo usa la consola del calentamiento).
+func calentar(segundos: float) -> void:
+	procesando = true
+	await _esperar(segundos)
 	procesando = false
 
 

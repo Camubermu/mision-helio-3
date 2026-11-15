@@ -9,6 +9,9 @@ signal nave_abordada
 
 ## Cuántas cápsulas necesita la nave para despegar.
 @export var helio3_necesario := 3
+## Si es verdadero, el jugador sube a la nave con E dentro de esta zona.
+## Si es falso, sube por otro lado (por ejemplo, la escalera de la plataforma).
+@export var abordar_con_e := true
 ## Nivel al que se va cuando la nave está cargada (vacío = quedarse).
 @export_file("*.tscn") var siguiente_nivel := ""
 
@@ -30,7 +33,7 @@ func esta_lista() -> bool:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if esta_lista() and not abordada and _jugador_cerca and event.is_action_pressed("interactuar"):
+	if abordar_con_e and esta_lista() and not abordada and _jugador_cerca and event.is_action_pressed("interactuar"):
 		get_viewport().set_input_as_handled()
 		abordada = true
 		Juego.ocultar_ayuda()
@@ -44,7 +47,7 @@ func _al_salir(cuerpo: Node3D) -> void:
 
 
 func _avisar_que_puede_subir() -> void:
-	if esta_lista() and not abordada and _jugador_cerca:
+	if abordar_con_e and esta_lista() and not abordada and _jugador_cerca:
 		Juego.mostrar_ayuda("Presiona E para subir a la nave y despegar con el motor de helio-3")
 
 
@@ -66,7 +69,10 @@ func _al_entrar(cuerpo: Node3D) -> void:
 	await _subir_capsulas(cuerpo, cantidad)
 	cargado += cantidad
 	if cargado >= helio3_necesario:
-		Juego.mostrar_mensaje("¡Nave cargada con helio-3! Súbete con E para probar el motor")
+		if abordar_con_e:
+			Juego.mostrar_mensaje("¡Nave cargada con helio-3! Súbete con E para probar el motor")
+		else:
+			Juego.mostrar_mensaje("¡Nave cargada con helio-3! Sube por la escalera de la torre (E al pie de la escalera)")
 		nave_cargada.emit()
 		_avisar_que_puede_subir()
 		if not siguiente_nivel.is_empty():

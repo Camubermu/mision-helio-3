@@ -21,6 +21,7 @@ func _ready() -> void:
 			llama.visible = false
 	_subir_zona_de_carga(cubierta)
 	_cerrar_brazos()
+	_poner_escalera()
 
 
 func _altura_cubierta() -> float:
@@ -45,3 +46,26 @@ func _cerrar_brazos() -> void:
 		animacion.play(animacion_soltar)
 		animacion.seek(0.0, true)
 		animacion.pause()
+
+
+## Escalera junto a la torre (scripts/escalera_plataforma.gd) y la zona con E al pie.
+func _poner_escalera() -> void:
+	var escalera := Node3D.new()
+	escalera.name = "Escalera"
+	escalera.set_script(load("res://scripts/escalera_plataforma.gd"))
+	add_child(escalera)
+	var pie := Area3D.new()
+	pie.name = "PieEscalera"
+	pie.set_script(load("res://scripts/pie_escalera.gd"))
+	pie.set("escalera", escalera)
+	pie.set("carga_nave", carga_nave)
+	var forma := CollisionShape3D.new()
+	var caja := BoxShape3D.new()
+	caja.size = Vector3(4.0, 3.0, 4.0)
+	forma.shape = caja
+	forma.position.y = 1.5
+	pie.add_child(forma)
+	add_child(pie)
+	pie.global_position = escalera.punto_pie()
+	if carga_nave:
+		carga_nave.set("abordar_con_e", false)

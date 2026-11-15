@@ -46,6 +46,8 @@ var _barra_2: ProgressBar
 var _nombre_barra_2: Label
 var _estado: Label
 var _saltar := false
+## Verdadero mientras se está mostrando una de las cuatro escenas.
+var _en_escena := false
 var _tiempo := 0.0
 
 
@@ -61,7 +63,7 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if visible and event.is_action_pressed("propulsor"):
+	if _en_escena and event.is_action_pressed("propulsor"):
 		get_viewport().set_input_as_handled()
 		_saltar = true
 
@@ -262,6 +264,7 @@ func _mover_brazos(abrir: bool, segundos: float) -> void:
 
 func _preparar(en_la_luna: bool) -> void:
 	_saltar = false
+	_en_escena = true
 	visible = true
 	_panel.visible = true
 	_poner_altura(0.0)
@@ -280,6 +283,7 @@ func _preparar(en_la_luna: bool) -> void:
 ## Al terminar una escena. Si "quedarse_en_la_plataforma" es verdadero (aterrizajes),
 ## la vista se queda mostrando el cohete sujeto en la plataforma hasta el siguiente paso.
 func _terminar(quedarse_en_la_plataforma := false) -> void:
+	_en_escena = false
 	_polvo.emitting = false
 	_camara.h_offset = 0.0
 	_camara.v_offset = 0.0

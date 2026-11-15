@@ -28,6 +28,8 @@ enum Inicio { VIAJE_A_LA_LUNA, SUPERFICIE_LUNAR, VIAJE_A_LA_TIERRA }
 
 ## Terreno de la superficie (Terrain3D). Solo arma el suelo sólido cerca de un punto.
 var _terreno: Node3D
+## La escalera para subir a la nave (la crea la plataforma al empezar).
+var _escalera: Node
 ## Cuándo empezó la misión (para la pantalla de resultados de la base).
 var _inicio_msec := 0
 
@@ -45,6 +47,7 @@ func _ready() -> void:
 			_terreno.set("collision_radius", 128)
 	viaje.terminado.connect(_al_terminar_viaje)
 	carga_nave.nave_abordada.connect(_viajar.bind(1))
+	_conectar_escalera.call_deferred()
 	match empezar_en:
 		Inicio.VIAJE_A_LA_LUNA:
 			_viajar.call_deferred(0)
@@ -88,8 +91,9 @@ func _viajar(destino: int) -> void:
 
 func _al_terminar_viaje() -> void:
 	if viaje.destino == 0:
+		await _bajar_por_la_escalera()
 		_encender_jugador(true)
-		Juego.mostrar_mensaje("Plan nuevo: produce helio-3. Sube al vehículo extractor, excava regolito y llévalo al reactor")
+		Juego.mostrar_mensaje("Plan nuevo: produce helio-3. Excava regolito con el vehículo, déjalo en el reactor y sigue las etapas en las consolas de la estación")
 	else:
 		_guardar_resultado()
 	if viaje.destino != 0 and not escena_final.is_empty():
@@ -99,9 +103,6 @@ func _al_terminar_viaje() -> void:
 		Juego.cambiar_nivel(escena_final)
 
 
-## Guantes del traje en la cámara del jugador. Se crean desde aquí (y no en la escena)
-## para que el editor no los borre al guardar. Como el jugador ya tiene cuerpo 3D
-## con sus manos, los guantes solo aparecen al estirar la mano para tocar algo (E).
 ## La cápsula blanca de player.tscn es solo de prueba: se esconde porque el jugador
 ## ya tiene el cuerpo del astronauta (nodo "Cuerpo").
 func _esconder_capsula() -> void:
@@ -110,6 +111,9 @@ func _esconder_capsula() -> void:
 			(hijo as MeshInstance3D).visible = false
 
 
+## Guantes del traje en la cámara del jugador. Se crean desde aquí (y no en la escena)
+## para que el editor no los borre al guardar. Como el jugador ya tiene cuerpo 3D
+## con sus manos, los guantes solo aparecen al estirar la mano para tocar algo (E).
 func _poner_guantes() -> void:
 	var camara := jugador.find_child("Camera3D", true, false) as Camera3D
 	if camara == null or camara.has_node("Brazos"):
@@ -122,6 +126,25 @@ func _poner_guantes() -> void:
 	brazos.set("color_manga", Color(0.86, 0.5, 0.3))
 	brazos.set("color_mano", Color(0.9, 0.86, 0.78))
 	camara.add_child(brazos)
+
+
+## La escalera de la plataforma (scripts/escalera_plataforma.gd): por ahí se sube a la nave.
+func _conectar_escalera() -> void:
+	_escalera = get_tree().get_first_node_in_group("escalera_nave")
+	if _escalera:
+		_escalera.abordo.connect(_viajar.bind(1))
+
+
+## Al alunizar, el astronauta sale de la nave y baja la escalera; ahí empieza a jugar.
+func _bajar_por_la_escalera() -> void:
+	if _escalera == null:
+		return
+	if superficie:
+		superficie.visible = true
+	_escalera.bajar()
+	await _escalera.en_el_suelo
+	jugador.global_position = _escalera.punto_pie() + Vector3.UP * 1.0
+	jugador.global_rotation = Vector3(0, _escalera.giro_al_bajar(), 0)
 
 
 ## Guarda el resultado de la misión para la pantalla de la base (scripts/pantalla_mision.gd).

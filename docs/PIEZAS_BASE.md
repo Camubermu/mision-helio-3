@@ -43,6 +43,30 @@ Para mover, girar o cambiar el tamaño de una pieza, selecciónala y usa las her
 | Cápsula de helio-3 | `scenes/objetos/capsula_helio3.tscn` | Al tocarla (a pie o en el vehículo) se recoge: +1 helio-3 | — |
 | Carga de la nave | `scenes/objetos/carga_nave.tscn` | Ponla alrededor de la nave. Al llegar con cápsulas, se cargan en la nave | `helio3_necesario`, `siguiente_nivel` |
 
+### Planta de helio-3 (etapas 3 a 7 del proceso real)
+
+En la escena Cami la estación lunar funciona como planta. El reactor ya no hace las cápsulas solo:
+el vehículo deja el regolito en la **tolva** y el jugador sigue las etapas en consolas con **E**.
+
+| Etapa | Dónde | Qué hace el jugador |
+|---|---|---|
+| 3. Clasificación | Laboratorio | Malla del tamiz en 150 µm o menos + separadores magnético y electrostático |
+| 4. Calentamiento | Reactor | Temperatura entre 700 y 1.000 °C y fuente de energía |
+| 5. Captura de gases | Depósitos | Filtrar, comprimir y enfriar, en ese orden (se guarda el hidrógeno) |
+| 6. Separación isotópica | Núcleo | 5 etapas de destilación criogénica hasta 99,9 % de helio-3 |
+| 7. Almacenamiento | Esclusa | Llenar las cápsulas entre 150 y 300 bar; salen frente a la esclusa |
+
+Piezas: `scripts/planta_helio.gd` (lleva la cuenta), `scripts/consola_planta.gd` (cada consola),
+`scripts/estacion_planta.gd` (va en la estación: le pone choques y crea las consolas) y
+`scripts/procesador_helio.gd` con su campo `planta`.
+
+### Escalera de la plataforma
+
+`scripts/nave_en_plataforma.gd` crea una escalera de 4 tramos junto a la torre (`scripts/escalera_plataforma.gd`).
+Se puede subir caminando. Con **E** al pie (cuando la nave ya está cargada) se ve al astronauta subir en tercera
+persona y entrar a la nave; al alunizar se le ve bajar. Si el astronauta trae animaciones llamadas
+`caminar`, `subir_escaleras`, `bajar_escaleras` y `quieto` (por ejemplo de Mixamo), se usan solas.
+
 **Rocas que se pueden excavar:** selecciona la roca → pestaña **Nodo** → **Grupos** → escribe `roca_minable` → **Añadir**.
 
 Para hacer otro vehículo: copia `vehiculo_extractor.tscn` y cambia el modelo dentro de `Modelo`.
