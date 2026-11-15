@@ -15,14 +15,14 @@ signal en_el_suelo
 ## Altura del piso del brazo de acceso (metros sobre el suelo).
 @export var altura := 15.45
 ## El astronauta que se ve subir y bajar.
-@export var escena_astronauta: PackedScene = preload("res://scenes/personajes/astronauta.tscn")
+@export var escena_astronauta: PackedScene = preload("res://scenes/personajes/astronauta_animado.tscn")
 ## Nombres de las animaciones del astronauta (si las tiene).
 @export var animacion_caminar := "caminar"
 @export var animacion_subir := "subir_escaleras"
 @export var animacion_bajar := "bajar_escaleras"
 @export var animacion_quieto := "quieto"
 ## Escalones por segundo al subir o bajar.
-@export var escalones_por_segundo := 3.0
+@export var escalones_por_segundo := 2.6
 ## Metros por segundo al caminar.
 @export var velocidad_caminando := 1.6
 
@@ -156,7 +156,7 @@ func _mover(desde: Vector3, hasta: Vector3, es_escalera: bool, bajando: bool) ->
 	if es_escalera:
 		duracion = ESCALONES / escalones_por_segundo
 		nombre = animacion_bajar if bajando else animacion_subir
-	_poner_animacion(nombre)
+	_poner_animacion(nombre, escalones_por_segundo if es_escalera else velocidad_caminando)
 	var t := 0.0
 	while t < duracion:
 		if _saltar or not is_inside_tree():
@@ -196,6 +196,8 @@ func _crear_actor() -> void:
 	add_child(_actor)
 	var modelo: Node3D = escena_astronauta.instantiate()
 	_actor.add_child(modelo)
+	if "automatica" in modelo:
+		modelo.automatica = false
 	_animacion = modelo.find_child("AnimationPlayer", true, false) as AnimationPlayer
 	_camara.global_position = to_global(Vector3(INICIO_X - 6.0, 2.5, 12.0))
 
@@ -207,7 +209,11 @@ func _quitar_actor() -> void:
 	_animacion = null
 
 
-func _poner_animacion(nombre: String) -> void:
+func _poner_animacion(nombre: String, rapidez := 0.0) -> void:
+	var modelo := _actor.get_child(0) if _actor else null
+	if modelo and modelo.has_method("poner"):
+		modelo.poner(nombre, rapidez)
+		return
 	if _animacion == null:
 		return
 	if _animacion.has_animation(nombre):

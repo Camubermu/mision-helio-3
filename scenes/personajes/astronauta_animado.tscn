@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://d0wp64c3118nw" path="res://scripts/astronauta_animado.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://ysmv2wpjndfy" path="res://models/personaje/mixamo/Walking.fbx" id="2_modelo"]
+
+[node name="AstronautaAnimado" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="Modelo" parent="." instance=ExtResource("2_modelo")]
+transform = Transform3D(-100, 0, 0, 0, 100, 0, 0, 0, -100, 0, 0, 0)

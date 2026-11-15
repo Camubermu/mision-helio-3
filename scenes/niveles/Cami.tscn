@@ -24,7 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://mc0mnjhd10ul" path="res://scenes/niveles/EEmil.tscn" id="21_superficie"]
 [ext_resource type="PackedScene" uid="uid://cxm3anngkp4d6" path="res://models/Lanzamiento/plataforma_kodland.tscn" id="22_plataforma"]
 [ext_resource type="Script" uid="uid://cfi2sahj53117" path="res://scripts/nave_en_plataforma.gd" id="23_nave_plataforma"]
-[ext_resource type="PackedScene" path="res://scenes/personajes/astronauta.tscn" id="24_astronauta"]
+[ext_resource type="PackedScene" path="res://scenes/personajes/astronauta_animado.tscn" id="24_astronauta"]
 [ext_resource type="Script" uid="uid://u6ejf4oe2xnx" path="res://scripts/planta_helio.gd" id="25_planta"]
 [ext_resource type="PackedScene" path="res://scenes/objetos/EstacionLunar/estacion_lunar.tscn" id="26_estacion"]
 [ext_resource type="Script" uid="uid://c38d3oqyyltp" path="res://scripts/estacion_planta.gd" id="27_estacion_planta"]
