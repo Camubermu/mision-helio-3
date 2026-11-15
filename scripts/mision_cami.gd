@@ -46,7 +46,9 @@ func _al_terminar_viaje() -> void:
 		_encender_jugador(true)
 		Juego.mostrar_mensaje("Plan nuevo: produce helio-3. Sube al vehículo extractor, excava regolito y llévalo al reactor")
 	elif not escena_final.is_empty():
-		await get_tree().create_timer(4.0).timeout
+		var espera := create_tween()
+		espera.tween_interval(4.0)
+		await espera.finished
 		Juego.cambiar_nivel(escena_final)
 
 

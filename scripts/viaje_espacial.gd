@@ -82,6 +82,8 @@ func empezar(nuevo_destino: Destino) -> void:
 	else:
 		Juego.mostrar_mensaje("Fase 5: prueba del motor de helio-3 para despegar de la Luna")
 		await _cinematica.despegar_de_la_luna()
+	if not is_inside_tree():
+		return
 
 	_empezar_cabina()
 	await _fin_cabina
@@ -92,6 +94,8 @@ func empezar(nuevo_destino: Destino) -> void:
 	else:
 		Juego.mostrar_mensaje("Aterrizando en la base con el motor de helio-3...")
 		await _cinematica.aterrizar_en_la_tierra()
+	if not is_inside_tree():
+		return
 	terminado.emit()
 
 

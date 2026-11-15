@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b2agtfb62ll0k" path="res://player/player.tscn" id="1_d4e1e"]
 [ext_resource type="Texture2D" uid="uid://cgfkr4kir7kg6" path="res://icon.svg" id="1_g7emj"]
-[ext_resource type="PackedScene" uid="uid://3ke0og1tcoxq" path="res://scenes/objetos/ExtractorHelio3/ExtractorHelio3.tscn" id="4_vehiculo"]
+[ext_resource type="PackedScene" uid="uid://cpnvwlmo0ixx7" path="res://scenes/objetos/ExtractorHelio3/vehiculo_extractor.tscn" id="4_vehiculo"]
 [ext_resource type="PackedScene" uid="uid://bwvtgwartxt0g" path="res://demo/assets/models/RockB.tscn" id="5_ap0q0"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_hud"]
 [ext_resource type="PackedScene" uid="uid://be6nrf0b8j4l0" path="res://demo/assets/models/RockA.tscn" id="5_rk5m2"]
@@ -48,7 +48,7 @@ glow_enabled = true
 glow_intensity = 0.6
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_suelo"]
-size = Vector3(200, 1, 200)
+size = Vector3(620, 1, 820)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_suelo"]
 albedo_color = Color(0.3, 0.29, 0.28, 1)
@@ -101,16 +101,23 @@ script = ExtResource("16_piernas")
 [node name="PasoLunar" type="Node" parent="player" unique_id=1841876302]
 script = ExtResource("17_paso")
 
+[node name="Brazos" type="Node3D" parent="player/head/Camera3D"]
+script = ExtResource("15_brazos")
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=703014759]
 environment = SubResource("Environment_luz")
 
 [node name="NaveLuna" parent="." unique_id=1525601573 instance=ExtResource("10_cohete_lujo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 26)
 
+[node name="Plasma" parent="NaveLuna/Cohete_Kodland/Exterior" index="0"]
+visible = false
+
 [node name="SueloLunar" type="StaticBody3D" parent="." unique_id=1172744402]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="Forma" type="CollisionShape3D" parent="SueloLunar" unique_id=946372519]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -97)
 shape = SubResource("BoxShape3D_suelo")
 
 [node name="Malla" type="MeshInstance3D" parent="SueloLunar" unique_id=1118478203]
@@ -174,7 +181,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20.17008)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22, 0, 0)
 
 [node name="Forma" type="CollisionShape3D" parent="SueloLunar/RockC/ColisionRocaC" unique_id=864789670]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -286.27704)
 shape = SubResource("BoxShape3D_rocac")
 
 [node name="reactor" parent="SueloLunar" unique_id=2109122115 instance=ExtResource("7_ivofh")]
