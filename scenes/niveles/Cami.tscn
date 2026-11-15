@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://b2agtfb62ll0k" path="res://player/player.tscn" id="1_d4e1e"]
 [ext_resource type="Texture2D" uid="uid://cgfkr4kir7kg6" path="res://icon.svg" id="1_g7emj"]
-[ext_resource type="PackedScene" uid="uid://hc0l2ga8tqdu" path="res://scenes/niveles/cohete_kodland_completo.glb" id="3_5x81c"]
 [ext_resource type="PackedScene" uid="uid://3ke0og1tcoxq" path="res://scenes/objetos/ExtractorHelio3/vehiculo_extractor.tscn" id="4_vehiculo"]
 [ext_resource type="PackedScene" uid="uid://bwvtgwartxt0g" path="res://demo/assets/models/RockB.tscn" id="5_ap0q0"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_hud"]
@@ -12,6 +11,11 @@
 [ext_resource type="PackedScene" uid="uid://btk4qeniemash" path="res://scenes/objetos/ReactorLunar/reactorlunar.tscn" id="7_ivofh"]
 [ext_resource type="PackedScene" path="res://scenes/objetos/procesador_helio.tscn" id="8_procesador"]
 [ext_resource type="PackedScene" path="res://scenes/objetos/carga_nave.tscn" id="9_carga"]
+[ext_resource type="PackedScene" uid="uid://cevnqteiqvdxt" path="res://models/cohete_final/cohete_kodland_lujo_godot.tscn" id="10_cohete_lujo"]
+[ext_resource type="Script" path="res://scripts/viaje_espacial.gd" id="11_viaje"]
+[ext_resource type="Script" path="res://scripts/mision_cami.gd" id="12_mision"]
+[ext_resource type="Script" path="res://scripts/cinematica_cohete.gd" id="13_cinematica"]
+[ext_resource type="PackedScene" uid="uid://dfe5apeh28ijj" path="res://scenes/niveles/level1.tscn" id="14_level1"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sv3wp"]
 
@@ -54,7 +58,7 @@ size = Vector3(6, 14, 6)
 size = Vector3(13, 5, 3.4)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cohete"]
-size = Vector3(7, 11, 5.8)
+size = Vector3(7, 29, 6.5)
 
 [node name="Cami" type="Node3D" unique_id=230549995]
 
@@ -86,8 +90,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.863841, 1.0725822, 24.3289
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=703014759]
 environment = SubResource("Environment_luz")
 
-[node name="cohete_kodland_completo" parent="." unique_id=565953578 instance=ExtResource("3_5x81c")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 1.3, 26)
+[node name="NaveLuna" parent="." instance=ExtResource("10_cohete_lujo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 26)
+
+[node name="Plasma" parent="NaveLuna/Cohete_Kodland/Exterior" index="0"]
+visible = false
 
 [node name="SueloLunar" type="StaticBody3D" parent="." unique_id=1172744402]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -142,3 +149,43 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 5.5, 0)
 
 [node name="Forma" type="CollisionShape3D" parent="CargaNave/ColisionCohete" unique_id=1799662793]
 shape = SubResource("BoxShape3D_cohete")
+
+[node name="ViajeEspacial" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3000, 0, 0)
+script = ExtResource("11_viaje")
+
+[node name="Cohete" parent="ViajeEspacial" instance=ExtResource("10_cohete_lujo")]
+
+[node name="Asiento" type="Node3D" parent="ViajeEspacial"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.05, 2.85, -0.5)
+
+[node name="Camara" type="Camera3D" parent="ViajeEspacial/Asiento"]
+near = 0.03
+fov = 75.0
+
+[node name="LuzCabina" type="OmniLight3D" parent="ViajeEspacial"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.6, 0)
+light_color = Color(1, 0.95, 0.88, 1)
+light_energy = 1.3
+omni_range = 6.0
+
+[node name="LuzAlarma" type="OmniLight3D" parent="ViajeEspacial"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 4.0, 0)
+light_color = Color(1, 0.1, 0.08, 1)
+light_energy = 0.0
+omni_range = 6.0
+
+[node name="Cinematica" type="Node3D" parent="ViajeEspacial" node_paths=PackedStringArray("base_tierra")]
+script = ExtResource("13_cinematica")
+base_tierra = NodePath("BaseTierra")
+
+[node name="BaseTierra" parent="ViajeEspacial/Cinematica" instance=ExtResource("14_level1")]
+process_mode = 4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0.17, 12)
+
+[node name="Mision" type="Node" parent="." node_paths=PackedStringArray("viaje", "jugador", "carga_nave", "hud")]
+script = ExtResource("12_mision")
+viaje = NodePath("../ViajeEspacial")
+jugador = NodePath("../player")
+carga_nave = NodePath("../CargaNave")
+hud = NodePath("../HUD")
