@@ -104,10 +104,24 @@ func _preparar_superficie() -> void:
 		if hijo.is_class("Terrain3D"):
 			continue
 		if hijo is WorldEnvironment:
+			_usar_cielo_de(hijo as WorldEnvironment)
 			hijo.queue_free()
 		elif hijo is Node3D:
 			(hijo as Node3D).visible = false
 			hijo.process_mode = Node.PROCESS_MODE_DISABLED
+
+
+## El cielo de estrellas de la escena de Emil (la Vía Láctea) se usa en esta escena,
+## pero con la luz de esta escena.
+func _usar_cielo_de(ambiente_superficie: WorldEnvironment) -> void:
+	var cielo: Sky = ambiente_superficie.environment.sky if ambiente_superficie.environment else null
+	var mundo := get_parent().find_children("*", "WorldEnvironment", false, false)
+	if cielo == null or mundo.is_empty():
+		return
+	var ambiente := (mundo[0] as WorldEnvironment).environment
+	ambiente.background_mode = Environment.BG_SKY
+	ambiente.sky = cielo
+	ambiente.background_energy_multiplier = 0.8
 
 
 func _physics_process(_delta: float) -> void:

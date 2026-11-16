@@ -102,7 +102,7 @@ func recargar() -> void:
 	await animacion.finished
 	_avisos.clear()
 	_recargando = false
-	Juego.mostrar_mensaje("Oxígeno al 100 %. Tienes unos %d minutos afuera" % int(minutos))
+	Juego.mostrar_mensaje("Oxígeno al 100 %%. Tienes unos %d minutos afuera" % int(minutos))
 
 
 func _rescatar() -> void:

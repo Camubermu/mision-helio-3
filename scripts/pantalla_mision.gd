@@ -1,8 +1,9 @@
 extends Node3D
-## Pantalla de la base con el plan de la misión y su resultado.
-## Antes de la misión muestra el plan y la importancia del helio-3.
-## Al volver de la Luna muestra también el resultado (lo guarda scripts/mision_cami.gd
-## en Juego.set_meta("resultado_mision", {...})).
+## Pantalla de la base con la explicación de la misión, el plan y el resultado.
+## Muestra una página a la vez y cambia sola cada "segundos_por_pagina"
+## (siguiente_pagina() la cambia antes, por ejemplo con E):
+##   1. ¿Por qué esta misión?  2. Plan de la misión  3. Resultado (al volver de la Luna;
+##   lo guarda scripts/mision_cami.gd en Juego.set_meta("resultado_mision", {...})).
 ## El frente de la pantalla mira hacia +Z del nodo.
 
 ## Ancho y alto de la imagen de la pantalla (metros).
@@ -12,45 +13,104 @@ const AZUL := Color(0.45, 0.85, 1.0)
 const VERDE := Color(0.45, 1.0, 0.55)
 const AMARILLO := Color(1.0, 0.85, 0.35)
 
+## Segundos que se queda cada página.
+@export var segundos_por_pagina := 25.0
+
 var _vista: SubViewport
-var _plan: RichTextLabel
-var _resultado: RichTextLabel
+var _texto: RichTextLabel
+var _pie: Label
+var _pagina := 0
+var _tiempo := 0.0
 
 
 func _ready() -> void:
 	_armar_pantalla()
+	# Al volver de la Luna empieza mostrando el resultado.
+	_pagina = 2 if Juego.has_meta("resultado_mision") else 0
+	actualizar()
+
+
+func _process(delta: float) -> void:
+	_tiempo += delta
+	if _tiempo >= segundos_por_pagina:
+		siguiente_pagina()
+
+
+func _paginas() -> Array:
+	var lista := [_texto_por_que(), _texto_plan()]
+	if Juego.has_meta("resultado_mision"):
+		lista.append(_texto_resultado())
+	return lista
+
+
+func siguiente_pagina() -> void:
+	_pagina += 1
 	actualizar()
 
 
 ## Vuelve a escribir la pantalla (por si cambió el resultado de la misión).
 func actualizar() -> void:
-	_plan.text = _texto_plan()
-	_resultado.text = _texto_resultado()
+	_tiempo = 0.0
+	var lista := _paginas()
+	_pagina = _pagina % lista.size()
+	_texto.text = lista[_pagina]
+	_ajustar_letra()
+	var puntos := ""
+	for i in lista.size():
+		puntos += "●  " if i == _pagina else "○  "
+	_pie.text = "%sPágina %d de %d  ·  cambia sola (E junto a la pantalla: siguiente)" % [puntos, _pagina + 1, lista.size()]
 	_vista.render_target_update_mode = SubViewport.UPDATE_ONCE
+
+
+## Achica la letra hasta que la página entra completa en la pantalla.
+func _ajustar_letra() -> void:
+	var tamano := 43
+	while tamano > 22:
+		_texto.add_theme_font_size_override("normal_font_size", tamano)
+		_texto.add_theme_font_size_override("bold_font_size", tamano)
+		if _texto.get_content_height() <= _texto.size.y:
+			return
+		tamano -= 2
+
+
+func _texto_por_que() -> String:
+	return "\n".join([
+		"[color=#73d9ff][font_size=58][b]¿POR QUÉ ESTA MISIÓN?[/b][/font_size][/color]",
+		"",
+		"La humanidad usa cada día [b]más energía eléctrica[/b]: hogares, escuelas, hospitales, fábricas, computadoras y autos eléctricos.",
+		"",
+		"Hoy gran parte sale de quemar carbón, petróleo y gas, que contaminan el aire y calientan el planeta. Las centrales nucleares actuales no echan humo, pero dejan [b]desechos radiactivos[/b] que son peligrosos por miles de años.",
+		"",
+		"Por eso los científicos investigan [color=#73ff8c][b]fuentes de energía alternativas, limpias y sin desechos radiactivos[/b][/color].",
+		"",
+		"Una de las más prometedoras es la [b]fusión con helio-3[/b]: libera muchísima energía y casi no deja residuos radiactivos. El problema: en la Tierra casi no hay helio-3. En la Luna, el viento del Sol lo fue dejando en el suelo durante miles de millones de años.",
+		"",
+		"[color=#ffd95a][b]TU MISIÓN:[/b] viajar a la Luna, producir helio-3 y traer una muestra para que los científicos lo investiguen.[/color]",
+	])
 
 
 func _texto_plan() -> String:
 	return "\n".join([
-		"[color=#73d9ff][b]PLAN DE LA MISIÓN HELIO-3[/b][/color]",
+		"[color=#73d9ff][font_size=58][b]PLAN DE LA MISIÓN HELIO-3[/b][/font_size][/color]",
 		"",
 		"[b]1.[/b] Despegue desde esta base con el motor químico. Si falla, el motor de plasma de helio-3 toma el control.",
-		"[b]2.[/b] Viaje de 3 días hasta la Luna (384.400 km). En la cabina revisa combustible, motores y daños.",
-		"[b]3.[/b] Alunizaje en la plataforma. Baja por la escalera de la torre.",
-		"[b]4.[/b] Con el vehículo extractor excava regolito y déjalo en la tolva del reactor.",
-		"[b]5.[/b] En la estación sigue las etapas: clasificar (Laboratorio), calentar a 700-1.000 °C (Reactor), capturar los gases (Depósitos), separar el helio-3 (Núcleo) y envasarlo (Esclusa).",
-		"[b]6.[/b] Carga entre 15 y 20 cápsulas en la nave (ella te dirá cuántas), sube por la escalera y regresa a esta base. ¡Vigila el oxígeno del traje!",
 		"",
-		"[color=#ffd95a][b]¿Por qué traer helio-3?[/b][/color]",
-		"• El viento del Sol deja helio-3 en el suelo de la Luna desde hace miles de millones de años. En la Tierra casi no hay.",
-		"• Podría ser combustible para reactores de fusión: mucha energía y muy pocos residuos radiactivos.",
-		"• Con una muestra real, los científicos pueden estudiarlo en el laboratorio.",
+		"[b]2.[/b] Viaje de 3 días hasta la Luna (384.400 km). En la cabina revisa combustible, motores y daños.",
+		"",
+		"[b]3.[/b] Alunizaje en la plataforma. Baja por la escalera de la torre.",
+		"",
+		"[b]4.[/b] Con el vehículo extractor excava regolito y déjalo en la tolva del reactor.",
+		"",
+		"[b]5.[/b] En la estación lunar sigue las etapas en sus salas: clasificar (Laboratorio), calentar a 700-1.000 °C (Sala del horno), capturar los gases, separar el helio-3 (Laboratorio criogénico) y envasarlo (Almacén). El oxígeno se recarga en la Esclusa.",
+		"",
+		"[b]6.[/b] Carga entre 15 y 20 cápsulas en la nave (ella te dirá cuántas), sube por la escalera y regresa a esta base. ¡Vigila el oxígeno del traje!",
 	])
 
 
 func _texto_resultado() -> String:
 	if not Juego.has_meta("resultado_mision"):
 		return "\n".join([
-			"[color=#73d9ff][b]RESULTADO DE LA MISIÓN[/b][/color]",
+			"[color=#73d9ff][font_size=58][b]RESULTADO DE LA MISIÓN[/b][/font_size][/color]",
 			"",
 			"[color=#ffd95a]Misión en preparación.[/color]",
 			"",
@@ -64,7 +124,7 @@ func _texto_resultado() -> String:
 	var extra: int = datos.get("capsulas_extra", 0)
 	var minutos: int = datos.get("minutos", 0)
 	var lineas := [
-		"[color=#73d9ff][b]RESULTADO DE LA MISIÓN[/b][/color]",
+		"[color=#73d9ff][font_size=58][b]RESULTADO DE LA MISIÓN[/b][/font_size][/color]",
 		"",
 		"[color=#73ff8c][font_size=44][b]¡MISIÓN CUMPLIDA![/b][/font_size][/color]",
 		"",
@@ -99,17 +159,20 @@ func _armar_pantalla() -> void:
 	fondo.size = resolucion
 	_vista.add_child(fondo)
 
-	var columnas := HBoxContainer.new()
-	columnas.position = Vector2(40, 34)
-	columnas.size = Vector2(resolucion.x - 80, resolucion.y - 68)
-	columnas.add_theme_constant_override("separation", 50)
-	_vista.add_child(columnas)
-	_plan = _columna(columnas, 1.15)
-	var linea := ColorRect.new()
-	linea.color = Color(0.3, 0.6, 0.9, 0.6)
-	linea.custom_minimum_size = Vector2(4, 0)
-	columnas.add_child(linea)
-	_resultado = _columna(columnas, 1.0)
+	_texto = RichTextLabel.new()
+	_texto.bbcode_enabled = true
+	_texto.scroll_active = false
+	_texto.position = Vector2(60, 44)
+	_texto.size = Vector2(resolucion.x - 120, resolucion.y - 130)
+	_texto.add_theme_font_size_override("normal_font_size", 43)
+	_texto.add_theme_font_size_override("bold_font_size", 43)
+	_texto.add_theme_color_override("default_color", Color(0.9, 0.94, 1.0))
+	_vista.add_child(_texto)
+	_pie = Label.new()
+	_pie.position = Vector2(60, resolucion.y - 70)
+	_pie.add_theme_font_size_override("font_size", 30)
+	_pie.add_theme_color_override("font_color", Color(0.55, 0.7, 0.85))
+	_vista.add_child(_pie)
 
 	# Marco oscuro y la imagen de la pantalla.
 	var marco := MeshInstance3D.new()
@@ -142,17 +205,3 @@ func _armar_pantalla() -> void:
 	luz.omni_range = 2.5
 	luz.position.z = 0.6
 	add_child(luz)
-
-
-func _columna(padre: Control, peso: float) -> RichTextLabel:
-	var texto := RichTextLabel.new()
-	texto.bbcode_enabled = true
-	texto.fit_content = false
-	texto.scroll_active = false
-	texto.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	texto.size_flags_stretch_ratio = peso
-	texto.add_theme_font_size_override("normal_font_size", 31)
-	texto.add_theme_font_size_override("bold_font_size", 31)
-	texto.add_theme_color_override("default_color", Color(0.9, 0.94, 1.0))
-	padre.add_child(texto)
-	return texto

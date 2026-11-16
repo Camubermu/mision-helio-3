@@ -34,18 +34,19 @@ const SALAS := {
 }
 ## Consolas de cada etapa: [lugar, hacia dónde mira el frente].
 const CONSOLAS := {
-	3: [Vector3(-11.6, 0, -2.4), Vector3(0, 0, 1)],
+	3: [Vector3(-11.5, 0, 2.4), Vector3(0, 0, -1)],
 	4: [Vector3(6.4, 0, 10.4), Vector3(0, 0, -1)],
-	5: [Vector3(-14.2, 0, -17.4), Vector3(0, 0, 1)],
-	6: [Vector3(-27.6, 0, -2.4), Vector3(0, 0, 1)],
-	7: [Vector3(-6.4, 0, 10.4), Vector3(0, 0, -1)],
+	5: [Vector3(-16.5, 0, -11.3), Vector3(0, 0, -1)],
+	6: [Vector3(-28.5, 0, 2.4), Vector3(0, 0, -1)],
+	7: [Vector3(-5.6, 0, 6.3), Vector3(0, 0, 1)],
 }
 ## Recarga de oxígeno en la esclusa: [lugar, hacia dónde mira].
-const OXIGENO := [Vector3(-2.2, 0, 13.0), Vector3(1, 0, 0)]
+const OXIGENO := [Vector3(2.4, 0, 12.0), Vector3(-1, 0, 0)]
 ## Salida de las cápsulas: frente a la rampa de la esclusa.
 const SALIDA_CAPSULAS := Vector3(0, 0, 20.5)
 ## Piezas del modelo que son sólidas.
-const PIEZAS_SOLIDAS := ["hull", "found", "floor", "glass"]
+## (Muebles, camas, máquinas e invernadero también: no se pueden atravesar.)
+const PIEZAS_SOLIDAS := ["hull", "found", "floor", "glass", "prop", "fabG", "fabB", "fabP", "bed", "soil", "plant", "orange"]
 
 ## Punto de recarga de oxígeno (lo usa el oxígeno del traje si el astronauta se queda sin aire).
 var punto_oxigeno: Node3D

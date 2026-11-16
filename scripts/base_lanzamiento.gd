@@ -35,6 +35,11 @@ func _ready() -> void:
 	_poner_suelo_exterior()
 	_poner_plataforma()
 	_preparar_jugador.call_deferred()
+	if not _mision_terminada():
+		_poner_zona_pantalla("E: siguiente página de la pantalla", func():
+			var pantalla := get_parent().get_node_or_null("PantallaMision")
+			if pantalla:
+				pantalla.siguiente_pagina())
 	if _mision_terminada():
 		_preparar_final.call_deferred()
 	else:
@@ -93,8 +98,9 @@ func _poner_plataforma() -> void:
 	plataforma.set_script(load("res://scripts/nave_en_plataforma.gd"))
 	plataforma.set("nave", nave)
 	plataforma.set("gravedad_lunar", false)
-	add_child(plataforma)
+	# La posición va antes de agregarla: al agregarla, la plataforma acomoda la nave encima.
 	plataforma.position = lugar_plataforma
+	add_child(plataforma)
 	_escalera = plataforma.get_node_or_null("Escalera")
 	if _escalera == null:
 		return
@@ -122,6 +128,24 @@ func _poner_llegada_arriba(plataforma: Node3D) -> void:
 	zona.body_entered.connect(func(cuerpo):
 		if cuerpo == _jugador:
 			_ir_a_la_mision())
+
+
+## Zona con E delante de la pantalla de la sala.
+func _poner_zona_pantalla(texto: String, al_usar: Callable) -> void:
+	var pantalla := get_parent().get_node_or_null("PantallaMision") as Node3D
+	if pantalla == null:
+		return
+	var zona := Area3D.new()
+	zona.set_script(load("res://scripts/zona_e.gd"))
+	zona.set("texto_ayuda", texto)
+	var forma := CollisionShape3D.new()
+	var caja := BoxShape3D.new()
+	caja.size = Vector3(3.0, 2.5, 3.5)
+	forma.shape = caja
+	zona.add_child(forma)
+	add_child(zona)
+	zona.global_position = pantalla.global_position + pantalla.global_basis.z * 1.5 + Vector3.DOWN * 0.3
+	zona.usada.connect(al_usar)
 
 
 func _ir_a_la_mision() -> void:
@@ -155,19 +179,7 @@ func _pantalla_negra() -> ColorRect:
 
 func _preparar_final() -> void:
 	Juego.mostrar_mensaje("¡Bienvenido de vuelta a la base! Mira el resultado de la misión en la pantalla (E junto a la pantalla: créditos)")
-	var pantalla := get_parent().get_node_or_null("PantallaMision") as Node3D
-	if pantalla:
-		var zona := Area3D.new()
-		zona.set_script(load("res://scripts/zona_e.gd"))
-		zona.set("texto_ayuda", "Presiona E para terminar la misión y ver los créditos")
-		var forma := CollisionShape3D.new()
-		var caja := BoxShape3D.new()
-		caja.size = Vector3(3.0, 2.5, 3.5)
-		forma.shape = caja
-		zona.add_child(forma)
-		add_child(zona)
-		zona.global_position = pantalla.global_position + pantalla.global_basis.z * 1.5 + Vector3.DOWN * 0.3
-		zona.usada.connect(mostrar_creditos)
+	_poner_zona_pantalla("Presiona E para terminar la misión y ver los créditos", mostrar_creditos)
 	var espera := create_tween()
 	espera.tween_interval(segundos_antes_de_creditos)
 	espera.tween_callback(mostrar_creditos)
