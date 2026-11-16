@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Misión Helio-3 · NASA Space Apps 2026</title>
+<meta name="description" content="Videojuego educativo en 3D: viaja a la Luna, produce helio-3 con el proceso real de extracción y tráelo a la Tierra para investigar energía limpia de fusión. Equipo de estudiantes de Kodland.">
+<meta property="og:title" content="Misión Helio-3 · NASA Space Apps 2026">
+<meta property="og:description" content="Videojuego educativo: produce helio-3 en la Luna para la energía limpia del futuro.">
+<meta property="og:image" content="img/portada.png">
+<link rel="icon" href="img/portada.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --cielo: #070a14;
+  --panel: #0f1526;
+  --borde: #233052;
+  --regolito: #c9c5bc;
+  --texto: #eef1f7;
+  --helio: #5fd6ff;
+  --empuje: #ff9a3d;
+  --verde: #63e08a;
+  --f-display: "Chakra Petch", "Avenir Next Condensed", "Arial Narrow", sans-serif;
+  --f-texto: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--cielo); color: var(--texto); font-family: var(--f-texto); font-size: 16px; line-height: 1.6; margin: 0; }
+a { color: var(--helio); }
+img { max-width: 100%; display: block; }
+.envoltura { max-width: 1120px; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)) 80px max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 88px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; letter-spacing: 0.01em; }
+h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); line-height: 1.02; font-weight: 700; }
+h2 { font-size: clamp(1.6rem, 3.2vw, 2.3rem); font-weight: 600; }
+h3 { font-size: 1.2rem; font-weight: 600; }
+p { margin: 0; }
+.etiqueta { font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--helio); }
+.sub { color: var(--regolito); max-width: 70ch; }
+code { font-family: var(--f-mono); font-size: 0.86em; color: var(--helio); }
+section { display: flex; flex-direction: column; gap: 26px; scroll-margin-top: 72px; }
+.cabecera { display: flex; flex-direction: column; gap: 10px; }
+
+/* Barra superior */
+nav.barra { position: sticky; top: 0; z-index: 10; background: rgba(7, 10, 20, 0.88); backdrop-filter: blur(8px); border-bottom: 1px solid var(--borde); }
+nav.barra .dentro { max-width: 1120px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+nav.barra strong { font-family: var(--f-display); font-size: 1.05rem; margin-right: auto; }
+nav.barra a { color: var(--regolito); text-decoration: none; font-size: 0.9rem; }
+nav.barra a:hover { color: var(--texto); }
+
+/* Portada */
+.portada { position: relative; margin: 0 calc(-1 * max(16px, env(safe-area-inset-left, 0px))); }
+.portada img { width: 100%; height: min(78vh, 640px); object-fit: cover; filter: saturate(1.05); }
+.portada .velo { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,10,20,0.15) 0%, rgba(7,10,20,0.35) 45%, var(--cielo) 100%); }
+.portada .texto { position: absolute; left: 0; right: 0; bottom: 28px; padding: 0 24px; max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+.portada .sub { color: #dfe3ea; font-size: 1.1rem; }
+.botones { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+.boton { display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-display); font-weight: 600; font-size: 1.05rem; padding: 12px 20px; border-radius: 10px; text-decoration: none; border: 1px solid var(--borde); color: var(--texto); background: rgba(15, 21, 38, 0.85); }
+.boton.principal { background: var(--empuje); color: #1a0d00; border-color: var(--empuje); }
+.boton:hover { filter: brightness(1.1); }
+
+/* Datos rápidos */
+.datos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.dato { background: var(--panel); border: 1px solid var(--borde); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 4px; }
+.dato b { font-family: var(--f-display); font-size: 1.6rem; color: var(--helio); }
+.dato span { color: var(--regolito); font-size: 0.92rem; }
+
+/* Dos columnas */
+.dos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; align-items: start; }
+.tarjeta { background: var(--panel); border: 1px solid var(--borde); border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.tarjeta ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; color: var(--regolito); }
+.tarjeta li::marker { color: var(--helio); }
+.tarjeta.alerta { border-color: rgba(255, 154, 61, 0.6); }
+.tarjeta.solucion { border-color: rgba(99, 224, 138, 0.55); }
+
+/* Fases */
+.fases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px; }
+.fase { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.fase img { border-radius: 12px; border: 1px solid var(--borde); aspect-ratio: 16 / 9; object-fit: cover; width: 100%; }
+.fase .titulo { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.num { font-family: var(--f-mono); color: var(--empuje); font-size: 0.95rem; }
+
+/* Proceso real */
+.proceso { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px; counter-reset: etapa; }
+.proceso li { background: var(--panel); border: 1px solid var(--borde); border-top: 3px solid var(--helio); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 8px; counter-increment: etapa; min-width: 0; }
+.proceso li::before { content: "Etapa " counter(etapa); font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--helio); }
+.proceso h3 { font-size: 1.02rem; }
+.proceso p { color: var(--regolito); font-size: 0.86rem; }
+.proceso .juego { color: var(--verde); font-size: 0.82rem; font-family: var(--f-mono); }
+
+/* Galería */
+.galeria { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.galeria figure { margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.galeria img { border-radius: 10px; border: 1px solid var(--borde); aspect-ratio: 16 / 9; object-fit: cover; width: 100%; }
+.galeria figcaption { color: var(--regolito); font-size: 0.85rem; }
+
+/* Video */
+.video { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; border: 1px solid var(--borde); background: #000; }
+.video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* Equipo */
+.equipo { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+.persona { background: var(--panel); border: 1px solid var(--borde); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 6px; }
+.persona.lider { border-color: var(--empuje); }
+.persona h3 { font-size: 1.05rem; }
+.persona span { font-family: var(--f-mono); font-size: 0.75rem; color: var(--empuje); letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* Tablas */
+.tabla-env { overflow-x: auto; border: 1px solid var(--borde); border-radius: 10px; }
+table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 0.93rem; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--borde); vertical-align: top; }
+th { font-family: var(--f-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--regolito); font-weight: 500; }
+td:first-child { font-family: var(--f-mono); color: var(--helio); white-space: nowrap; }
+tr:last-child td { border-bottom: none; }
+
+.ingles { border-left: 3px solid var(--helio); padding: 6px 0 6px 18px; color: var(--regolito); display: flex; flex-direction: column; gap: 10px; }
+.ingles strong { color: var(--texto); }
+footer { color: var(--regolito); font-size: 0.88rem; border-top: 1px solid var(--borde); padding-top: 24px; display: flex; flex-direction: column; gap: 6px; }
+
+@media (max-width: 960px) {
+  .proceso { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .equipo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .datos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .dos, .fases, .galeria { grid-template-columns: minmax(0, 1fr); }
+  nav.barra a.opcional { display: none; }
+}
+@media (max-width: 440px) {
+  .proceso, .equipo, .datos { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<nav class="barra" aria-label="Secciones">
+  <div class="dentro">
+    <strong>Misión Helio-3</strong>
+    <a href="#problema" class="opcional">El problema</a>
+    <a href="#juego" class="opcional">El juego</a>
+    <a href="#ciencia" class="opcional">La ciencia</a>
+    <a href="#video">Video</a>
+    <a href="#equipo">Equipo</a>
+    <a href="https://kodlandcamubermu.itch.io/mision-helio-3">Jugar</a>
+  </div>
+</nav>
+
+<main class="envoltura">
+
+  <header class="portada">
+    <img src="img/despegue.jpg" alt="El cohete de la misión despega desde la base de lanzamiento con su llama azul">
+    <div class="velo"></div>
+    <div class="texto">
+      <span class="etiqueta">NASA Space Apps Challenge 2026 · Equipo Kodland</span>
+      <h1>Misión Helio-3</h1>
+      <p class="sub">Un videojuego educativo en 3D donde viajas a la Luna, produces helio-3 siguiendo el proceso real de extracción y lo traes a la Tierra para investigar la energía limpia del futuro.</p>
+      <div class="botones">
+        <a class="boton principal" href="https://kodlandcamubermu.itch.io/mision-helio-3">▶ Jugar en el navegador</a>
+        <a class="boton" href="#video">Ver gameplay</a>
+        <a class="boton" href="https://github.com/Camubermu/mision-helio-3">Código en GitHub</a>
+      </div>
+    </div>
+  </header>
+
+  <section aria-label="Datos del proyecto">
+    <div class="datos">
+      <div class="dato"><b>7 etapas</b><span>del proceso real para producir helio-3, jugables en la estación lunar</span></div>
+      <div class="dato"><b>384.400 km</b><span>de viaje Tierra–Luna, con despegue, falla del motor y alunizaje</span></div>
+      <div class="dato"><b>1,62 m/s²</b><span>gravedad lunar: el astronauta camina a saltitos, como en la Luna</span></div>
+      <div class="dato"><b>Sin instalar</b><span>se juega en el navegador, en computadora con Chrome</span></div>
+    </div>
+  </section>
+
+  <section id="problema" aria-labelledby="t-problema">
+    <div class="cabecera">
+      <span class="etiqueta">El reto</span>
+      <h2 id="t-problema">¿Por qué esta misión?</h2>
+    </div>
+    <div class="dos">
+      <article class="tarjeta alerta">
+        <h3>El problema: cada vez usamos más energía</h3>
+        <p class="sub">La humanidad consume cada año más electricidad: hogares, escuelas, hospitales, fábricas, centros de datos y autos eléctricos. Hoy gran parte sale de quemar carbón, petróleo y gas, que contaminan el aire y calientan el planeta. La energía nuclear actual (fisión) no echa humo, pero deja <b>desechos radiactivos</b> que siguen siendo peligrosos durante miles de años.</p>
+      </article>
+      <article class="tarjeta solucion">
+        <h3>Una respuesta posible: fusión con helio-3</h3>
+        <p class="sub">La <b>fusión nuclear</b> de deuterio con helio-3 podría producir muchísima energía casi sin dejar residuos radiactivos. El problema es que en la Tierra casi no hay helio-3. En la Luna, el viento del Sol lo ha ido depositando en el suelo (el regolito) durante miles de millones de años. Traer una muestra permitiría a los científicos investigarlo.</p>
+      </article>
+    </div>
+    <article class="tarjeta">
+      <h3>Nuestra propuesta</h3>
+      <p class="sub">Convertimos ese desafío en un juego para que niños y jóvenes entiendan, jugando, por qué la humanidad busca fuentes de energía alternativas y cómo sería, de verdad, producir helio-3 en la Luna: no se "fabrica", se extrae del regolito con un proceso industrial de varias etapas. Todo el contenido científico aparece dentro del juego, en pantallas, consolas y conversaciones por radio.</p>
+    </article>
+  </section>
+
+  <section id="juego" aria-labelledby="t-juego">
+    <div class="cabecera">
+      <span class="etiqueta">El juego terminado</span>
+      <h2 id="t-juego">La misión, de principio a fin</h2>
+      <p class="sub">El juego cuenta una sola misión continua en primera persona, con escenas en tercera persona para los despegues y aterrizajes. Todas las imágenes son capturas del juego real.</p>
+    </div>
+
+    <div class="fases">
+      <article class="fase">
+        <img src="img/mision.jpg" alt="Sala de la base con la pantalla que explica por qué existe la misión" loading="lazy">
+        <div class="titulo"><span class="num">Fase 1</span><h3>La base y el despegue</h3></div>
+        <p class="sub">El jugador empieza en la sala de control de la base, frente a una pantalla que explica el problema de la energía y el plan de la misión. Sale, camina hasta la plataforma de lanzamiento, sube la escalera de la torre (15 m) y entra a la nave. Empieza la cuenta atrás: los brazos de la torre sueltan el cohete y despega con el motor químico de llama azul.</p>
+      </article>
+      <article class="fase">
+        <img src="img/comunicaciones.jpg" alt="Cabina de la nave con el panel de comunicaciones con Control de Misión" loading="lazy">
+        <div class="titulo"><span class="num">Fase 2</span><h3>El viaje y la falla</h3></div>
+        <p class="sub">Al salir de la atmósfera el motor químico falla. En la cabina, con objetos flotando por la gravedad cero, el jugador habla con Control de Misión en la Tierra eligiendo respuestas y revisa el monitor (combustible, motores, daños y navegación) para dar los datos correctos. La nave sigue solo con el motor de plasma de helio-3, que alcanza para llegar pero no para volver.</p>
+      </article>
+      <article class="fase">
+        <img src="img/alunizaje.jpg" alt="La nave alunizando sobre la plataforma lunar con el motor de helio-3" loading="lazy">
+        <div class="titulo"><span class="num">Fase 3</span><h3>Alunizaje y exploración</h3></div>
+        <p class="sub">La nave aluniza sobre una plataforma frenando con el motor de helio-3, y los brazos la sujetan. El astronauta baja la escalera y recorre la superficie lunar bajo un cielo de estrellas, con gravedad de 1,62 m/s². El oxígeno del traje empieza a bajar: hay que volver a la estación a recargarlo.</p>
+      </article>
+      <article class="fase">
+        <img src="img/consola.jpg" alt="Consola de la etapa de clasificación del regolito en la estación lunar" loading="lazy">
+        <div class="titulo"><span class="num">Fase 4</span><h3>Minería y producción de helio-3</h3></div>
+        <p class="sub">Con el vehículo extractor el jugador excava regolito entre 50 rocas. Algunas son basalto duro sin helio-3, y el vehículo las descarta al analizarlas. El regolito se lleva a la tolva del reactor y después, en las salas de la estación lunar, el jugador opera cada etapa del proceso real en su consola. La nave necesita entre 15 y 20 cápsulas, un número que cambia en cada partida.</p>
+      </article>
+      <article class="fase">
+        <img src="img/aterrizaje.jpg" alt="La nave aterrizando en la base de la Tierra" loading="lazy">
+        <div class="titulo"><span class="num">Fase 5</span><h3>Despegue lunar y regreso</h3></div>
+        <p class="sub">Con la nave cargada, el astronauta sube la escalera y despega de la Luna: el motor de helio-3 va al límite, pero alcanza la velocidad de escape de 2,38 km/s. La nave vuelve y aterriza en la plataforma de la base de la Tierra.</p>
+      </article>
+      <article class="fase">
+        <img src="img/cumplida.jpg" alt="Pantalla de la base con el resultado: misión cumplida" loading="lazy">
+        <div class="titulo"><span class="num">Final</span><h3>Misión cumplida</h3></div>
+        <p class="sub">De vuelta en la sala, la pantalla muestra el resultado: las cápsulas traídas, el helio-3 que quedó en el tanque y que <b>el combustible de helio-3 sobrante se usará en investigaciones energéticas</b> para desarrollar energía limpia de fusión. Después aparecen los créditos del equipo.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="ciencia" aria-labelledby="t-ciencia">
+    <div class="cabecera">
+      <span class="etiqueta">La ciencia dentro del juego</span>
+      <h2 id="t-ciencia">El proceso real del helio-3, etapa por etapa</h2>
+      <p class="sub">Producir helio-3 en la Luna es minería, procesamiento industrial y separación de isótopos. En el juego, cada etapa es una consola en una sala distinta de la estación lunar, y solo funciona si el jugador elige los valores correctos, como lo haría un operador real.</p>
+    </div>
+    <ol class="proceso">
+      <li><h3>Exploración</h3><p>Buscar zonas donde el regolito tenga más helio-3.</p><span class="juego">En el juego: recorrer la superficie y buscar rocas útiles.</span></li>
+      <li><h3>Excavación</h3><p>Máquinas autónomas recogen el regolito de la superficie.</p><span class="juego">En el juego: el vehículo extractor y su cinta.</span></li>
+      <li><h3>Clasificación</h3><p>Tamices y separadores magnéticos y electrostáticos dejan solo los granos finos (menos de 100–200 µm).</p><span class="juego">Laboratorio: ajustar la malla y los separadores.</span></li>
+      <li><h3>Calentamiento</h3><p>Entre 700 y 1.000 °C el regolito suelta helio-3, helio-4, hidrógeno y otros gases.</p><span class="juego">Sala del horno: elegir temperatura y fuente de energía.</span></li>
+      <li><h3>Captura de gases</h3><p>En un sistema cerrado se filtra, se comprime y se enfría; el hidrógeno se aprovecha.</p><span class="juego">Captura de gases: los 3 pasos en orden.</span></li>
+      <li><h3>Separación isotópica</h3><p>Destilación criogénica a −271 °C, repetida varias veces, separa el helio-3 del helio-4.</p><span class="juego">Laboratorio criogénico: de 0,04 % a 99,9 % de pureza.</span></li>
+      <li><h3>Almacenamiento</h3><p>Cápsulas con control de presión y temperatura, listas para la nave.</p><span class="juego">Almacén: llenar entre 150 y 300 bar.</span></li>
+    </ol>
+    <div class="dos">
+      <article class="tarjeta">
+        <h3>Otros detalles reales que se aprenden jugando</h3>
+        <ul>
+          <li>Gravedad de la Tierra (9,8 m/s²) frente a la de la Luna (1,62 m/s²): en la Luna se camina a saltitos.</li>
+          <li>Distancia Tierra–Luna (384.400 km), viaje de unos 3 días y velocidad de escape lunar (2,38 km/s).</li>
+          <li>Gravedad cero en la cabina: los objetos flotan y rebotan entre sí.</li>
+          <li>El traje tiene oxígeno limitado (7 minutos afuera) y se recarga en la esclusa de la estación.</li>
+          <li>No todas las rocas sirven: el helio-3 está en el polvo fino de la superficie, no dentro del basalto duro.</li>
+          <li>Comunicación por radio con Control de Misión, con los tonos Quindar de las misiones Apolo.</li>
+        </ul>
+      </article>
+      <article class="tarjeta">
+        <h3>Cómo se juega</h3>
+        <ul>
+          <li><b>WASD</b>: caminar o manejar · <b>Mouse</b>: mirar · <b>Espacio</b>: saltar o saltar escenas.</li>
+          <li><b>E</b>: usar objetos, subir al vehículo, operar consolas y recargar oxígeno.</li>
+          <li><b>Teclas 1–4</b> en la cabina: páginas del monitor de la nave.</li>
+          <li>Se juega en el navegador desde itch.io. Pesa unos 200 MB, así que la primera carga tarda uno o dos minutos.</li>
+        </ul>
+        <div class="botones"><a class="boton principal" href="https://kodlandcamubermu.itch.io/mision-helio-3">▶ Jugar ahora</a></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="video" aria-labelledby="t-video">
+    <div class="cabecera">
+      <span class="etiqueta">30 segundos</span>
+      <h2 id="t-video">Gameplay</h2>
+    </div>
+    <div class="video">
+      <iframe src="https://player.vimeo.com/video/1247137846" title="Gameplay de Misión Helio-3" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-galeria">
+    <div class="cabecera">
+      <span class="etiqueta">Capturas</span>
+      <h2 id="t-galeria">Galería</h2>
+    </div>
+    <div class="galeria">
+      <figure><img src="img/base.jpg" alt="Vista aérea de la base de lanzamiento en la Tierra" loading="lazy"><figcaption>La base de lanzamiento en la Tierra.</figcaption></figure>
+      <figure><img src="img/escalera.jpg" alt="El astronauta sube la escalera de la torre" loading="lazy"><figcaption>El astronauta sube la escalera de la torre.</figcaption></figure>
+      <figure><img src="img/despegue.jpg" alt="Despegue con el motor químico" loading="lazy"><figcaption>Despegue con el motor químico.</figcaption></figure>
+      <figure><img src="img/luna.jpg" alt="La superficie lunar con la plataforma y el vehículo" loading="lazy"><figcaption>La superficie lunar bajo la Vía Láctea.</figcaption></figure>
+      <figure><img src="img/estacion.jpg" alt="La estación lunar vista desde arriba" loading="lazy"><figcaption>La estación lunar, con una sala por etapa.</figcaption></figure>
+      <figure><img src="img/oxigeno.jpg" alt="Recarga de oxígeno en la esclusa de la estación" loading="lazy"><figcaption>Recarga de oxígeno en la esclusa.</figcaption></figure>
+      <figure><img src="img/astronauta.jpg" alt="El astronauta con traje naranja en la Luna" loading="lazy"><figcaption>El astronauta, animado con Mixamo.</figcaption></figure>
+      <figure><img src="img/comunicaciones.jpg" alt="Conversación con Control de Misión" loading="lazy"><figcaption>Conversación con Control de Misión.</figcaption></figure>
+      <figure><img src="img/creditos.jpg" alt="Créditos del juego con el equipo" loading="lazy"><figcaption>Créditos del equipo.</figcaption></figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-tec">
+    <div class="cabecera">
+      <span class="etiqueta">Cómo lo construimos</span>
+      <h2 id="t-tec">Tecnología y trabajo en equipo</h2>
+      <p class="sub">Cada integrante construyó su parte en su propia escena de Godot y trabajamos juntos en un repositorio de GitHub. Al final se unió todo en una sola misión jugable.</p>
+    </div>
+    <div class="tabla-env">
+      <table>
+        <thead><tr><th>Herramienta</th><th>Para qué la usamos</th></tr></thead>
+        <tbody>
+          <tr><td>Godot 4.7</td><td>Motor del juego (GDScript, render GL Compatibility) y exportación para la web.</td></tr>
+          <tr><td>Terrain3D</td><td>El terreno lunar con montañas y cráteres.</td></tr>
+          <tr><td>Blender y modelos 3D</td><td>El equipo armó en Blender los modelos del cohete, la plataforma, la estación y más; algunos modelos se descargaron, como el traje ACES del astronauta.</td></tr>
+          <tr><td>Mixamo</td><td>Esqueleto y animaciones del astronauta: caminar, subir y bajar escaleras, respirar.</td></tr>
+          <tr><td>GitHub</td><td>Control de versiones y trabajo en equipo.</td></tr>
+          <tr><td>itch.io</td><td>Publicación del juego para jugar en el navegador.</td></tr>
+          <tr><td>IA generativa</td><td>Un asistente de IA (Claude) ayudó a escribir parte del código y de los textos del juego; el equipo decidió el diseño, la historia y los modelos.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="equipo" aria-labelledby="t-equipo">
+    <div class="cabecera">
+      <span class="etiqueta">Quiénes somos</span>
+      <h2 id="t-equipo">El equipo</h2>
+      <p class="sub">Somos estudiantes de <b>Kodland</b>, escuela de programación, y este es nuestro proyecto para el NASA Space Apps Challenge 2026.</p>
+    </div>
+    <div class="equipo">
+      <article class="persona"><span>Equipo</span><h3>Kimberly Selena Sandoval Guato</h3></article>
+      <article class="persona"><span>Equipo</span><h3>Jentsel Arnold Aguilar Aguilera</h3></article>
+      <article class="persona"><span>Equipo</span><h3>Darwin Emil Alvarez Miranda</h3></article>
+      <article class="persona"><span>Equipo</span><h3>José Miguel Tang Ly</h3></article>
+      <article class="persona lider"><span>Líder del equipo</span><h3>Camilo Muñoz Bermudez</h3></article>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-en">
+    <div class="cabecera">
+      <span class="etiqueta">Summary in English</span>
+      <h2 id="t-en">Mission Helium-3</h2>
+    </div>
+    <div class="ingles">
+      <p><strong>Mission Helium-3</strong> is a 3D educational game for the NASA Space Apps Challenge 2026, made by a team of Kodland programming students. Humanity's electricity demand keeps growing, and we need alternative energy sources that are clean and leave no radioactive waste. Fusion with helium-3 is one of the most promising options, but helium-3 is almost absent on Earth, while the solar wind has deposited it in the lunar regolith for billions of years.</p>
+      <p>The player starts at a launch base on Earth, climbs the tower and launches. The chemical engine fails, so the player talks with Mission Control and continues on the helium-3 plasma engine. On the Moon, the player mines regolith with a rover, avoids rocks without helium-3, and runs the real seven-stage process inside the lunar station: exploration, excavation, beneficiation, heating to 700–1,000 °C, gas capture, cryogenic isotope separation and storage. The player also has to manage suit oxygen, then flies back to Earth with the sample for energy research.</p>
+      <p>Play in the browser: <a href="https://kodlandcamubermu.itch.io/mision-helio-3">kodlandcamubermu.itch.io/mision-helio-3</a> · Source: <a href="https://github.com/Camubermu/mision-helio-3">github.com/Camubermu/mision-helio-3</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <p>Misión Helio-3 · NASA Space Apps Challenge 2026 · Equipo de estudiantes de Kodland, escuela de programación.</p>
+    <p><a href="https://kodlandcamubermu.itch.io/mision-helio-3">Jugar en itch.io</a> · <a href="https://vimeo.com/1247137846">Video en Vimeo</a> · <a href="https://github.com/Camubermu/mision-helio-3">Código en GitHub</a></p>
+  </footer>
+
+</main>
+</body>
+</html>
