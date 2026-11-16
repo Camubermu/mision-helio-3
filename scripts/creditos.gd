@@ -14,6 +14,7 @@ extends CanvasLayer
 	"Jentsel Arnold Aguilar Aguilera",
 	"Darwin Emil Alvarez Miranda",
 	"José Miguel Tang Ly",
+	"Mariano Carazo",
 	"Camilo Muñoz Bermudez · Líder del equipo",
 	"",
 	"Estudiantes de Kodland, escuela de programación",
