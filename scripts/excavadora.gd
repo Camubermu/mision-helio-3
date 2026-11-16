@@ -81,6 +81,9 @@ func _avisar_si_lleno(lleno: bool) -> void:
 func _sacar_carga() -> void:
 	if not is_instance_valid(_roca):
 		return
+	if _roca.get_meta("sin_helio", false):
+		_analizar_roca_sin_helio()
+		return
 	Juego.agregar_regolito(1)
 	var restante: int = _roca.get_meta("regolito", regolito_por_roca) - 1
 	_roca.set_meta("regolito", restante)
@@ -93,6 +96,26 @@ func _sacar_carga() -> void:
 	else:
 		# La roca se achica con cada carga.
 		_roca.scale *= 0.9
+
+
+## Algunas rocas son basalto macizo: el viento solar solo deja helio-3 en el polvo fino
+## (regolito) de la superficie, no adentro de las rocas duras. El vehículo lo descubre al excavar.
+func _analizar_roca_sin_helio() -> void:
+	var pasadas: int = _roca.get_meta("analisis", 0) + 1
+	_roca.set_meta("analisis", pasadas)
+	if pasadas == 1:
+		Juego.mostrar_mensaje("Analizando la roca...")
+		return
+	_roca.remove_from_group("roca_minable")
+	_roca.set_meta("analizada", true)
+	# Se oscurece un poco para que se note que ya no sirve.
+	for malla in _roca.find_children("*", "MeshInstance3D", true, false):
+		(malla as MeshInstance3D).transparency = 0.0
+		var material := StandardMaterial3D.new()
+		material.albedo_color = Color(0.25, 0.24, 0.24)
+		(malla as MeshInstance3D).material_overlay = material
+	_roca = null
+	Juego.mostrar_mensaje("Análisis: esta roca es basalto duro, SIN helio-3. El helio-3 está en el regolito fino. Busca otra roca")
 
 
 func _roca_cercana() -> Node3D:

@@ -18,6 +18,11 @@ config/name="Misión Helio-3"
 config/description="Juego para el NASA Space Apps Challenge 2026: viaja a la Luna, extrae helio-3 y vuelve a la Tierra."
 run/main_scene="uid://dfe5apeh28ijj"
 config/features=PackedStringArray("4.7", "GL Compatibility")
+boot_splash/bg_color=Color(0.02, 0.04, 0.1, 1)
+boot_splash/fullsize=false
+boot_splash/image="res://models/cohete_final/cohete_kodland_lujo_godot_logo_K.png"
+boot_splash/minimum_display_time=1500
+config/icon="res://models/cohete_final/cohete_kodland_lujo_godot_logo_K.png"
 
 [autoload]
 

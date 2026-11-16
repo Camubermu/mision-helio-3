@@ -1,7 +1,5 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://c8wm7uyoupwn7"]
 
-[ext_resource type="PackedScene" path="res://lunar_station_kodland.glb" id="1_station"]
+[ext_resource type="PackedScene" uid="uid://su5hnnhw1vd7" path="res://lunar_station_kodland (1).glb" id="1_he6dd"]
 
-[node name="LunarStationKodland" type="Node3D"]
-
-[node name="Station" parent="." instance=ExtResource("1_station")]
+[node name="lunar_station_kodland (1)" unique_id=465754311 instance=ExtResource("1_he6dd")]

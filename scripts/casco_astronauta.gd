@@ -49,5 +49,5 @@ func _process(delta: float) -> void:
 	var camara := get_viewport().get_camera_3d()
 	visible = camara != null and camaras_del_casco.has(camara)
 	if visible:
-		var oxigeno := 98 - int(_tiempo / 60.0) % 20
+		var oxigeno := int(ceil(Juego.get_meta("oxigeno", 98.0)))
 		_datos.text = "TRAJE: OK   PRESIÓN: 4,3 psi\nOXÍGENO: %d %%   RADIO: CANAL 1\nPULSO: %d lpm" % [oxigeno, 82 + int(sin(_tiempo * 0.3) * 6)]

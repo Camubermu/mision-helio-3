@@ -22,9 +22,9 @@ signal en_el_suelo
 @export var animacion_bajar := "bajar_escaleras"
 @export var animacion_quieto := "quieto"
 ## Escalones por segundo al subir o bajar.
-@export var escalones_por_segundo := 2.6
+@export var escalones_por_segundo := 3.6
 ## Metros por segundo al caminar.
-@export var velocidad_caminando := 1.6
+@export var velocidad_caminando := 2.2
 ## En la Luna (gravedad 6 veces menor) el astronauta va más despacio y da saltitos.
 @export var gravedad_lunar := false
 
@@ -154,8 +154,8 @@ func _mover(desde: Vector3, hasta: Vector3, es_escalera: bool, bajando: bool) ->
 	if plano.length() > 0.01:
 		_actor.rotation.y = atan2(-plano.x, -plano.z)
 	# En la Luna se camina más lento y a saltitos, y los escalones se toman con calma.
-	var caminando := velocidad_caminando * (0.75 if gravedad_lunar else 1.0)
-	var escalones := escalones_por_segundo * (0.7 if gravedad_lunar else 1.0)
+	var caminando := velocidad_caminando * (0.85 if gravedad_lunar else 1.0)
+	var escalones := escalones_por_segundo * (0.8 if gravedad_lunar else 1.0)
 	var duracion := plano.length() / caminando
 	var nombre := animacion_caminar
 	if es_escalera:

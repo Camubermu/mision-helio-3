@@ -38,7 +38,7 @@ func _texto_plan() -> String:
 		"[b]3.[/b] Alunizaje en la plataforma. Baja por la escalera de la torre.",
 		"[b]4.[/b] Con el vehículo extractor excava regolito y déjalo en la tolva del reactor.",
 		"[b]5.[/b] En la estación sigue las etapas: clasificar (Laboratorio), calentar a 700-1.000 °C (Reactor), capturar los gases (Depósitos), separar el helio-3 (Núcleo) y envasarlo (Esclusa).",
-		"[b]6.[/b] Carga 3 cápsulas en la nave, sube por la escalera y regresa a esta base.",
+		"[b]6.[/b] Carga entre 15 y 20 cápsulas en la nave (ella te dirá cuántas), sube por la escalera y regresa a esta base. ¡Vigila el oxígeno del traje!",
 		"",
 		"[color=#ffd95a][b]¿Por qué traer helio-3?[/b][/color]",
 		"• El viento del Sol deja helio-3 en el suelo de la Luna desde hace miles de millones de años. En la Tierra casi no hay.",

@@ -7,10 +7,14 @@ extends Node
 ##      motor de helio-3 y aterriza en la base. Al final se pasa a la escena level 1.
 ## En "Empezar en" eliges por dónde empieza al probar con F6.
 
-enum Inicio { VIAJE_A_LA_LUNA, SUPERFICIE_LUNAR, VIAJE_A_LA_TIERRA }
+enum Inicio { VIAJE_A_LA_LUNA, SUPERFICIE_LUNAR, VIAJE_A_LA_TIERRA, DESDE_LA_BASE }
 
-## Por dónde empieza la escena.
-@export var empezar_en := Inicio.VIAJE_A_LA_LUNA
+## Por dónde empieza la escena. "Desde la base" = como en el juego de verdad: si se abre
+## esta escena directo, se va a la base (level 1) y el jugador camina hasta la nave.
+## Las otras opciones sirven para probar una parte sin jugar todo.
+@export var empezar_en := Inicio.DESDE_LA_BASE
+## Escena de la base, donde empieza el juego.
+@export_file("*.tscn") var escena_base := "res://scenes/niveles/level1.tscn"
 ## El nodo del viaje en cohete (scripts/viaje_espacial.gd).
 @export var viaje: Node3D
 ## El jugador que camina por la Luna.
@@ -47,12 +51,50 @@ func _ready() -> void:
 			_terreno.set("collision_radius", 128)
 	viaje.terminado.connect(_al_terminar_viaje)
 	carga_nave.nave_abordada.connect(_viajar.bind(1))
+	_preparar_luna()
 	_conectar_escalera.call_deferred()
 	match empezar_en:
+		Inicio.DESDE_LA_BASE:
+			# La base avisa (con esta marca) que el jugador ya subió a la nave.
+			if Juego.has_meta("subio_en_la_base"):
+				Juego.remove_meta("subio_en_la_base")
+				_viajar.call_deferred(0)
+			else:
+				Juego.cambiar_nivel.call_deferred(escena_base)
 		Inicio.VIAJE_A_LA_LUNA:
 			_viajar.call_deferred(0)
 		Inicio.VIAJE_A_LA_TIERRA:
 			_viajar.call_deferred(1)
+
+
+## Lo que cambia en cada partida: cuántas cápsulas pide la nave, las rocas y el oxígeno.
+func _preparar_luna() -> void:
+	# La nave necesita entre 15 y 20 cápsulas de helio-3 para despegar (al azar).
+	if not Juego.has_meta("helio3_necesario"):
+		Juego.set_meta("helio3_necesario", randi_range(15, 20))
+	carga_nave.helio3_necesario = Juego.get_meta("helio3_necesario")
+	# Las 3 rocas de prueba se cambian por un campo de 50 rocas (algunas sin helio-3).
+	var suelo := get_parent().get_node_or_null("SueloLunar")
+	if suelo:
+		for roca in suelo.get_children():
+			if roca.is_in_group("roca_minable"):
+				roca.queue_free()
+	var campo := Node3D.new()
+	campo.name = "CampoDeRocas"
+	campo.set_script(load("res://scripts/campo_rocas.gd"))
+	campo.set("terreno", _terreno)
+	var libres := [[Vector3(350, 0, 188), 47.0], [Vector3(278, 0, 286), 30.0], [Vector3(295, 0, 274), 10.0]]
+	var reactor := get_parent().get_node_or_null("ProcesadorHelio") as Node3D
+	if reactor:
+		libres.append([reactor.global_position, 16.0])
+	campo.set("lugares_libres", libres)
+	get_parent().add_child.call_deferred(campo)
+	# Oxígeno del traje.
+	var oxigeno := CanvasLayer.new()
+	oxigeno.name = "OxigenoTraje"
+	oxigeno.set_script(load("res://scripts/oxigeno_traje.gd"))
+	oxigeno.set("jugador", jugador)
+	add_child(oxigeno)
 
 
 ## De la escena de la superficie solo se usa el terreno: su cielo y sus otros
@@ -93,7 +135,7 @@ func _al_terminar_viaje() -> void:
 	if viaje.destino == 0:
 		await _bajar_por_la_escalera()
 		_encender_jugador(true)
-		Juego.mostrar_mensaje("Plan nuevo: produce helio-3. Excava regolito con el vehículo, déjalo en el reactor y sigue las etapas en las consolas de la estación")
+		Juego.mostrar_mensaje("Plan nuevo: la nave necesita %d cápsulas de helio-3. Excava regolito con el vehículo, déjalo en el reactor y sigue las etapas en la estación. ¡Vigila tu oxígeno!" % carga_nave.helio3_necesario)
 	else:
 		_guardar_resultado()
 	if viaje.destino != 0 and not escena_final.is_empty():

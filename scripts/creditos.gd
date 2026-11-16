@@ -119,6 +119,8 @@ func _unhandled_input(event: InputEvent) -> void:
 func _jugar_otra_vez() -> void:
 	Engine.time_scale = 1.0
 	Juego.remove_meta("resultado_mision")
+	if Juego.has_meta("helio3_necesario"):
+		Juego.remove_meta("helio3_necesario")
 	Juego.reiniciar_datos()
 	get_tree().reload_current_scene()
 

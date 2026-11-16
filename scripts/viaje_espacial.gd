@@ -49,6 +49,8 @@ var _curiosidad: Label
 var _barra: ColorRect
 var _marca: ColorRect
 var _giro_base := Vector3.ZERO
+## Panel de comunicaciones con la Tierra (scripts/comunicaciones_cabina.gd).
+var _comunicaciones: Node
 var _mirar := Vector2.ZERO
 
 @onready var _asiento: Node3D = $Asiento
@@ -68,7 +70,15 @@ func _ready() -> void:
 	_poner_en_pieza(nombre_monitor, _monitor)
 	_mirar_a_la_pantalla()
 	_alarma.light_energy = 0.0
+	_comunicaciones = load("res://scripts/comunicaciones_cabina.gd").new()
+	add_child(_comunicaciones)
+	_comunicaciones.configurar(_cabina._pitar if _cabina else Callable(), _tocar_monitor)
 	set_process(false)
+
+
+## Verdadero mientras se habla con la Tierra (el viaje se detiene).
+func comunicando() -> bool:
+	return _comunicaciones != null and _comunicaciones.activa
 
 
 ## Empieza el viaje completo hacia la Luna o hacia la Tierra.
@@ -120,6 +130,13 @@ func _empezar_cabina() -> void:
 	if _cabina:
 		_cabina.empezar(destino == Destino.LUNA, momento_cambio_plan)
 	set_process(true)
+	if destino == Destino.LUNA:
+		# Control de Misión llama por radio al rato de la falla.
+		var llamada := create_tween()
+		llamada.tween_interval(2.0)
+		llamada.tween_callback(func():
+			if viajando:
+				_comunicaciones.empezar_falla())
 
 
 ## Verdadero mientras suena la alarma de la cabina.
@@ -128,7 +145,9 @@ func alarma_activa() -> bool:
 
 
 func _process(delta: float) -> void:
-	_tiempo += delta
+	# Mientras se habla con la Tierra, el viaje no avanza.
+	if not comunicando():
+		_tiempo += delta
 	var avance := clampf(_tiempo / duracion, 0.0, 1.0)
 	# El destino se acerca cada vez más rápido.
 	_camara_vista.position.z = lerpf(10.0, 1.75, ease(avance, 1.6))
@@ -148,6 +167,14 @@ func _process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not viajando:
+		return
+	if comunicando():
+		# Con el panel abierto el mouse es para elegir respuestas. Espacio igual salta el viaje.
+		if event.is_action_pressed("propulsor"):
+			get_viewport().set_input_as_handled()
+			_terminar()
+		elif event is InputEventKey and event.pressed and not event.echo and event.physical_keycode >= KEY_1 and event.physical_keycode <= KEY_4:
+			_monitor.cambiar((event.physical_keycode - KEY_1) as MonitorCabina.Pagina)
 		return
 	if event is InputEventMouseMotion:
 		_mirar.x = clampf(_mirar.x - event.relative.x * sensibilidad_mouse, -75.0, 75.0)
@@ -191,6 +218,7 @@ func _cambiar_plan() -> void:
 	_alarma_hasta = _tiempo + 4.0
 	_monitor.cambiar(MonitorCabina.Pagina.COMBUSTIBLE)
 	Juego.mostrar_mensaje("CAMBIO DE PLAN: el helio-3 solo alcanza para alunizar. Habrá que producirlo en la Luna")
+	_comunicaciones.empezar_cambio_de_plan()
 
 
 func _animar_alarma() -> void:
@@ -210,6 +238,7 @@ func _terminar() -> void:
 		return
 	viajando = false
 	set_process(false)
+	_comunicaciones.cerrar()
 	_alarma.light_energy = 0.0
 	_camara.h_offset = 0.0
 	_camara.v_offset = 0.0

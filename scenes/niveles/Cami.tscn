@@ -26,7 +26,7 @@
 [ext_resource type="Script" uid="uid://cfi2sahj53117" path="res://scripts/nave_en_plataforma.gd" id="23_nave_plataforma"]
 [ext_resource type="PackedScene" path="res://scenes/personajes/astronauta_animado.tscn" id="24_astronauta"]
 [ext_resource type="Script" uid="uid://u6ejf4oe2xnx" path="res://scripts/planta_helio.gd" id="25_planta"]
-[ext_resource type="PackedScene" uid="uid://c4xn3bfnglhx8" path="res://scenes/objetos/EstacionLunar/estacion_lunar.tscn" id="26_estacion"]
+[ext_resource type="PackedScene" uid="uid://c8wm7uyoupwn7" path="res://lunar_station_kodland.tscn" id="26_estacion"]
 [ext_resource type="Script" uid="uid://c38d3oqyyltp" path="res://scripts/estacion_planta.gd" id="27_estacion_planta"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sv3wp"]
@@ -107,7 +107,7 @@ environment = SubResource("Environment_luz")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 278, 0, 286)
 
 [node name="PlataformaLuna" parent="." unique_id=474585162 node_paths=PackedStringArray("nave", "carga_nave") instance=ExtResource("22_plataforma")]
-transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 278.04468, -0.030921172, 285.99283)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 278, 0.05, 286)
 script = ExtResource("23_nave_plataforma")
 nave = NodePath("../NaveLuna")
 carga_nave = NodePath("../CargaNave")
@@ -157,7 +157,7 @@ script = ExtResource("25_planta")
 reactor = NodePath("../ProcesadorHelio")
 
 [node name="EstacionLunar" parent="." unique_id=904553470 node_paths=PackedStringArray("planta", "reactor") instance=ExtResource("26_estacion")]
-transform = Transform3D(2.2, 0, 0, 0, 2.2, 0, 0, 0, 2.2, 354, 0, 200)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 350, 0, 188)
 script = ExtResource("27_estacion_planta")
 planta = NodePath("../PlantaHelio")
 reactor = NodePath("../ProcesadorHelio")

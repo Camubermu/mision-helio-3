@@ -7,10 +7,8 @@ extends Node3D
 ## - Estrellas por la ventana y un leve flotar del pasajero.
 ## Va como hija del ViajeEspacial, que la prende y apaga con empezar() y terminar().
 
+## (La falla y el cambio de plan se hablan con Control en el panel de comunicaciones.)
 const RADIO_LUNA := [
-	[2.0, "Helio-3, aquí Control. Confirmamos falla del motor químico. Mantengan la calma."],
-	[8.0, "Motor de plasma estable. Revisen combustible con la tecla 1 y daños con la 3."],
-	[-1.0, "Helio-3, malas noticias: el helio-3 no alcanza para volver. Nuevo plan: producirlo en la Luna."],
 	[26.0, "Preparen el alunizaje. Toda la Tierra los está mirando. Buena suerte."],
 ]
 const RADIO_TIERRA := [
@@ -93,7 +91,11 @@ func _process(delta: float) -> void:
 	_tiempo += delta
 	_mover_flotantes(delta)
 	_parpadear_luces()
-	_revisar_radio()
+	# La radio espera mientras se habla con la Tierra en el panel de comunicaciones.
+	if _viaje.has_method("comunicando") and _viaje.comunicando():
+		_tiempo -= delta
+	else:
+		_revisar_radio()
 	# En gravedad cero el pasajero flota un poquito en su asiento.
 	_asiento.position = _base_asiento + Vector3(sin(_tiempo * 0.5) * 0.01, sin(_tiempo * 0.8) * 0.015, 0)
 	_llenar_sonido()

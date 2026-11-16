@@ -135,6 +135,7 @@ func _ir_a_la_mision() -> void:
 	var animacion := create_tween()
 	animacion.tween_property(negro, "color:a", 1.0, 1.2)
 	await animacion.finished
+	Juego.set_meta("subio_en_la_base", true)
 	Juego.cambiar_nivel(escena_mision)
 
 
