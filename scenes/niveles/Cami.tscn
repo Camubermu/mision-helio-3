@@ -65,13 +65,13 @@ size = Vector3(7, 29, 6.5)
 [node name="Cami5" type="Node3D" unique_id=230549995]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=649537266]
-transform = Transform3D(-0.5150378, -0.8218692, 0.24344866, 4.9658812e-08, -0.2840153, -0.95881975, 0.8571675, -0.49382836, 0.14627863, 0, 0, 0)
+transform = Transform3D(-0.5150377, -0.82186913, 0.24344866, -0.022671795, -0.2708543, -0.96235335, 0.85686755, -0.5011677, 0.12086694, 0, 0, 0)
 shadow_enabled = true
 shadow_bias = 0.0
 shadow_normal_bias = 0.0
 
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." unique_id=853898183]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 39.03147, 19.788189, 0)
+transform = Transform3D(-0.84294987, -0.49837908, 0.20261747, -0.50444824, 0.86309946, 0.024312606, -0.18699594, -0.081715725, -0.97895604, 39.03147, 19.788189, 0)
 light_energy = 0.35
 shadow_enabled = true
 
