@@ -49,6 +49,8 @@ func _ready() -> void:
 		if not terrenos.is_empty():
 			_terreno = terrenos[0]
 			_terreno.set("collision_radius", 128)
+			if OS.has_feature("web"):
+				_terreno_para_web()
 	viaje.terminado.connect(_al_terminar_viaje)
 	carga_nave.nave_abordada.connect(_viajar.bind(1))
 	_preparar_luna()
@@ -95,6 +97,24 @@ func _preparar_luna() -> void:
 	oxigeno.set_script(load("res://scripts/oxigeno_traje.gd"))
 	oxigeno.set("jugador", jugador)
 	add_child(oxigeno)
+
+
+## En el navegador (WebGL) el shader de Terrain3D es demasiado grande y el suelo
+## no se dibuja. Ahí se muestran mallas horneadas del mismo terreno (cerca, con
+## detalle; lejos, más simple). Terrain3D sigue dando el suelo sólido.
+func _terreno_para_web() -> void:
+	var material := StandardMaterial3D.new()
+	material.albedo_texture = load("res://models/suelo_lunar_3d_0.png")
+	material.albedo_color = Color(0.85, 0.85, 0.85)
+	material.roughness = 1.0
+	material.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	for ruta in ["res://luna_web/terreno_cerca.res", "res://luna_web/terreno_lejos.res"]:
+		var malla := MeshInstance3D.new()
+		malla.mesh = load(ruta)
+		malla.material_override = material
+		superficie.add_child(malla)
+		malla.global_transform = _terreno.global_transform
+	_terreno.visible = false
 
 
 ## De la escena de la superficie solo se usa el terreno: su cielo y sus otros

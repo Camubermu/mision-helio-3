@@ -54,6 +54,40 @@ func _unhandled_input(event: InputEvent) -> void:
 		reiniciar_nivel()
 
 
+# --- Mouse ----------------------------------------------------------------
+
+## true cuando un panel (consola, comunicaciones) necesita ver el cursor.
+var mouse_libre := false
+
+
+## Esconde el cursor para mirar con el mouse.
+func capturar_mouse() -> void:
+	mouse_libre = false
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+
+## Muestra el cursor para usar un panel.
+func soltar_mouse() -> void:
+	mouse_libre = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+
+## En el navegador el cursor solo se puede atrapar después de un clic
+## (y se suelta con Esc): con cualquier clic se vuelve a atrapar.
+func _input(event: InputEvent) -> void:
+	if mouse_libre or Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		return
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		# El navegador rechaza pedidos muy seguidos: como mucho uno por segundo.
+		var ahora := Time.get_ticks_msec()
+		if ahora - _ultimo_pedido_mouse < 1000:
+			return
+		_ultimo_pedido_mouse = ahora
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+var _ultimo_pedido_mouse := -1000
+
+
 # --- Recursos -------------------------------------------------------------
 
 ## Gasta combustible. Devuelve false si ya no queda.

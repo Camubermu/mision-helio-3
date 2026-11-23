@@ -136,7 +136,7 @@ func _abrir() -> void:
 
 	if _jugador:
 		_jugador.process_mode = Node.PROCESS_MODE_DISABLED
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	Juego.soltar_mouse()
 
 
 var _texto_accion := ""
@@ -152,7 +152,7 @@ func _cerrar() -> void:
 	_ocupado = false
 	if _jugador:
 		_jugador.process_mode = Node.PROCESS_MODE_INHERIT
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	Juego.capturar_mouse()
 
 
 func _hacer_accion() -> void:

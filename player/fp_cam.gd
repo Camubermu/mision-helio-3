@@ -1,9 +1,9 @@
 extends Node3D
 
-var sensitivity = 0.2
+var sensitivity = 0.3
 
 func _ready() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	Juego.capturar_mouse()
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:

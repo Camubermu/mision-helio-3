@@ -97,7 +97,7 @@ func _empezar(conversacion: Dictionary) -> void:
 	for hijo in _historial.get_children():
 		hijo.queue_free()
 	_panel.visible = true
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	Juego.soltar_mouse()
 	_ir_a("inicio")
 
 
@@ -151,7 +151,7 @@ func _terminar() -> void:
 		return
 	_panel.visible = false
 	activa = false
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	Juego.capturar_mouse()
 	termino.emit()
 
 
@@ -161,7 +161,7 @@ func cerrar() -> void:
 		return
 	_panel.visible = false
 	activa = false
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	Juego.capturar_mouse()
 
 
 func _linea(quien: String, texto: String, color: Color) -> void:

@@ -18,7 +18,7 @@ extends CharacterBody3D
 ## Inclinación inicial de la cámara (grados, negativo = mira desde arriba).
 @export var inclinacion_camara := -18.0
 ## Sensibilidad del mouse para girar la cámara.
-@export var sensibilidad_mouse := 0.2
+@export var sensibilidad_mouse := 0.3
 ## Qué tan fuerte tiembla al excavar (0 = nada, 1 = normal, 2 = el doble).
 @export var fuerza_vibracion := 1.0
 

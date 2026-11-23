@@ -1,40 +1,40 @@
-# Misión Helio-3
+# Mission Helium-3
 
-Juego para el NASA Space Apps Challenge 2026, hecho en Godot 4 (GDScript).
+Game for the NASA Space Apps Challenge 2026, made with Godot 4 (GDScript).
 
-## Historia
+## Story
 
-Un astronauta construye su cohete en la Tierra para viajar a la Luna e investigar el helio-3, un gas que el viento solar ha depositado durante miles de millones de años en el suelo lunar y que podría ser combustible para la energía de fusión del futuro.
+An astronaut builds a rocket on Earth to travel to the Moon and research helium-3, a gas that the solar wind has been depositing in the lunar soil for billions of years and that could be fuel for the fusion energy of the future.
 
-El plan es despegar con motores de combustible químico y, ya en el espacio, encender el motor de plasma para probar su viabilidad en viajes largos. Sin embargo, en pleno trayecto se presenta una falla en el reactor que lo alimenta y la nave se queda sin energía eléctrica. Esto obliga al astronauta a dirigirse a la Luna y alunizar de emergencia con el poco combustible químico que le queda.
+The plan is to launch with chemical-fuel engines and, once in space, switch on the plasma engine to test whether it works for long trips. However, halfway through the trip the reactor that powers it fails and the ship runs out of electrical power. This forces the astronaut to head to the Moon and make an emergency landing with the little chemical fuel left.
 
-Para sobrevivir y volver a la Tierra, debe explorar la superficie, excavar regolito y calentarlo para extraer el helio-3. Con ese mismo recurso recarga el reactor y repara el motor de plasma. Al final despega de la Luna y regresa sano y salvo a la Tierra con las muestras, demostrando que el helio-3 podría ser una fuente de energía para la humanidad.
+To survive and return to Earth, the astronaut must explore the surface, dig regolith and heat it to extract helium-3. With that same resource the astronaut refuels the reactor and repairs the plasma engine. In the end the ship lifts off from the Moon and returns safely to Earth with the samples, showing that helium-3 could be an energy source for humanity.
 
-> Nota: los reactores de fusión con helio-3 todavía no existen; en el juego es tecnología del futuro.
+> Note: helium-3 fusion reactors do not exist yet; in the game they are future technology.
 
-## Cómo abrir el proyecto
+## How to open the project
 
-1. Instala **Godot 4** (versión estándar, no .NET). Todo el equipo debe usar **la misma versión**: ver `docs/VERSION.md`.
-2. Clona el repo:
+1. Install **Godot 4** (standard version, not .NET). The whole team must use **the same version**: see `docs/VERSION.md`.
+2. Clone the repo:
    ```
    git clone https://github.com/Camubermu/mision-helio-3.git
    ```
-3. Abre Godot → **Import** → selecciona el archivo `project.godot` de esta carpeta → **Import & Edit**.
-4. (Opcional) VS Code: instala la extensión recomendada **godot-tools** y configura Godot en *Editor Settings → Text Editor → External*.
+3. Open Godot → **Import** → select the `project.godot` file in this folder → **Import & Edit**.
+4. (Optional) VS Code: install the recommended **godot-tools** extension and set Godot in *Editor Settings → Text Editor → External*.
 
-## Estructura
+## Structure
 
-| Carpeta | Contenido |
+| Folder | Contents |
 | --- | --- |
-| `scenes/niveles/` | Una escena por nivel |
-| `scenes/ui/` | Menús, HUD, pantallas de historia |
-| `scripts/` | Scripts GDScript compartidos |
-| `assets/` | Sprites, audio y fuentes |
-| `docs/` | Guion, notas y versión de Godot |
+| `scenes/niveles/` | One scene per level |
+| `scenes/ui/` | Menus, HUD, story screens |
+| `scripts/` | Shared GDScript scripts |
+| `assets/` | Sprites, audio and fonts |
+| `docs/` | Script, notes and Godot version |
 
-## Reglas para trabajar en equipo
+## Rules for teamwork
 
-- **Haz `git pull` antes de empezar** y haz commits pequeños y seguidos.
-- **Cada persona trabaja en su propia escena.** Dos personas editando el mismo `.tscn` a la vez generan conflictos difíciles de resolver.
-- No subas la carpeta `.godot/` (ya está en `.gitignore`).
-- Nombres de archivos en `snake_case`: `nivel_aterrizaje.tscn`, `rover.gd`.
+- **Run `git pull` before you start** and make small, frequent commits.
+- **Each person works in their own scene.** Two people editing the same `.tscn` at the same time create conflicts that are hard to fix.
+- Do not upload the `.godot/` folder (it is already in `.gitignore`).
+- File names in `snake_case`: `nivel_aterrizaje.tscn`, `rover.gd`.

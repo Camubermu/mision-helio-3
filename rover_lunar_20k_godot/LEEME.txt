@@ -1,1 +1,1 @@
-Godot 4: coloca los archivos GLB, TSCN y GD en la raiz de res:// o juntos en una misma carpeta y abre RoverLunar20K.tscn. Control: flechas. Necesita suelo con colision. El brazo y las orugas son visuales sin animacion.
+Godot 4: place the GLB, TSCN and GD files in the root of res:// or together in the same folder and open RoverLunar20K.tscn. Controls: arrow keys. It needs a floor with collision. The arm and the tracks are visual only, without animation.

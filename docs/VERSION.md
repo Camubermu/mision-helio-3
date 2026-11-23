@@ -1,5 +1,5 @@
-# Versión de Godot del equipo
+# Team Godot version
 
-Versión acordada: **Godot 4.7.2 (estándar)**
+Agreed version: **Godot 4.7.2 (standard)**
 
-Todos deben usar exactamente esta versión para evitar que el proyecto se convierta o cambie archivos sin querer.
+Everyone must use exactly this version so the project is not converted and files are not changed by accident.

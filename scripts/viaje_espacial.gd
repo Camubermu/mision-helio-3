@@ -27,7 +27,7 @@ enum Destino { LUNA, TIERRA }
 ## Segundo del viaje a la Luna en que se avisa el cambio de plan.
 @export var momento_cambio_plan := 15.0
 ## Sensibilidad del mouse para mirar dentro de la cabina.
-@export var sensibilidad_mouse := 0.15
+@export var sensibilidad_mouse := 0.22
 ## Nombre de la pieza del cohete donde se ve el destino.
 @export var nombre_pantalla := "Pantalla_curva"
 ## Nombre de la pieza del cohete donde está el monitor con botones.
