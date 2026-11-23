@@ -87,10 +87,10 @@ func empezar(nuevo_destino: Destino) -> void:
 	var hacia_la_luna := destino == Destino.LUNA
 	Juego.mostrar_telemetria("")
 	if hacia_la_luna:
-		Juego.mostrar_mensaje("Fase 2: despegue desde la base con el motor químico")
+		Juego.mostrar_mensaje("Phase 2: launch from the base with the chemical engine")
 		await _cinematica.despegar_de_la_tierra()
 	else:
-		Juego.mostrar_mensaje("Fase 5: prueba del motor de helio-3 para despegar de la Luna")
+		Juego.mostrar_mensaje("Phase 5: helium-3 engine test to lift off from the Moon")
 		await _cinematica.despegar_de_la_luna()
 	if not is_inside_tree():
 		return
@@ -99,10 +99,10 @@ func empezar(nuevo_destino: Destino) -> void:
 	await _fin_cabina
 
 	if hacia_la_luna:
-		Juego.mostrar_mensaje("Alunizaje solo con el motor de helio-3...")
+		Juego.mostrar_mensaje("Moon landing with only the helium-3 engine...")
 		await _cinematica.alunizar()
 	else:
-		Juego.mostrar_mensaje("Aterrizando en la base con el motor de helio-3...")
+		Juego.mostrar_mensaje("Landing at the base with the helium-3 engine...")
 		await _cinematica.aterrizar_en_la_tierra()
 	if not is_inside_tree():
 		return
@@ -122,11 +122,11 @@ func _empezar_cabina() -> void:
 	if destino == Destino.LUNA:
 		_monitor.cambiar(MonitorCabina.Pagina.DANOS)
 		_alarma_hasta = 6.0
-		Juego.mostrar_mensaje("El motor químico falló. Seguimos con el motor de plasma de helio-3. Teclas 1-4: revisa el monitor")
+		Juego.mostrar_mensaje("The chemical engine failed. We continue with the helium-3 plasma engine. Keys 1-4: check the monitor")
 	else:
 		_monitor.cambiar(MonitorCabina.Pagina.MOTORES)
 		_alarma_hasta = 0.0
-		Juego.mostrar_mensaje("¡El motor de helio-3 funcionó! Rumbo a casa. Teclas 1-4: revisa el monitor")
+		Juego.mostrar_mensaje("The helium-3 engine worked! Heading home. Keys 1-4: check the monitor")
 	if _cabina:
 		_cabina.empezar(destino == Destino.LUNA, momento_cambio_plan)
 	set_process(true)
@@ -217,7 +217,7 @@ func _cambiar_plan() -> void:
 	_plan_cambiado = true
 	_alarma_hasta = _tiempo + 4.0
 	_monitor.cambiar(MonitorCabina.Pagina.COMBUSTIBLE)
-	Juego.mostrar_mensaje("CAMBIO DE PLAN: el helio-3 solo alcanza para alunizar. Habrá que producirlo en la Luna")
+	Juego.mostrar_mensaje("CHANGE OF PLAN: the helium-3 is only enough to land on the Moon. We will have to produce it there")
 	_comunicaciones.empezar_cambio_de_plan()
 
 
@@ -325,13 +325,13 @@ func _crear_datos_en_vista() -> void:
 
 func _actualizar_vista(avance: float) -> void:
 	var hacia_la_luna := destino == Destino.LUNA
-	_datos_vista.text = "VELOCIDAD %s km/h      LLEGADA EN %s      DISTANCIA %s km" % [
+	_datos_vista.text = "SPEED %s km/h      ARRIVAL IN %s      DISTANCE %s km" % [
 		Datos.con_puntos(Datos.velocidad(hacia_la_luna, avance)),
 		Datos.falta(avance),
 		Datos.con_puntos(Datos.distancia(avance)),
 	]
-	(_vista.get_node("Punta0") as Label).text = "TIERRA" if hacia_la_luna else "LUNA"
-	(_vista.get_node("Punta1") as Label).text = "LUNA" if hacia_la_luna else "TIERRA"
+	(_vista.get_node("Punta0") as Label).text = "EARTH" if hacia_la_luna else "MOON"
+	(_vista.get_node("Punta1") as Label).text = "MOON" if hacia_la_luna else "EARTH"
 	_marca.position = Vector2(_barra.position.x + _barra.size.x * avance - 7, 217)
 	_curiosidad.text = Datos.curiosidad(hacia_la_luna, _tiempo)
 

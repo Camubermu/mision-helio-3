@@ -5,38 +5,38 @@ extends CanvasLayer
 ## y las que empiezan con "#" son títulos).
 
 @export var lineas: PackedStringArray = [
-	"#MISIÓN HELIO-3",
-	"Un viaje a la Luna para traer helio-3, el combustible del futuro",
+	"#MISSION HELIUM-3",
+	"A trip to the Moon to bring back helium-3, the fuel of the future",
 	"",
 	"",
-	"#EQUIPO",
+	"#TEAM",
 	"Kodland students team",
 	"",
-	"Estudiantes de Kodland, escuela de programación",
+	"Kodland programming school",
 	"",
 	"",
-	"#LA CIENCIA DE LA MISIÓN",
-	"El helio-3 llega a la Luna con el viento solar",
-	"Se extrae del regolito: clasificar, calentar a 700-1.000 °C,",
-	"capturar los gases, separar los isótopos y almacenar",
-	"Algún día podría dar energía limpia con reactores de fusión",
+	"#THE SCIENCE OF THE MISSION",
+	"Helium-3 reaches the Moon with the solar wind",
+	"It is extracted from the regolith: sort, heat to 700-1,000 °C,",
+	"capture the gases, separate the isotopes and store",
+	"One day it could give clean energy with fusion reactors",
 	"",
 	"",
-	"#HERRAMIENTAS",
-	"Motor de juego: Godot 4",
-	"Terreno lunar: Terrain3D",
-	"Animaciones del astronauta: Mixamo",
-	"Modelos 3D: hechos por el equipo",
+	"#TOOLS",
+	"Game engine: Godot 4",
+	"Lunar terrain: Terrain3D",
+	"Astronaut animations: Mixamo",
+	"3D models: made by the team",
 	"",
 	"",
-	"#GRACIAS",
+	"#THANKS",
 	"NASA Space Apps Challenge",
-	"Kodland, nuestra escuela de programación",
-	"Y a ti, por completar la misión",
+	"Kodland, our programming school",
+	"And you, for completing the mission",
 	"",
 	"",
 	"",
-	"#FIN",
+	"#THE END",
 ]
 ## Segundos que tardan los créditos en pasar.
 @export var duracion := 38.0
@@ -78,7 +78,7 @@ func _ready() -> void:
 		_columna.add_child(etiqueta)
 
 	_aviso = Label.new()
-	_aviso.text = "Presiona Enter para jugar otra vez"
+	_aviso.text = "Press Enter to play again"
 	_aviso.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_aviso.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
 	_aviso.add_theme_font_size_override("font_size", 26)

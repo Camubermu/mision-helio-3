@@ -75,8 +75,8 @@ func despegar_de_la_tierra() -> void:
 	_preparar(false)
 	_poner_brazos(false)
 	_camara.position = Vector3(-45, 6, 9)
-	_titulo.text = "MOTOR QUÍMICO · DESPEGUE DESDE LA BASE"
-	_nombre_barra_2.text = "Altitud (100 km)"
+	_titulo.text = "CHEMICAL ENGINE · LAUNCH FROM THE BASE"
+	_nombre_barra_2.text = "Altitude (100 km)"
 	var duracion := duracion_despegue_tierra
 	# Cuenta regresiva mientras los brazos de la plataforma sueltan el cohete.
 	var encendido_en := 5.0
@@ -96,34 +96,34 @@ func despegar_de_la_tierra() -> void:
 		_polvo.emitting = encendido and _altura() < 25.0
 		if t < encendido_en:
 			var falta := 5 - int(t)
-			_estado.text = "Cuenta atrás: T-%d%s" % [falta, " · soltando amarras" if falta <= 3 else ""]
+			_estado.text = "Countdown: T-%d%s" % [falta, " · releasing clamps" if falta <= 3 else ""]
 			_estado.modulate = Color.WHITE
 		elif falla:
-			_estado.text = "¡FALLA DEL MOTOR QUÍMICO! Fuga de combustible"
+			_estado.text = "CHEMICAL ENGINE FAILURE! Fuel leak"
 			_estado.modulate = Color(1, 0.3, 0.25) if fmod(t, 0.5) < 0.3 else Color(1, 0.8, 0.3)
 		else:
-			_estado.text = "Saliendo de la atmósfera..."
+			_estado.text = "Leaving the atmosphere..."
 			_estado.modulate = Color(0.6, 0.9, 1)
-		_lineas.text = "Altitud: %d km   Combustible químico: %d %%" % [altitud * 100.0, 0 if falla else 100 - int(t * 6)]
+		_lineas.text = "Altitude: %d km   Chemical fuel: %d %%" % [altitud * 100.0, 0 if falla else 100 - int(t * 6)]
 		_barra_1.value = 100.0 if encendido else 0.0
 		_barra_2.value = altitud * 100.0
 		_seguir_cohete(0.07 if encendido and _altura() < 40.0 else 0.02 if falla else 0.0)
 		if not await _siguiente_cuadro():
 			return
 	if not _saltar:
-		Juego.mostrar_mensaje("¡El motor químico falló al salir de la atmósfera!")
+		Juego.mostrar_mensaje("The chemical engine failed when leaving the atmosphere!")
 	_terminar()
 
 
 ## El cohete baja sobre la Luna frenando solo con el motor de plasma de helio-3.
 func alunizar() -> void:
 	_preparar(true)
-	_titulo.text = "MOTOR DE HELIO-3 · ALUNIZAJE"
+	_titulo.text = "HELIUM-3 ENGINE · MOON LANDING"
 	await _bajar(Vector3(34, 6, 30), 10.0, 4.0)
 	if not is_inside_tree():
 		return
 	if not _saltar:
-		Juego.mostrar_mensaje("Alunizaje logrado con lo último del helio-3")
+		Juego.mostrar_mensaje("Moon landing achieved with the last of the helium-3")
 	_terminar(true)
 
 
@@ -133,8 +133,8 @@ func despegar_de_la_luna() -> void:
 	_poner_brazos(false)
 	_mover_brazos(true, 3.0)
 	_camara.position = Vector3(-38, 8, 30)
-	_titulo.text = "MOTOR DE HELIO-3 · DESPEGUE LUNAR"
-	_nombre_barra_2.text = "Velocidad de escape"
+	_titulo.text = "HELIUM-3 ENGINE · LUNAR LAUNCH"
+	_nombre_barra_2.text = "Escape velocity"
 	var duracion := duracion_despegue_luna
 	var t := 0.0
 	var altura := 0.0
@@ -156,18 +156,18 @@ func despegar_de_la_luna() -> void:
 		_polvo.emitting = t > 1.0 and altura < 20.0
 		_barra_1.value = empuje
 		_barra_2.value = escape * 100.0
-		_lineas.text = "Temperatura: %d °C   Velocidad: %s de 2,38 km/s" % [temperatura, ("%.2f" % (escape * 2.38)).replace(".", ",")]
+		_lineas.text = "Temperature: %d °C   Speed: %s of 2.38 km/s" % [temperatura, "%.2f" % (escape * 2.38)]
 		if t < 1.0:
-			_estado.text = "Soltando amarras. Encendiendo el motor de helio-3..."
+			_estado.text = "Releasing clamps. Starting the helium-3 engine..."
 			_estado.modulate = Color.WHITE
 		elif escape < 1.0 and empuje > 95.0:
-			_estado.text = "¡MOTOR AL LÍMITE! Empuje 100 %"
+			_estado.text = "ENGINE AT LIMIT! Thrust 100 %"
 			_estado.modulate = Color(1, 0.35, 0.2) if fmod(t, 0.5) < 0.3 else Color(1, 0.85, 0.3)
 		elif escape < 1.0:
-			_estado.text = "Subiendo potencia..."
+			_estado.text = "Increasing power..."
 			_estado.modulate = Color(1, 0.85, 0.3)
 		else:
-			_estado.text = "¡GRAVEDAD LUNAR VENCIDA! El motor de helio-3 funciona"
+			_estado.text = "LUNAR GRAVITY OVERCOME! The helium-3 engine works"
 			_estado.modulate = Color(0.4, 1, 0.5)
 		_seguir_cohete(0.09 if empuje > 95.0 and escape < 1.0 else 0.03 if t > 1.0 else 0.0)
 		if not await _siguiente_cuadro():
@@ -178,12 +178,12 @@ func despegar_de_la_luna() -> void:
 ## El cohete vuelve a la base (level 1) frenando con el motor de helio-3.
 func aterrizar_en_la_tierra() -> void:
 	_preparar(false)
-	_titulo.text = "MOTOR DE HELIO-3 · ATERRIZAJE EN LA BASE"
+	_titulo.text = "HELIUM-3 ENGINE · LANDING AT THE BASE"
 	await _bajar(Vector3(-42, 4, 9), 60.0, 30.0)
 	if not is_inside_tree():
 		return
 	if not _saltar:
-		Juego.mostrar_mensaje("¡Aterrizaje en la base! Misión cumplida: el motor de helio-3 funcionó")
+		Juego.mostrar_mensaje("Landed at the base! Mission accomplished: the helium-3 engine worked")
 	_terminar(true)
 
 
@@ -191,7 +191,7 @@ func aterrizar_en_la_tierra() -> void:
 
 func _bajar(lugar_camara: Vector3, helio_inicio: float, helio_fin: float) -> void:
 	_camara.position = lugar_camara
-	_nombre_barra_2.text = "Helio-3 en tanque"
+	_nombre_barra_2.text = "Helium-3 in tank"
 	# Llega con los brazos abiertos; al tocar la cubierta, los brazos lo sujetan.
 	_poner_brazos(true)
 	var sujetar := 3.0
@@ -211,8 +211,8 @@ func _bajar(lugar_camara: Vector3, helio_inicio: float, helio_fin: float) -> voi
 		_polvo.emitting = en_el_aire and _altura() < 18.0
 		_barra_1.value = lerpf(60.0, 85.0, avance) if en_el_aire else 0.0
 		_barra_2.value = lerpf(helio_inicio, helio_fin, avance)
-		_lineas.text = "Altura: %d m   Helio-3: %d %%" % [_altura(), _barra_2.value]
-		_estado.text = "Frenando..." if en_el_aire else "Sobre la plataforma. Motor apagado. Brazos sujetando"
+		_lineas.text = "Height: %d m   Helium-3: %d %%" % [_altura(), _barra_2.value]
+		_estado.text = "Braking..." if en_el_aire else "On the pad. Engine off. Arms holding"
 		_estado.modulate = Color(1, 0.85, 0.3) if en_el_aire else Color(0.4, 1, 0.5)
 		_seguir_cohete(0.04 if en_el_aire and _altura() < 20.0 else 0.0)
 		if not await _siguiente_cuadro():
@@ -385,7 +385,7 @@ func _armar_panel() -> void:
 	_titulo.add_theme_font_size_override("font_size", 24)
 	_titulo.add_theme_color_override("font_color", Color(0.5, 0.95, 1.0))
 	columna.add_child(_titulo)
-	_barra_1 = _fila_barra(columna, "Empuje del motor", Color(1.0, 0.55, 0.2))[1]
+	_barra_1 = _fila_barra(columna, "Engine thrust", Color(1.0, 0.55, 0.2))[1]
 	var fila_2: Array = _fila_barra(columna, "", Color(0.3, 0.85, 1.0))
 	_nombre_barra_2 = fila_2[0]
 	_barra_2 = fila_2[1]

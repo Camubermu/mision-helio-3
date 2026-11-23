@@ -58,7 +58,7 @@ func actualizar() -> void:
 	var puntos := ""
 	for i in lista.size():
 		puntos += "●  " if i == _pagina else "○  "
-	_pie.text = "%sPágina %d de %d  ·  cambia sola (E junto a la pantalla: siguiente)" % [puntos, _pagina + 1, lista.size()]
+	_pie.text = "%sPage %d of %d  ·  changes automatically (E next to the screen: next)" % [puntos, _pagina + 1, lista.size()]
 	_vista.render_target_update_mode = SubViewport.UPDATE_ONCE
 
 
@@ -75,47 +75,47 @@ func _ajustar_letra() -> void:
 
 func _texto_por_que() -> String:
 	return "\n".join([
-		"[color=#73d9ff][font_size=58][b]¿POR QUÉ ESTA MISIÓN?[/b][/font_size][/color]",
+		"[color=#73d9ff][font_size=58][b]WHY THIS MISSION?[/b][/font_size][/color]",
 		"",
-		"La humanidad usa cada día [b]más energía eléctrica[/b]: hogares, escuelas, hospitales, fábricas, computadoras y autos eléctricos.",
+		"Every day humanity uses [b]more electricity[/b]: homes, schools, hospitals, factories, computers and electric cars.",
 		"",
-		"Hoy gran parte sale de quemar carbón, petróleo y gas, que contaminan el aire y calientan el planeta. Las centrales nucleares actuales no echan humo, pero dejan [b]desechos radiactivos[/b] que son peligrosos por miles de años.",
+		"Much of it still comes from burning coal, oil and gas, which pollute the air and warm the planet. Today's nuclear power plants do not produce smoke, but they leave [b]radioactive waste[/b] that is dangerous for thousands of years.",
 		"",
-		"Por eso los científicos investigan [color=#73ff8c][b]fuentes de energía alternativas, limpias y sin desechos radiactivos[/b][/color].",
+		"That is why scientists research [color=#73ff8c][b]alternative energy sources that are clean and leave no radioactive waste[/b][/color].",
 		"",
-		"Una de las más prometedoras es la [b]fusión con helio-3[/b]: libera muchísima energía y casi no deja residuos radiactivos. El problema: en la Tierra casi no hay helio-3. En la Luna, el viento del Sol lo fue dejando en el suelo durante miles de millones de años.",
+		"One of the most promising is [b]fusion with helium-3[/b]: it releases a huge amount of energy and leaves almost no radioactive waste. The problem: there is almost no helium-3 on Earth. On the Moon, the solar wind has been leaving it in the soil for billions of years.",
 		"",
-		"[color=#ffd95a][b]TU MISIÓN:[/b] viajar a la Luna, producir helio-3 y traer una muestra para que los científicos lo investiguen.[/color]",
+		"[color=#ffd95a][b]YOUR MISSION:[/b] travel to the Moon, produce helium-3 and bring back a sample for scientists to research.[/color]",
 	])
 
 
 func _texto_plan() -> String:
 	return "\n".join([
-		"[color=#73d9ff][font_size=58][b]PLAN DE LA MISIÓN HELIO-3[/b][/font_size][/color]",
+		"[color=#73d9ff][font_size=58][b]MISSION HELIUM-3 PLAN[/b][/font_size][/color]",
 		"",
-		"[b]1.[/b] Despegue desde esta base con el motor químico. Si falla, el motor de plasma de helio-3 toma el control.",
+		"[b]1.[/b] Launch from this base with the chemical engine. If it fails, the helium-3 plasma engine takes over.",
 		"",
-		"[b]2.[/b] Viaje de 3 días hasta la Luna (384.400 km). En la cabina revisa combustible, motores y daños.",
+		"[b]2.[/b] 3-day trip to the Moon (384,400 km). In the cockpit, check fuel, engines and damage.",
 		"",
-		"[b]3.[/b] Alunizaje en la plataforma. Baja por la escalera de la torre.",
+		"[b]3.[/b] Land on the lunar pad. Climb down the tower stairs.",
 		"",
-		"[b]4.[/b] Con el vehículo extractor excava regolito y déjalo en la tolva del reactor.",
+		"[b]4.[/b] Dig regolith with the mining rover and drop it in the reactor hopper.",
 		"",
-		"[b]5.[/b] En la estación lunar sigue las etapas en sus salas: clasificar (Laboratorio), calentar a 700-1.000 °C (Sala del horno), capturar los gases, separar el helio-3 (Laboratorio criogénico) y envasarlo (Almacén). El oxígeno se recarga en la Esclusa.",
+		"[b]5.[/b] In the lunar station, follow the stages in their rooms: sort (Laboratory), heat to 700-1,000 °C (Furnace room), capture the gases, separate the helium-3 (Cryogenic lab) and pack it (Storage). Refill oxygen in the Airlock.",
 		"",
-		"[b]6.[/b] Carga entre 15 y 20 cápsulas en la nave (ella te dirá cuántas), sube por la escalera y regresa a esta base. ¡Vigila el oxígeno del traje!",
+		"[b]6.[/b] Load 15 to 20 capsules into the ship (it will tell you how many), climb the stairs and return to this base. Watch your suit oxygen!",
 	])
 
 
 func _texto_resultado() -> String:
 	if not Juego.has_meta("resultado_mision"):
 		return "\n".join([
-			"[color=#73d9ff][font_size=58][b]RESULTADO DE LA MISIÓN[/b][/font_size][/color]",
+			"[color=#73d9ff][font_size=58][b]MISSION RESULT[/b][/font_size][/color]",
 			"",
-			"[color=#ffd95a]Misión en preparación.[/color]",
+			"[color=#ffd95a]Mission in preparation.[/color]",
 			"",
-			"Todavía no hay resultados.",
-			"Completa la misión y regresa a esta base: aquí verás lo que lograste.",
+			"No results yet.",
+			"Complete the mission and return to this base: you will see what you achieved here.",
 		])
 	var datos: Dictionary = Juego.get_meta("resultado_mision")
 	var capsulas: int = datos.get("capsulas", 0)
@@ -124,22 +124,22 @@ func _texto_resultado() -> String:
 	var extra: int = datos.get("capsulas_extra", 0)
 	var minutos: int = datos.get("minutos", 0)
 	var lineas := [
-		"[color=#73d9ff][font_size=58][b]RESULTADO DE LA MISIÓN[/b][/font_size][/color]",
+		"[color=#73d9ff][font_size=58][b]MISSION RESULT[/b][/font_size][/color]",
 		"",
-		"[color=#73ff8c][font_size=44][b]¡MISIÓN CUMPLIDA![/b][/font_size][/color]",
+		"[color=#73ff8c][font_size=44][b]MISSION ACCOMPLISHED![/b][/font_size][/color]",
 		"",
-		"Cápsulas de helio-3 traídas: [b]%d de %d[/b]" % [capsulas, necesarias],
-		"Helio-3 que quedó en el tanque del motor: [b]%d %%[/b]" % tanque,
+		"Helium-3 capsules brought back: [b]%d of %d[/b]" % [capsulas, necesarias],
+		"Helium-3 left in the engine tank: [b]%d %%[/b]" % tanque,
 	]
 	if extra > 0:
-		lineas.append("Cápsulas extra recogidas por el astronauta: [b]%d[/b]" % extra)
+		lineas.append("Extra capsules collected by the astronaut: [b]%d[/b]" % extra)
 	if minutos > 0:
-		lineas.append("Duración de la misión: [b]%d min[/b]" % minutos)
+		lineas.append("Mission duration: [b]%d min[/b]" % minutos)
 	lineas.append_array([
 		"",
-		"El motor de plasma de helio-3 funcionó: despegó de la Luna y aterrizó en la base.",
+		"The helium-3 plasma engine worked: it lifted off from the Moon and landed at the base.",
 		"",
-		"[color=#ffd95a][b]El combustible de helio-3 sobrante se usará en investigaciones energéticas[/b][/color] para desarrollar energía limpia de fusión.",
+		"[color=#ffd95a][b]The leftover helium-3 fuel will be used for energy research[/b][/color] to develop clean fusion energy.",
 	])
 	return "\n".join(lineas)
 

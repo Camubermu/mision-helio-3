@@ -81,7 +81,7 @@ func subir(jugador: Node3D = null) -> void:
 	if jugador:
 		jugador.visible = false
 		jugador.process_mode = Node.PROCESS_MODE_DISABLED
-	Juego.mostrar_mensaje("Subiendo a la nave... (Espacio para saltar la escena)")
+	Juego.mostrar_mensaje("Boarding the ship... (Space to skip the scene)")
 	await _recorrer(_camino(), false)
 	if not is_inside_tree():
 		return
@@ -95,7 +95,7 @@ func bajar() -> void:
 	if ocupada:
 		return
 	ocupada = true
-	Juego.mostrar_mensaje("Bajando de la nave... (Espacio para saltar la escena)")
+	Juego.mostrar_mensaje("Leaving the ship... (Space to skip the scene)")
 	var camino := _camino()
 	camino.reverse()
 	await _recorrer(camino, true)
@@ -281,7 +281,7 @@ func _armar() -> void:
 	add_child(piso_brazo)
 	# Letrero al pie de la escalera.
 	var letrero := Label3D.new()
-	letrero.text = "ACCESO A LA NAVE\n↑ 15 m"
+	letrero.text = "SHIP ACCESS\n↑ 15 m"
 	letrero.font_size = 64
 	letrero.pixel_size = 0.006
 	letrero.modulate = AMARILLO

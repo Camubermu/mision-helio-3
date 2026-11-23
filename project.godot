@@ -14,8 +14,8 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
-config/name="Misión Helio-3"
-config/description="Juego para el NASA Space Apps Challenge 2026: viaja a la Luna, extrae helio-3 y vuelve a la Tierra."
+config/name="Mission Helium-3"
+config/description="Game for the NASA Space Apps Challenge 2026: travel to the Moon, extract helium-3 and return to Earth."
 run/main_scene="uid://dfe5apeh28ijj"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 boot_splash/bg_color=Color(0.02, 0.04, 0.1, 1)

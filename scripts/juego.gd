@@ -116,7 +116,7 @@ func mostrar_telemetria(texto: String) -> void:
 func cambiar_nivel(ruta: String) -> void:
 	if ruta.is_empty() or not ResourceLoader.exists(ruta):
 		push_error("No existe el nivel: '%s'" % ruta)
-		mostrar_mensaje("Falta el siguiente nivel")
+		mostrar_mensaje("The next level is missing")
 		return
 	_limpiar_pantalla()
 	_guardar_inicio_nivel()

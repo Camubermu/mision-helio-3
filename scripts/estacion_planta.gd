@@ -20,17 +20,17 @@ const Consola = preload("res://scripts/consola_planta.gd")
 
 ## Salas: nombre, centro (metros del modelo) y si llevan luz.
 const SALAS := {
-	"LABORATORIO": Vector3(-15, 0, 0),
-	"LABORATORIO CRIOGÉNICO": Vector3(-32, 0, 0),
-	"CAPTURA DE GASES": Vector3(-17, 0, -15),
-	"INVERNADERO": Vector3(0, 0, -15),
-	"COMUNICACIONES": Vector3(16, 0, -15),
-	"DORMITORIOS": Vector3(15, 0, 0),
-	"MÓDULO DE VIDA": Vector3(32, 0, 0),
-	"ALMACÉN": Vector3(-9.5, 0, 10),
-	"SALA DEL HORNO": Vector3(9.5, 0, 10),
-	"ESCLUSA": Vector3(0, 0, 13),
-	"NÚCLEO": Vector3(0, 0, 0),
+	"LABORATORY": Vector3(-15, 0, 0),
+	"CRYOGENIC LAB": Vector3(-32, 0, 0),
+	"GAS CAPTURE": Vector3(-17, 0, -15),
+	"GREENHOUSE": Vector3(0, 0, -15),
+	"COMMUNICATIONS": Vector3(16, 0, -15),
+	"CREW QUARTERS": Vector3(15, 0, 0),
+	"LIVING MODULE": Vector3(32, 0, 0),
+	"STORAGE": Vector3(-9.5, 0, 10),
+	"FURNACE ROOM": Vector3(9.5, 0, 10),
+	"AIRLOCK": Vector3(0, 0, 13),
+	"CORE": Vector3(0, 0, 0),
 }
 ## Consolas de cada etapa: [lugar, hacia dónde mira el frente].
 const CONSOLAS := {
@@ -150,7 +150,7 @@ func _crear_recarga_oxigeno(escena: Node) -> Node3D:
 	boton.position = Vector3(0.25, 0.9, 0.14)
 	base.add_child(boton)
 	var letrero := Label3D.new()
-	letrero.text = "RECARGA DE\nOXÍGENO"
+	letrero.text = "OXYGEN\nREFILL"
 	letrero.font_size = 40
 	letrero.pixel_size = 0.0025
 	letrero.modulate = Color(0.5, 0.95, 1.0)
@@ -160,7 +160,7 @@ func _crear_recarga_oxigeno(escena: Node) -> Node3D:
 	var zona := Area3D.new()
 	zona.name = "ZonaRecarga"
 	zona.set_script(load("res://scripts/zona_e.gd"))
-	zona.set("texto_ayuda", "Presiona E para recargar el oxígeno del traje")
+	zona.set("texto_ayuda", "Press E to refill your suit oxygen")
 	var forma := CollisionShape3D.new()
 	var figura := BoxShape3D.new()
 	figura.size = Vector3(2.2, 2.5, 2.4)
@@ -174,7 +174,7 @@ func _crear_recarga_oxigeno(escena: Node) -> Node3D:
 ## Nombre de cada sala, grande, en lo alto.
 func _letreros() -> void:
 	for nombre in SALAS:
-		if nombre == "NÚCLEO":
+		if nombre == "CORE":
 			continue
 		var letrero := Label3D.new()
 		letrero.text = nombre

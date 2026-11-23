@@ -26,7 +26,7 @@ func _al_tocar(cuerpo: Node3D) -> void:
 		return
 	_recogida = true
 	Juego.agregar_helio3(1)
-	Juego.mostrar_mensaje("+1 cápsula de helio-3 (llevas %d). Llévalas a la nave" % Juego.helio3)
+	Juego.mostrar_mensaje("+1 helium-3 capsule (you have %d). Take them to the ship" % Juego.helio3)
 	var animacion := create_tween()
 	animacion.tween_property(self, "scale", Vector3.ONE * 0.01, 0.25)
 	animacion.tween_callback(queue_free)

@@ -75,12 +75,12 @@ func _al_tocar_suelo(velocidad_impacto: Vector3) -> void:
 	_llama.visible = false
 	if rapidez <= velocidad_segura and inclinacion_grados() <= inclinacion_segura:
 		estado = Estado.ATERRIZADA
-		Juego.mostrar_mensaje("¡Alunizaje exitoso!")
+		Juego.mostrar_mensaje("Moon landing successful!")
 		aterrizo.emit()
 		_ir_al_siguiente_nivel()
 	else:
 		estado = Estado.ESTRELLADA
-		Juego.mostrar_mensaje("¡La nave se estrelló! Presiona R para intentar otra vez")
+		Juego.mostrar_mensaje("The ship crashed! Press R to try again")
 		choco.emit()
 
 
@@ -94,9 +94,9 @@ func _ir_al_siguiente_nivel() -> void:
 func _mostrar_datos() -> void:
 	var altura := global_position.y - altura_suelo
 	var bajada := -velocity.y
-	var aviso := "  ¡MUY RÁPIDO!" if velocity.length() > velocidad_segura else ""
+	var aviso := "  TOO FAST!" if velocity.length() > velocidad_segura else ""
 	Juego.mostrar_telemetria(
-		"Altura: %d m\nVelocidad: %.1f m/s%s\nInclinación: %d°" % [altura, bajada, aviso, inclinacion_grados()]
+		"Height: %d m\nSpeed: %.1f m/s%s\nTilt: %d°" % [altura, bajada, aviso, inclinacion_grados()]
 	)
 
 

@@ -10,19 +10,19 @@ extends Interactuable
 
 func _ready() -> void:
 	super()
-	if texto_ayuda == "Presiona E":
-		texto_ayuda = "Presiona E para calentar regolito"
+	if texto_ayuda == "Press E":
+		texto_ayuda = "Press E to heat regolith"
 
 
 func interactuar() -> void:
 	if not Juego.usar_regolito(regolito_necesario):
 		var faltan := regolito_necesario - Juego.regolito
-		Juego.mostrar_mensaje("Necesitas %d regolito más" % faltan)
+		Juego.mostrar_mensaje("You need %d more regolith" % faltan)
 		return
 	Juego.agregar_helio3(helio3_por_carga)
-	Juego.mostrar_mensaje("¡Extrajiste %d de helio-3!" % helio3_por_carga)
+	Juego.mostrar_mensaje("You extracted %d helium-3!" % helio3_por_carga)
 	actualizar_ayuda()
 
 
 func obtener_texto_ayuda() -> String:
-	return "%s (%d regolito → %d helio-3)" % [texto_ayuda, regolito_necesario, helio3_por_carga]
+	return "%s (%d regolith → %d helium-3)" % [texto_ayuda, regolito_necesario, helio3_por_carga]

@@ -90,7 +90,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 	if conduciendo:
-		Juego.mostrar_telemetria("Velocidad: %d km/h\n%sE para bajarte" % [absf(_rapidez * 3.6), texto_extra])
+		Juego.mostrar_telemetria("Speed: %d km/h\n%sE to get out" % [absf(_rapidez * 3.6), texto_extra])
 
 
 func _process(delta: float) -> void:
@@ -126,7 +126,7 @@ func subir(jugador: Node3D) -> void:
 	_brazo.rotation = Vector3(deg_to_rad(inclinacion_camara), 0, 0)
 	_camara.make_current()
 	Juego.ocultar_ayuda()
-	Juego.mostrar_mensaje("W/S avanzar · A/D girar · Mouse cámara · E bajarte")
+	Juego.mostrar_mensaje("W/S drive · A/D turn · Mouse camera · E get out")
 
 
 ## Baja al jugador al lado del vehículo y le devuelve su cámara.

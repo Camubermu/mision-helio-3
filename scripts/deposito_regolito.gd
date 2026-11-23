@@ -15,8 +15,8 @@ var _restantes := 0
 func _ready() -> void:
 	super()
 	_restantes = excavaciones
-	if texto_ayuda == "Presiona E":
-		texto_ayuda = "Presiona E para excavar regolito"
+	if texto_ayuda == "Press E":
+		texto_ayuda = "Press E to dig regolith"
 
 
 func interactuar() -> void:
@@ -24,7 +24,7 @@ func interactuar() -> void:
 		return
 	_restantes -= 1
 	Juego.agregar_regolito(regolito_por_excavacion)
-	Juego.mostrar_mensaje("+%d regolito" % regolito_por_excavacion)
+	Juego.mostrar_mensaje("+%d regolith" % regolito_por_excavacion)
 	if _restantes <= 0:
 		desaparecer()
 		return

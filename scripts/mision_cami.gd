@@ -149,7 +149,7 @@ func _al_terminar_viaje() -> void:
 	if viaje.destino == 0:
 		await _bajar_por_la_escalera()
 		_encender_jugador(true)
-		Juego.mostrar_mensaje("Plan nuevo: la nave necesita %d cápsulas de helio-3. Excava regolito con el vehículo, déjalo en el reactor y sigue las etapas en la estación. ¡Vigila tu oxígeno!" % carga_nave.helio3_necesario)
+		Juego.mostrar_mensaje("New plan: the ship needs %d helium-3 capsules. Dig regolith with the rover, drop it at the reactor and follow the stages in the station. Watch your oxygen!" % carga_nave.helio3_necesario)
 	else:
 		_guardar_resultado()
 	if viaje.destino != 0 and not escena_final.is_empty():

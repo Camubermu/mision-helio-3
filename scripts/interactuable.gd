@@ -11,7 +11,7 @@ extends Area3D
 ##         Juego.mostrar_mensaje("¡Me usaste!")
 
 ## Texto que aparece cuando el jugador está cerca.
-@export var texto_ayuda := "Presiona E"
+@export var texto_ayuda := "Press E"
 
 var jugador_cerca := false
 

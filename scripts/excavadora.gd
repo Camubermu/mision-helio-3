@@ -47,7 +47,7 @@ func _physics_process(delta: float) -> void:
 
 	_vehiculo.vibracion = move_toward(_vehiculo.vibracion, 1.0 if excavando else 0.0, delta * 3.0)
 	if conduce:
-		_vehiculo.texto_extra = "Regolito: %d/%d\n" % [Juego.regolito, capacidad]
+		_vehiculo.texto_extra = "Regolith: %d/%d\n" % [Juego.regolito, capacidad]
 
 	if not excavando:
 		_tiempo_carga = 0.0
@@ -69,13 +69,13 @@ func _cambiar_excavando(valor: bool) -> void:
 	_vehiculo.ritmo_piezas = 4.0 if excavando else 1.0
 	if excavando:
 		_avisado_lleno = false
-		Juego.mostrar_mensaje("Excavando regolito...")
+		Juego.mostrar_mensaje("Digging regolith...")
 
 
 func _avisar_si_lleno(lleno: bool) -> void:
 	if lleno and not _avisado_lleno:
 		_avisado_lleno = true
-		Juego.mostrar_mensaje("¡Carga llena! Lleva el regolito al reactor")
+		Juego.mostrar_mensaje("Load full! Take the regolith to the reactor")
 
 
 func _sacar_carga() -> void:
@@ -92,7 +92,7 @@ func _sacar_carga() -> void:
 		_roca.remove_from_group("roca_minable")
 		_roca.queue_free()
 		_roca = null
-		Juego.mostrar_mensaje("Roca agotada. Busca otra")
+		Juego.mostrar_mensaje("Rock depleted. Find another one")
 	else:
 		# La roca se achica con cada carga.
 		_roca.scale *= 0.9
@@ -104,7 +104,7 @@ func _analizar_roca_sin_helio() -> void:
 	var pasadas: int = _roca.get_meta("analisis", 0) + 1
 	_roca.set_meta("analisis", pasadas)
 	if pasadas == 1:
-		Juego.mostrar_mensaje("Analizando la roca...")
+		Juego.mostrar_mensaje("Analyzing the rock...")
 		return
 	_roca.remove_from_group("roca_minable")
 	_roca.set_meta("analizada", true)
@@ -115,7 +115,7 @@ func _analizar_roca_sin_helio() -> void:
 		material.albedo_color = Color(0.25, 0.24, 0.24)
 		(malla as MeshInstance3D).material_overlay = material
 	_roca = null
-	Juego.mostrar_mensaje("Análisis: esta roca es basalto duro, SIN helio-3. El helio-3 está en el regolito fino. Busca otra roca")
+	Juego.mostrar_mensaje("Analysis: this rock is hard basalt, with NO helium-3. Helium-3 is in the fine regolith. Find another rock")
 
 
 func _roca_cercana() -> Node3D:

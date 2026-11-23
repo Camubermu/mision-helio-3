@@ -36,14 +36,14 @@ func _ready() -> void:
 	_poner_plataforma()
 	_preparar_jugador.call_deferred()
 	if not _mision_terminada():
-		_poner_zona_pantalla("E: siguiente página de la pantalla", func():
+		_poner_zona_pantalla("E: next screen page", func():
 			var pantalla := get_parent().get_node_or_null("PantallaMision")
 			if pantalla:
 				pantalla.siguiente_pagina())
 	if _mision_terminada():
 		_preparar_final.call_deferred()
 	else:
-		Juego.mostrar_mensaje("Lee el plan de la misión en la pantalla. Después sal por la puerta y sube por la escalera de la torre hasta la nave")
+		Juego.mostrar_mensaje("Read the mission plan on the screen. Then go out the door and climb the tower stairs to the ship")
 
 
 func _mision_terminada() -> bool:
@@ -154,7 +154,7 @@ func _ir_a_la_mision() -> void:
 	_saliendo = true
 	if _jugador:
 		_jugador.process_mode = Node.PROCESS_MODE_DISABLED
-	Juego.mostrar_mensaje("Escotilla cerrada. ¡Prepárate para la cuenta atrás!")
+	Juego.mostrar_mensaje("Hatch closed. Get ready for the countdown!")
 	var negro := _pantalla_negra()
 	var animacion := create_tween()
 	animacion.tween_property(negro, "color:a", 1.0, 1.2)
@@ -178,8 +178,8 @@ func _pantalla_negra() -> ColorRect:
 # --- Final: resultado y créditos ------------------------------------------------------------
 
 func _preparar_final() -> void:
-	Juego.mostrar_mensaje("¡Bienvenido de vuelta a la base! Mira el resultado de la misión en la pantalla (E junto a la pantalla: créditos)")
-	_poner_zona_pantalla("Presiona E para terminar la misión y ver los créditos", mostrar_creditos)
+	Juego.mostrar_mensaje("Welcome back to the base! See the mission result on the screen (E next to the screen: credits)")
+	_poner_zona_pantalla("Press E to finish the mission and see the credits", mostrar_creditos)
 	var espera := create_tween()
 	espera.tween_interval(segundos_antes_de_creditos)
 	espera.tween_callback(mostrar_creditos)

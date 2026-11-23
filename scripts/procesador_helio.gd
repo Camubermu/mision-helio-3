@@ -102,22 +102,22 @@ func _procesar(cuerpo: Node3D) -> void:
 	var lotes := Juego.regolito / regolito_por_helio
 	if lotes == 0:
 		if Juego.regolito > 0:
-			Juego.mostrar_mensaje("El reactor necesita %d de regolito (tienes %d)" % [regolito_por_helio, Juego.regolito])
+			Juego.mostrar_mensaje("The reactor needs %d regolith (you have %d)" % [regolito_por_helio, Juego.regolito])
 		else:
-			Juego.mostrar_mensaje("Trae regolito con el vehículo extractor para hacer helio-3")
+			Juego.mostrar_mensaje("Bring regolith with the mining rover to make helium-3")
 		return
 
 	procesando = true
 	Juego.usar_regolito(lotes * regolito_por_helio)
-	Juego.mostrar_mensaje("Descargando regolito en el reactor...")
+	Juego.mostrar_mensaje("Unloading regolith into the reactor...")
 	await _descargar(cuerpo, lotes * regolito_por_helio)
 
 	for i in lotes:
-		Juego.mostrar_mensaje("Procesando regolito... %d/%d" % [i + 1, lotes])
+		Juego.mostrar_mensaje("Processing regolith... %d/%d" % [i + 1, lotes])
 		await _esperar(segundos_por_helio)
 		_sacar_capsula()
 
-	Juego.mostrar_mensaje("¡Listo! Salieron %d cápsulas de helio-3. Recógelas" % lotes)
+	Juego.mostrar_mensaje("Done! %d helium-3 capsules came out. Pick them up" % lotes)
 	procesando = false
 
 
@@ -125,11 +125,11 @@ func _procesar(cuerpo: Node3D) -> void:
 func _dejar_en_la_tolva(cuerpo: Node3D) -> void:
 	var cantidad := Juego.regolito
 	if cantidad <= 0:
-		Juego.mostrar_mensaje("Trae regolito con el vehículo extractor para llenar la tolva del reactor")
+		Juego.mostrar_mensaje("Bring regolith with the mining rover to fill the reactor hopper")
 		return
 	procesando = true
 	Juego.usar_regolito(cantidad)
-	Juego.mostrar_mensaje("Descargando regolito en la tolva del reactor...")
+	Juego.mostrar_mensaje("Unloading regolith into the reactor hopper...")
 	await _descargar(cuerpo, cantidad)
 	procesando = false
 	planta.recibir_regolito(cantidad)

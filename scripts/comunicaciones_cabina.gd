@@ -12,51 +12,51 @@ signal termino
 ## "fin" termina la conversación.
 const FALLA := {
 	"inicio": {
-		"control": "Helio-3, aquí Control de Misión en la Tierra. Vemos una alarma en su nave. ¿Qué está pasando?",
+		"control": "Helium-3, this is Mission Control on Earth. We see an alarm on your ship. What is happening?",
 		"respuestas": [
-			["El motor químico falló al salir de la atmósfera", "combustible"],
-			["Hay una fuga en el tanque de combustible químico", "combustible"],
-			["No sabemos, la alarma no para", "inicio", "Revisen la página DAÑOS del monitor (tecla 3) y díganme qué ven."],
+			["The chemical engine failed when leaving the atmosphere", "combustible"],
+			["There is a leak in the chemical fuel tank", "combustible"],
+			["We don't know, the alarm won't stop", "inicio", "Check the DAMAGE page on the monitor (key 3) and tell me what you see."],
 		],
 	},
 	"combustible": {
-		"control": "Copiado. Confirmamos la falla en sus datos. ¿Cuánto combustible químico les queda?",
+		"control": "Copy. We confirm the failure in your data. How much chemical fuel do you have left?",
 		"respuestas": [
-			["0 %: el tanque quedó vacío", "plasma"],
-			["La mitad del tanque", "combustible", "Negativo, Helio-3. Revisen la página COMBUSTIBLE del monitor (tecla 1): sus datos dicen otra cosa."],
-			["El tanque está lleno", "combustible", "Negativo. Revisen la página COMBUSTIBLE (tecla 1) antes de responder."],
+			["0%: the tank is empty", "plasma"],
+			["Half a tank", "combustible", "Negative, Helium-3. Check the FUEL page on the monitor (key 1): your data says otherwise."],
+			["The tank is full", "combustible", "Negative. Check the FUEL page (key 1) before answering."],
 		],
 	},
 	"plasma": {
-		"control": "Entendido: sin motor químico. Activen el motor de plasma de helio-3 para seguir rumbo a la Luna. ¿Confirman?",
+		"control": "Understood: no chemical engine. Activate the helium-3 plasma engine to continue to the Moon. Do you confirm?",
 		"respuestas": [
-			["Activar el motor de plasma de helio-3", "listo"],
-			["¿Es seguro?", "plasma", "Sí. El motor de helio-3 es el que vinieron a probar. Revisen la página MOTORES (tecla 2): está listo."],
+			["Activate the helium-3 plasma engine", "listo"],
+			["Is it safe?", "plasma", "Yes. The helium-3 engine is what you came to test. Check the ENGINES page (key 2): it is ready."],
 		],
 	},
 	"listo": {
-		"control": "Motor de helio-3 encendido y estable. Buen trabajo, tripulación. Sigan rumbo a la Luna. Control fuera.",
-		"respuestas": [["Copiado, Control. Helio-3 fuera", "fin"]],
+		"control": "Helium-3 engine on and stable. Good job, crew. Continue to the Moon. Control out.",
+		"respuestas": [["Copy, Control. Helium-3 out", "fin"]],
 	},
 }
 const CAMBIO_DE_PLAN := {
 	"inicio": {
-		"control": "Helio-3, hicimos los cálculos: el helio-3 de su tanque solo alcanza para alunizar, no para volver.",
+		"control": "Helium-3, we ran the numbers: the helium-3 in your tank is only enough to land on the Moon, not to come back.",
 		"respuestas": [
-			["¿Qué hacemos entonces?", "plan"],
-			["¿Podemos volver ahora?", "inicio", "Negativo. Ya no hay combustible químico y el helio-3 no alcanza para dar la vuelta."],
+			["So what do we do?", "plan"],
+			["Can we come back now?", "inicio", "Negative. There is no chemical fuel left and the helium-3 is not enough to turn around."],
 		],
 	},
 	"plan": {
-		"control": "En la Luna hay una estación y un reactor. Excaven regolito, procésenlo en la estación y carguen la nave con cápsulas de helio-3.",
+		"control": "There is a station and a reactor on the Moon. Dig regolith, process it in the station and load the ship with helium-3 capsules.",
 		"respuestas": [
-			["¿Por qué el regolito tiene helio-3?", "plan", "El viento del Sol lo dejó en el polvo lunar durante miles de millones de años. En la Tierra casi no hay."],
-			["Entendido, Control. Produciremos helio-3", "fin2"],
+			["Why does the regolith have helium-3?", "plan", "The solar wind left it in the lunar dust over billions of years. There is almost none on Earth."],
+			["Understood, Control. We will produce helium-3", "fin2"],
 		],
 	},
 	"fin2": {
-		"control": "Toda la Tierra cuenta con ustedes. Cuiden el oxígeno de los trajes. Control fuera.",
-		"respuestas": [["Copiado. Helio-3 fuera", "fin"]],
+		"control": "The whole Earth is counting on you. Watch your suit oxygen. Control out.",
+		"respuestas": [["Copy. Helium-3 out", "fin"]],
 	},
 }
 
@@ -106,7 +106,7 @@ func _ir_a(paso: String) -> void:
 		_terminar()
 		return
 	var datos: Dictionary = _conversacion[paso]
-	_linea("CONTROL (Tierra)", datos.control, Color(0.55, 1.0, 0.65))
+	_linea("CONTROL (Earth)", datos.control, Color(0.55, 1.0, 0.65))
 	_mostrar_respuestas(datos.respuestas)
 
 
@@ -129,7 +129,7 @@ func _responder(respuesta: Array) -> void:
 		(hijo as Button).disabled = true
 	if _al_tocar.is_valid():
 		_al_tocar.call()
-	_linea("TÚ (Helio-3)", respuesta[0], Color(0.6, 0.85, 1.0))
+	_linea("YOU (Helium-3)", respuesta[0], Color(0.6, 0.85, 1.0))
 	if _pitar.is_valid():
 		_pitar.call(2475.0, 0.25)
 	await get_tree().create_timer(1.0).timeout
@@ -138,7 +138,7 @@ func _responder(respuesta: Array) -> void:
 	if _pitar.is_valid():
 		_pitar.call(2525.0, 0.25)
 	if respuesta.size() > 2:
-		_linea("CONTROL (Tierra)", respuesta[2], Color(0.55, 1.0, 0.65))
+		_linea("CONTROL (Earth)", respuesta[2], Color(0.55, 1.0, 0.65))
 		var siguiente: String = respuesta[1]
 		_mostrar_respuestas(_conversacion[siguiente].respuestas)
 	else:
@@ -201,7 +201,7 @@ func _armar() -> void:
 	columna.add_theme_constant_override("separation", 10)
 	_panel.add_child(columna)
 	var titulo := Label.new()
-	titulo.text = "📡 COMUNICACIONES · TIERRA"
+	titulo.text = "📡 COMMUNICATIONS · EARTH"
 	titulo.add_theme_font_size_override("font_size", 22)
 	titulo.add_theme_color_override("font_color", Color(1.0, 0.75, 0.3))
 	columna.add_child(titulo)
@@ -215,7 +215,7 @@ func _armar() -> void:
 	_desplazar.add_child(_historial)
 	var ayuda := Label.new()
 	ayuda.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	ayuda.text = "Elige con el mouse. Los datos están en el monitor (teclas 1-4)."
+	ayuda.text = "Choose with the mouse. The data is on the monitor (keys 1-4)."
 	ayuda.add_theme_font_size_override("font_size", 16)
 	ayuda.add_theme_color_override("font_color", Color(0.7, 0.75, 0.8))
 	columna.add_child(ayuda)

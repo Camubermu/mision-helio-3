@@ -51,11 +51,11 @@ func _al_cambiar_energia(valor: float, maximo: float) -> void:
 
 
 func _al_cambiar_regolito(valor: int) -> void:
-	_regolito.text = "Regolito: %d" % valor
+	_regolito.text = "Regolith: %d" % valor
 
 
 func _al_cambiar_helio3(valor: int) -> void:
-	_helio3.text = "Helio-3: %d" % valor
+	_helio3.text = "Helium-3: %d" % valor
 
 
 func _al_recibir_mensaje(texto: String) -> void:

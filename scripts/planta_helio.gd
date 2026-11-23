@@ -13,18 +13,18 @@ signal cambio
 enum Etapa { CLASIFICAR = 3, CALENTAR = 4, CAPTURAR = 5, SEPARAR = 6, ALMACENAR = 7 }
 
 const NOMBRES := {
-	Etapa.CLASIFICAR: "Clasificación del regolito",
-	Etapa.CALENTAR: "Calentamiento",
-	Etapa.CAPTURAR: "Captura de gases",
-	Etapa.SEPARAR: "Separación isotópica",
-	Etapa.ALMACENAR: "Almacenamiento",
+	Etapa.CLASIFICAR: "Regolith beneficiation",
+	Etapa.CALENTAR: "Heating",
+	Etapa.CAPTURAR: "Gas capture",
+	Etapa.SEPARAR: "Isotope separation",
+	Etapa.ALMACENAR: "Storage",
 }
 const LUGARES := {
-	Etapa.CLASIFICAR: "el Laboratorio",
-	Etapa.CALENTAR: "el Reactor",
-	Etapa.CAPTURAR: "los Depósitos de gas",
-	Etapa.SEPARAR: "el Núcleo de la estación",
-	Etapa.ALMACENAR: "la Esclusa",
+	Etapa.CLASIFICAR: "the Laboratory",
+	Etapa.CALENTAR: "the Reactor",
+	Etapa.CAPTURAR: "the Gas tanks",
+	Etapa.SEPARAR: "the station Core",
+	Etapa.ALMACENAR: "the Airlock",
 }
 
 ## Cuánto regolito hace falta para una cápsula de helio-3.
@@ -55,15 +55,15 @@ func recibir_regolito(cantidad: int) -> void:
 	regolito_en_tolva += cantidad
 	cambio.emit()
 	if etapa == Etapa.CLASIFICAR and lote == 0:
-		Juego.mostrar_mensaje("Regolito en la tolva: %d. Etapa 3: ve al Laboratorio y clasifícalo" % regolito_en_tolva)
+		Juego.mostrar_mensaje("Regolith in the hopper: %d. Stage 3: go to the Laboratory and sort it" % regolito_en_tolva)
 
 
 ## Explica por qué una etapa no puede empezar (vacío = sí puede).
 func motivo_para_no_empezar(de_etapa: Etapa) -> String:
 	if de_etapa != etapa:
-		return "Primero termina la etapa %d: %s en %s" % [etapa, NOMBRES[etapa], LUGARES[etapa]]
+		return "First finish stage %d: %s in %s" % [etapa, NOMBRES[etapa], LUGARES[etapa]]
 	if de_etapa == Etapa.CLASIFICAR and lote == 0 and regolito_en_tolva < regolito_por_capsula:
-		return "La tolva tiene %d de regolito. Faltan %d: excava más con el vehículo y déjalo en el reactor" % [regolito_en_tolva, regolito_por_capsula - regolito_en_tolva]
+		return "The hopper has %d regolith. %d more needed: dig more with the rover and drop it at the reactor" % [regolito_en_tolva, regolito_por_capsula - regolito_en_tolva]
 	return ""
 
 
@@ -86,10 +86,10 @@ func completar(de_etapa: Etapa) -> void:
 		_sacar_capsulas()
 		etapa = Etapa.CLASIFICAR
 		lote = 0
-		Juego.mostrar_mensaje("¡Helio-3 envasado! Recoge las cápsulas frente a la esclusa y llévalas a la nave")
+		Juego.mostrar_mensaje("Helium-3 packed! Pick up the capsules in front of the airlock and take them to the ship")
 	else:
 		etapa = (de_etapa + 1) as Etapa
-		Juego.mostrar_mensaje("Etapa %d lista. Sigue con la etapa %d: %s en %s" % [de_etapa, etapa, NOMBRES[etapa], LUGARES[etapa]])
+		Juego.mostrar_mensaje("Stage %d done. Continue with stage %d: %s in %s" % [de_etapa, etapa, NOMBRES[etapa], LUGARES[etapa]])
 	cambio.emit()
 
 

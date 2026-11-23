@@ -36,7 +36,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 1.5, 0)
 
 [node name="PuntoSubir" type="Area3D" parent="."]
 script = ExtResource("3_subir")
-texto_ayuda = "Presiona E para subir al vehículo extractor"
+texto_ayuda = "Press E to get in the mining rover"
 
 [node name="Forma" type="CollisionShape3D" parent="PuntoSubir"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)

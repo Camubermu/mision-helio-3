@@ -24,8 +24,8 @@ func _ready() -> void:
 	_panel_interruptores(270.0)
 	_estante_soporte_vital(300.0)
 	_cables_y_rejilla(330.0)
-	_bolsas_de_carga(250.0, ["COMIDA · DÍA 1-3", "AGUA POTABLE", "HERRAMIENTAS"])
-	_bolsas_de_carga(345.0, ["ROPA", "MUESTRAS LUNARES"])
+	_bolsas_de_carga(250.0, ["FOOD · DAY 1-3", "DRINKING WATER", "TOOLS"])
+	_bolsas_de_carga(345.0, ["CLOTHES", "LUNAR SAMPLES"])
 	_extintor_y_botiquin(28.0)
 	_tanques_oxigeno(55.0)
 	_letrero_escotilla(0.0)
@@ -124,7 +124,7 @@ static func _material_tela() -> StandardMaterial3D:
 func _panel_interruptores(angulo: float) -> void:
 	var panel := _en_pared(angulo, 3.4, 0.03)
 	_caja(panel, Vector3(0.8, 0.55, 0.04), Color(0.2, 0.22, 0.26))
-	_etiqueta(panel, "ENERGÍA PRINCIPAL", Vector3(0, 0.22, -0.025), 0.0011, Color(0.9, 0.9, 0.9))
+	_etiqueta(panel, "MAIN POWER", Vector3(0, 0.22, -0.025), 0.0011, Color(0.9, 0.9, 0.9))
 	for fila in 3:
 		for columna in 6:
 			var x := -0.3 + columna * 0.12
@@ -142,7 +142,7 @@ func _panel_interruptores(angulo: float) -> void:
 	var disco := _cilindro(insignia, 0.22, 0.01, Color(0.08, 0.15, 0.4), Vector3.ZERO, Vector3(90, 0, 0))
 	disco.material_override = _material(Color(0.08, 0.15, 0.4))
 	_cilindro(insignia, 0.235, 0.008, AMARILLO, Vector3(0, 0, 0.004), Vector3(90, 0, 0))
-	_etiqueta(insignia, "MISIÓN\nHELIO-3\n★ 2026 ★", Vector3(0, 0, -0.01), 0.0013, Color(1, 0.9, 0.5))
+	_etiqueta(insignia, "MISSION\nHELIUM-3\n★ 2026 ★", Vector3(0, 0, -0.01), 0.0013, Color(1, 0.9, 0.5))
 
 
 func _estante_soporte_vital(angulo: float) -> void:
@@ -152,7 +152,7 @@ func _estante_soporte_vital(angulo: float) -> void:
 		var y := 0.6 - i * 0.4
 		_caja(estante, Vector3(0.56, 0.34, 0.02), BLANCO, Vector3(0, y, -0.155))
 		_caja(estante, Vector3(0.14, 0.025, 0.03), GRIS, Vector3(0, y + 0.1, -0.17))
-	_etiqueta(estante, "SOPORTE VITAL\nCO2 · O2 · TEMP", Vector3(0, 0.78, -0.17), 0.0011)
+	_etiqueta(estante, "LIFE SUPPORT\nCO2 · O2 · TEMP", Vector3(0, 0.78, -0.17), 0.0011)
 	_caja(estante, Vector3(0.05, 0.05, 0.01), Color(0.2, 1, 0.3), Vector3(0.22, 0.78, -0.17), 3.0)
 	# Casco de repuesto sujeto arriba.
 	var soporte := _en_pared(angulo, 4.25, 0.22)
@@ -177,7 +177,7 @@ func _cables_y_rejilla(angulo: float) -> void:
 	_caja(rejilla, Vector3(0.4, 0.25, 0.03), OSCURO)
 	for i in 6:
 		_caja(rejilla, Vector3(0.38, 0.012, 0.02), GRIS, Vector3(0, -0.1 + i * 0.04, -0.02))
-	_etiqueta(rejilla, "AIRE", Vector3(0, 0.17, -0.02), 0.001, Color(0.85, 0.85, 0.85))
+	_etiqueta(rejilla, "AIR", Vector3(0, 0.17, -0.02), 0.001, Color(0.85, 0.85, 0.85))
 
 
 func _bolsas_de_carga(angulo: float, nombres: Array) -> void:
@@ -199,12 +199,12 @@ func _extintor_y_botiquin(angulo: float) -> void:
 	_caja(extintor, Vector3(0.2, 0.06, 0.04), GRIS, Vector3(0, 0.12, 0.07))
 	var letrero := _en_pared(angulo, PISO + 1.0, 0.01)
 	_caja(letrero, Vector3(0.24, 0.08, 0.005), ROJO)
-	_etiqueta(letrero, "EXTINTOR", Vector3(0, 0, -0.005), 0.0012, Color.WHITE)
+	_etiqueta(letrero, "EXTINGUISHER", Vector3(0, 0, -0.005), 0.0012, Color.WHITE)
 	var botiquin := _en_pared(angulo, 3.3, 0.08)
 	_caja(botiquin, Vector3(0.34, 0.26, 0.14), Color(0.95, 0.95, 0.95))
 	_caja(botiquin, Vector3(0.12, 0.035, 0.005), ROJO, Vector3(0, 0, -0.072))
 	_caja(botiquin, Vector3(0.035, 0.12, 0.005), ROJO, Vector3(0, 0, -0.072))
-	_etiqueta(botiquin, "PRIMEROS AUXILIOS", Vector3(0, -0.1, -0.073), 0.0007)
+	_etiqueta(botiquin, "FIRST AID", Vector3(0, -0.1, -0.073), 0.0007)
 
 
 func _tanques_oxigeno(angulo: float) -> void:
@@ -218,7 +218,7 @@ func _tanques_oxigeno(angulo: float) -> void:
 		_cilindro(tanque, 0.045, 0.02, AMARILLO, Vector3(0, 0.74, 0), Vector3(90, 0, 0))
 		_caja(tanque, Vector3(0.25, 0.03, 0.03), GRIS, Vector3(0, 0.3, 0.1))
 		_caja(tanque, Vector3(0.25, 0.03, 0.03), GRIS, Vector3(0, -0.3, 0.1))
-		_etiqueta(tanque, "O2\nALTA PRESIÓN", Vector3(0, 0.15, -0.112), 0.0009, Color.WHITE)
+		_etiqueta(tanque, "O2\nHIGH PRESSURE", Vector3(0, 0.15, -0.112), 0.0009, Color.WHITE)
 	var pasamanos := _en_pared(angulo + 14.0, 3.0, 0.07)
 	_cilindro(pasamanos, 0.018, 0.9, AMARILLO)
 
@@ -229,7 +229,7 @@ func _letrero_escotilla(angulo: float) -> void:
 	for i in 8:
 		_caja(letrero, Vector3(0.04, 0.12, 0.004), OSCURO, Vector3(-0.42 + i * 0.12, 0, -0.004))
 	_caja(letrero, Vector3(0.6, 0.08, 0.004), AMARILLO, Vector3(0, 0, -0.006))
-	_etiqueta(letrero, "ESCOTILLA · NO ABRIR EN VUELO", Vector3(0, 0, -0.009), 0.0009)
+	_etiqueta(letrero, "HATCH · DO NOT OPEN IN FLIGHT", Vector3(0, 0, -0.009), 0.0009)
 	for lado in [-1.0, 1.0]:
 		var riel := _en_pared(angulo + lado * 22.0, 3.0, 0.07)
 		_cilindro(riel, 0.018, 1.0, AMARILLO)
@@ -260,7 +260,7 @@ func _laptop() -> void:
 	laptop.add_child(pantalla)
 	_caja(pantalla, Vector3(0.34, 0.22, 0.012), OSCURO)
 	_caja(pantalla, Vector3(0.31, 0.19, 0.002), Color(0.02, 0.1, 0.2), Vector3(0, 0, -0.007), 1.5)
-	_etiqueta(pantalla, "TRAYECTORIA\nTIERRA ─── LUNA\nCorrección: 0,3 m/s\nDía de misión: 2", Vector3(0, 0, -0.009), 0.0006, Color(0.5, 1, 0.8))
+	_etiqueta(pantalla, "TRAJECTORY\nEARTH ─── MOON\nCorrection: 0.3 m/s\nMission day: 2", Vector3(0, 0, -0.009), 0.0006, Color(0.5, 1, 0.8))
 
 
 ## Arnés de 4 puntos en el respaldo de cada asiento.

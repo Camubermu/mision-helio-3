@@ -50,4 +50,4 @@ func _process(delta: float) -> void:
 	visible = camara != null and camaras_del_casco.has(camara)
 	if visible:
 		var oxigeno := int(ceil(Juego.get_meta("oxigeno", 98.0)))
-		_datos.text = "TRAJE: OK   PRESIÓN: 4,3 psi\nOXÍGENO: %d %%   RADIO: CANAL 1\nPULSO: %d lpm" % [oxigeno, 82 + int(sin(_tiempo * 0.3) * 6)]
+		_datos.text = "SUIT: OK   PRESSURE: 4.3 psi\nOXYGEN: %d %%   RADIO: CHANNEL 1\nPULSE: %d bpm" % [oxigeno, 82 + int(sin(_tiempo * 0.3) * 6)]

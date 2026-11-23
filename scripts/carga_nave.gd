@@ -48,7 +48,7 @@ func _al_salir(cuerpo: Node3D) -> void:
 
 func _avisar_que_puede_subir() -> void:
 	if abordar_con_e and esta_lista() and not abordada and _jugador_cerca:
-		Juego.mostrar_ayuda("Presiona E para subir a la nave y despegar con el motor de helio-3")
+		Juego.mostrar_ayuda("Press E to board the ship and launch with the helium-3 engine")
 
 
 func _al_entrar(cuerpo: Node3D) -> void:
@@ -59,10 +59,10 @@ func _al_entrar(cuerpo: Node3D) -> void:
 		return
 	if esta_lista():
 		if cuerpo.is_in_group("vehiculo"):
-			Juego.mostrar_mensaje("Bájate del vehículo para subir a la nave")
+			Juego.mostrar_mensaje("Get out of the rover to board the ship")
 		return
 	if Juego.helio3 <= 0:
-		Juego.mostrar_mensaje("La nave necesita %d cápsulas de helio-3 (tiene %d)" % [helio3_necesario, cargado])
+		Juego.mostrar_mensaje("The ship needs %d helium-3 capsules (it has %d)" % [helio3_necesario, cargado])
 		return
 	var cantidad := mini(Juego.helio3, helio3_necesario - cargado)
 	Juego.usar_helio3(cantidad)
@@ -70,16 +70,16 @@ func _al_entrar(cuerpo: Node3D) -> void:
 	cargado += cantidad
 	if cargado >= helio3_necesario:
 		if abordar_con_e:
-			Juego.mostrar_mensaje("¡Nave cargada con helio-3! Súbete con E para probar el motor")
+			Juego.mostrar_mensaje("Ship loaded with helium-3! Board with E to test the engine")
 		else:
-			Juego.mostrar_mensaje("¡Nave cargada con helio-3! Sube por la escalera de la torre (E al pie de la escalera)")
+			Juego.mostrar_mensaje("Ship loaded with helium-3! Climb the tower stairs (E at the foot of the stairs)")
 		nave_cargada.emit()
 		_avisar_que_puede_subir()
 		if not siguiente_nivel.is_empty():
 			await _esperar(3.0)
 			Juego.cambiar_nivel(siguiente_nivel)
 	else:
-		Juego.mostrar_mensaje("Nave: %d/%d cápsulas de helio-3" % [cargado, helio3_necesario])
+		Juego.mostrar_mensaje("Ship: %d/%d helium-3 capsules" % [cargado, helio3_necesario])
 
 
 ## Copias de la cápsula vuelan desde el jugador hasta la entrada de la nave.

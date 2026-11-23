@@ -9,12 +9,12 @@ extends Node3D
 
 ## (La falla y el cambio de plan se hablan con Control en el panel de comunicaciones.)
 const RADIO_LUNA := [
-	[26.0, "Preparen el alunizaje. Toda la Tierra los está mirando. Buena suerte."],
+	[26.0, "Prepare for Moon landing. The whole Earth is watching you. Good luck."],
 ]
 const RADIO_TIERRA := [
-	[2.0, "¡Helio-3, los vemos! El despegue con el motor de helio-3 fue un éxito."],
-	[12.0, "Todos los sistemas normales. La base level 1 los espera."],
-	[26.0, "Preparen el aterrizaje. Bienvenidos a casa, tripulación."],
+	[2.0, "Helium-3, we see you! The helium-3 engine launch was a success."],
+	[12.0, "All systems normal. Base Level 1 is waiting for you."],
+	[26.0, "Prepare for landing. Welcome home, crew."],
 ]
 
 ## Zona de la cabina donde flotan los objetos (coordenadas del cohete).
@@ -115,7 +115,7 @@ func _revisar_radio() -> void:
 
 
 func _decir(texto: String) -> void:
-	_radio.text = "CONTROL DE MISIÓN (radio):  " + texto
+	_radio.text = "MISSION CONTROL (radio):  " + texto
 	_panel_radio.visible = true
 	_pitar(2525.0, 0.25)
 	var espera := create_tween()
@@ -296,7 +296,7 @@ func _lista() -> Node3D:
 	var lista := _pieza(BoxMesh.new(), Color(0.95, 0.95, 0.92))
 	(lista.mesh as BoxMesh).size = Vector3(0.22, 0.3, 0.012)
 	var texto := Label3D.new()
-	texto.text = "LISTA DE VERIFICACIÓN\n\n[x] Trajes sellados\n[x] Radio OK\n[x] Plasma encendido\n[  ] Alunizaje"
+	texto.text = "CHECKLIST\n\n[x] Suits sealed\n[x] Radio OK\n[x] Plasma on\n[  ] Moon landing"
 	texto.font_size = 18
 	texto.pixel_size = 0.0007
 	texto.modulate = Color(0.1, 0.1, 0.15)

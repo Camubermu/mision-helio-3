@@ -55,7 +55,7 @@ layout_mode = 2
 [node name="Nombre" type="Label" parent="Panel/Datos/FilaCombustible"]
 custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
-text = "Combustible"
+text = "Fuel"
 
 [node name="Barra" type="ProgressBar" parent="Panel/Datos/FilaCombustible"]
 custom_minimum_size = Vector2(170, 20)
@@ -73,7 +73,7 @@ layout_mode = 2
 [node name="Nombre" type="Label" parent="Panel/Datos/FilaEnergia"]
 custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
-text = "Energía"
+text = "Energy"
 
 [node name="Barra" type="ProgressBar" parent="Panel/Datos/FilaEnergia"]
 custom_minimum_size = Vector2(170, 20)
@@ -87,11 +87,11 @@ show_percentage = false
 
 [node name="Regolito" type="Label" parent="Panel/Datos"]
 layout_mode = 2
-text = "Regolito: 0"
+text = "Regolith: 0"
 
 [node name="Helio3" type="Label" parent="Panel/Datos"]
 layout_mode = 2
-text = "Helio-3: 0"
+text = "Helium-3: 0"
 
 [node name="Mira" type="Label" parent="."]
 anchors_preset = 8

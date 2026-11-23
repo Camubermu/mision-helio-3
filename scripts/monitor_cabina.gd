@@ -6,7 +6,7 @@ extends SubViewport
 const Datos = preload("res://scripts/datos_viaje.gd")
 
 enum Pagina { COMBUSTIBLE, MOTORES, DANOS, NAVEGACION }
-const NOMBRES := ["1 COMBUST.", "2 MOTORES", "3 DAÑOS", "4 NAVEG."]
+const NOMBRES := ["1 FUEL", "2 ENGINES", "3 DAMAGE", "4 NAV"]
 
 const VERDE := Color(0.3, 1.0, 0.5)
 const ROJO := Color(1.0, 0.25, 0.2)
@@ -90,50 +90,50 @@ static func helio3(hacia_la_luna: bool, avance: float) -> int:
 func _combustible(hacia_la_luna: bool, avance: float) -> String:
 	var helio := helio3(hacia_la_luna, avance)
 	var lineas := PackedStringArray([
-		"Químico (despegue):   %s  0 %%  FUGA" % _barra(0),
-		"Helio-3 (plasma):     %s %d %%" % [_barra(helio), helio],
-		"Oxígeno cabina:       %s %d %%" % [_barra(98 - int(avance * 4)), 98 - int(avance * 4)],
-		"Batería:              %s %d %%" % [_barra(100 - int(avance * 13)), 100 - int(avance * 13)],
+		"Chemical (launch):    %s  0 %%  LEAK" % _barra(0),
+		"Helium-3 (plasma):    %s %d %%" % [_barra(helio), helio],
+		"Cabin oxygen:         %s %d %%" % [_barra(98 - int(avance * 4)), 98 - int(avance * 4)],
+		"Battery:              %s %d %%" % [_barra(100 - int(avance * 13)), 100 - int(avance * 13)],
 	])
 	if hacia_la_luna and helio < 25:
-		lineas.append("¡El helio-3 solo alcanza para alunizar!")
+		lineas.append("The helium-3 is only enough to land on the Moon!")
 	elif not hacia_la_luna:
-		lineas.append("Tanques llenos con helio-3 lunar")
+		lineas.append("Tanks full of lunar helium-3")
 	return "\n".join(lineas)
 
 
 func _motores(hacia_la_luna: bool) -> String:
 	var lineas := PackedStringArray([
-		"MOTOR QUÍMICO (llama azul)",
-		"  Estado: %s" % ("FALLA - apagado" if hacia_la_luna else "DAÑADO - apagado"),
-		"  Presión de bomba: 0 bar",
-		"MOTOR DE PLASMA (helio-3)",
-		"  Estado: ENCENDIDO",
-		"  Empuje: %d %%   Temp: %d °C" % [35 + int(sin(_tiempo) * 3), 900 + int(sin(_tiempo * 0.7) * 40)],
+		"CHEMICAL ENGINE (blue flame)",
+		"  Status: %s" % ("FAILURE - off" if hacia_la_luna else "DAMAGED - off"),
+		"  Pump pressure: 0 bar",
+		"PLASMA ENGINE (helium-3)",
+		"  Status: ON",
+		"  Thrust: %d %%   Temp: %d °C" % [35 + int(sin(_tiempo) * 3), 900 + int(sin(_tiempo * 0.7) * 40)],
 	])
 	return "\n".join(lineas)
 
 
 func _danos(hacia_la_luna: bool) -> String:
 	var lineas := PackedStringArray([
-		"DAÑOS:",
-		"Motor químico:",
-		"  bomba rota",
-		"Tanque químico:",
-		"  fuga (abajo)",
-		"Resto: OK" if hacia_la_luna else "Reparar en la base",
+		"DAMAGE:",
+		"Chemical engine:",
+		"  broken pump",
+		"Chemical tank:",
+		"  leak (bottom)",
+		"Rest: OK" if hacia_la_luna else "Repair at the base",
 	])
 	return "\n".join(lineas)
 
 
 func _navegacion(hacia_la_luna: bool, avance: float) -> String:
 	var lineas := PackedStringArray([
-		"Destino: %s" % ("LUNA" if hacia_la_luna else "TIERRA (base level 1)"),
-		"Distancia: %s km" % Datos.con_puntos(Datos.distancia(avance)),
-		"Velocidad: %s km/h" % Datos.con_puntos(Datos.velocidad(hacia_la_luna, avance)),
-		"Tiempo: %s" % Datos.reloj(avance),
-		"Llegada en: %s" % Datos.falta(avance),
-		"Afuera: %s" % Datos.temperatura(_tiempo),
+		"Destination: %s" % ("MOON" if hacia_la_luna else "EARTH (Base Level 1)"),
+		"Distance: %s km" % Datos.con_puntos(Datos.distancia(avance)),
+		"Speed: %s km/h" % Datos.con_puntos(Datos.velocidad(hacia_la_luna, avance)),
+		"Time: %s" % Datos.reloj(avance),
+		"Arrival in: %s" % Datos.falta(avance),
+		"Outside: %s" % Datos.temperatura(_tiempo),
 	])
 	return "\n".join(lineas)
 

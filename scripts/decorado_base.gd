@@ -84,7 +84,7 @@ func _edificio_ensamblaje(lugar: Vector3) -> void:
 	logo.rotation_degrees.y = 90
 	edificio.add_child(logo)
 	var nombre := Label3D.new()
-	nombre.text = "EDIFICIO DE ENSAMBLAJE"
+	nombre.text = "ASSEMBLY BUILDING"
 	nombre.font_size = 120
 	nombre.pixel_size = 0.02
 	nombre.modulate = Color(0.1, 0.12, 0.15)
@@ -202,7 +202,7 @@ func _letrero(lugar: Vector3) -> void:
 		_cilindro(cartel, 0.12, 3.2, Vector3(x, 1.6, 0), GRIS)
 	_caja(cartel, Vector3(8, 2.2, 0.2), Vector3(0, 3.6, 0), Color(0.08, 0.12, 0.2), true)
 	var texto := Label3D.new()
-	texto.text = "BASE DE LANZAMIENTO\nMISIÓN HELIO-3 · KODLAND"
+	texto.text = "LAUNCH BASE\nMISSION HELIUM-3 · KODLAND"
 	texto.font_size = 90
 	texto.pixel_size = 0.009
 	texto.modulate = Color(0.55, 0.95, 1.0)

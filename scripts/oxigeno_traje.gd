@@ -73,9 +73,9 @@ func _avisar() -> void:
 		if oxigeno <= limite and not _avisos.has(limite):
 			_avisos[limite] = true
 			match limite:
-				50: Juego.mostrar_mensaje("Oxígeno del traje al 50 %. Recuerda: se recarga en la esclusa de la estación")
-				25: Juego.mostrar_mensaje("¡Oxígeno al 25 %! Ve a la estación a recargarlo")
-				10: Juego.mostrar_mensaje("¡ALERTA! Oxígeno al 10 %. ¡Vuelve YA a la esclusa de la estación!")
+				50: Juego.mostrar_mensaje("Suit oxygen at 50%. Remember: refill it in the station airlock")
+				25: Juego.mostrar_mensaje("Oxygen at 25%! Go to the station to refill it")
+				10: Juego.mostrar_mensaje("WARNING! Oxygen at 10%. Get back to the station airlock NOW!")
 
 
 # --- Recarga y rescate -------------------------------------------------------------------
@@ -93,7 +93,7 @@ func recargar() -> void:
 	if _recargando:
 		return
 	_recargando = true
-	Juego.mostrar_mensaje("Recargando oxígeno... sssss")
+	Juego.mostrar_mensaje("Refilling oxygen... sssss")
 	var brazos := jugador.find_child("Brazos", true, false) if jugador else null
 	if brazos and brazos.has_method("alcanzar"):
 		brazos.alcanzar()
@@ -102,7 +102,7 @@ func recargar() -> void:
 	await animacion.finished
 	_avisos.clear()
 	_recargando = false
-	Juego.mostrar_mensaje("Oxígeno al 100 %%. Tienes unos %d minutos afuera" % int(minutos))
+	Juego.mostrar_mensaje("Oxygen at 100%%. You have about %d minutes outside" % int(minutos))
 
 
 func _rescatar() -> void:
@@ -111,7 +111,7 @@ func _rescatar() -> void:
 	negro.color = Color(0, 0, 0, 0)
 	negro.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(negro)
-	Juego.mostrar_mensaje("¡Te quedaste sin oxígeno!")
+	Juego.mostrar_mensaje("You ran out of oxygen!")
 	var oscurecer := create_tween()
 	oscurecer.tween_property(negro, "color:a", 1.0, 1.5)
 	await oscurecer.finished
@@ -124,7 +124,7 @@ func _rescatar() -> void:
 		jugador.velocity = Vector3.ZERO
 	oxigeno = 100.0
 	_avisos.clear()
-	Juego.mostrar_mensaje("El equipo de la estación te rescató y recargó tu traje. ¡Vigila el oxígeno!")
+	Juego.mostrar_mensaje("The station crew rescued you and refilled your suit. Watch your oxygen!")
 	var aclarar := create_tween()
 	aclarar.tween_property(negro, "color:a", 0.0, 1.5)
 	await aclarar.finished
@@ -156,7 +156,7 @@ func _armar_barra() -> void:
 func _dibujar() -> void:
 	_barra.value = oxigeno
 	var dentro := _dentro_de_la_estacion()
-	_texto.text = "Oxígeno del traje: %d %%%s" % [ceili(oxigeno), "  (en la estación: no baja)" if dentro else ""]
+	_texto.text = "Suit oxygen: %d %%%s" % [ceili(oxigeno), "  (in the station: not dropping)" if dentro else ""]
 	var critico := oxigeno <= 25.0
 	var color := Color(1.0, 0.3, 0.25) if critico else (Color(1.0, 0.8, 0.3) if oxigeno <= 50.0 else Color(0.3, 0.85, 1.0))
 	if oxigeno <= 10.0 and fmod(_tiempo, 0.6) < 0.3:

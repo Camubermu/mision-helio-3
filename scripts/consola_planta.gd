@@ -42,7 +42,7 @@ func _ready() -> void:
 
 
 func obtener_texto_ayuda() -> String:
-	return "E: consola de la etapa %d · %s" % [etapa, Planta.NOMBRES[etapa]]
+	return "E: stage %d console · %s" % [etapa, Planta.NOMBRES[etapa]]
 
 
 func _recordar_jugador(cuerpo: Node3D) -> void:
@@ -61,7 +61,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func interactuar() -> void:
 	if planta == null:
-		Juego.mostrar_mensaje("Esta consola no está conectada a la planta")
+		Juego.mostrar_mensaje("This console is not connected to the plant")
 		return
 	var motivo: String = planta.motivo_para_no_empezar(etapa)
 	if not motivo.is_empty():
@@ -99,7 +99,7 @@ func _abrir() -> void:
 	_caja.add_theme_constant_override("separation", 10)
 	panel.add_child(_caja)
 	var titulo := Label.new()
-	titulo.text = "ETAPA %d · %s" % [etapa, String(Planta.NOMBRES[etapa]).to_upper()]
+	titulo.text = "STAGE %d · %s" % [etapa, String(Planta.NOMBRES[etapa]).to_upper()]
 	titulo.add_theme_font_size_override("font_size", 30)
 	titulo.add_theme_color_override("font_color", AZUL)
 	_caja.add_child(titulo)
@@ -130,7 +130,7 @@ func _abrir() -> void:
 	_caja.add_child(botones)
 	if _accion.is_valid():
 		_boton_accion = _boton(botones, _texto_accion, func(): _hacer_accion())
-	_boton(botones, "Cerrar (E)", _cerrar)
+	_boton(botones, "Close (E)", _cerrar)
 	if _actualizar.is_valid():
 		_actualizar.call()
 
@@ -180,7 +180,7 @@ func _trabajar(texto: String, segundos: float) -> void:
 
 
 func _terminar_etapa(texto: String) -> void:
-	_avisar(texto + "  (se cierra solo)", VERDE)
+	_avisar(texto + "  (closes automatically)", VERDE)
 	if _boton_accion:
 		_boton_accion.disabled = true
 	planta.completar(etapa)
@@ -193,124 +193,124 @@ func _terminar_etapa(texto: String) -> void:
 # --- Etapa 3: clasificación ------------------------------------------------------
 
 func _armar_clasificar() -> void:
-	_explicar("Casi todo el helio-3 que dejó el viento solar está en los granos más finos del regolito (menores de 100 a 200 micrómetros). Para no calentar toneladas de tierra inútil, primero se separan los granos finos con tamices y separadores.")
-	var malla := _deslizador("Malla del tamiz", 50, 500, 400, " µm")
-	var magnetico := _interruptor("Separador magnético (saca los granos con hierro)")
-	var electro := _interruptor("Separador electrostático (separa minerales por su carga eléctrica)")
-	var centrifugo := _interruptor("Separador centrífugo (opcional: ordena por peso)")
+	_explicar("Almost all the helium-3 left by the solar wind is in the finest regolith grains (smaller than 100 to 200 micrometers). To avoid heating tons of useless soil, the fine grains are first separated with sieves and separators.")
+	var malla := _deslizador("Sieve mesh", 50, 500, 400, " µm")
+	var magnetico := _interruptor("Magnetic separator (removes grains with iron)")
+	var electro := _interruptor("Electrostatic separator (separates minerals by electric charge)")
+	var centrifugo := _interruptor("Centrifugal separator (optional: sorts by weight)")
 	var toneladas: int = planta.datos.get("toneladas", 0)
 	_actualizar = func():
 		var fino := clampf(1.0 - (malla.value - 50.0) / 450.0, 0.0, 1.0)
 		var concentrado := toneladas * lerpf(0.6, 0.18, fino)
 		var ppb := lerpf(12.0, 38.0, fino) + (4.0 if magnetico.button_pressed else 0.0) + (4.0 if electro.button_pressed else 0.0) + (2.0 if centrifugo.button_pressed else 0.0)
-		_datos.text = "Regolito del lote: [b]%d t[/b]   ·   Concentrado que irá al reactor: [b]%d t[/b]\nHelio-3 en el concentrado: [b]%d ppb[/b] (partes por mil millones)" % [toneladas, concentrado, ppb]
+		_datos.text = "Regolith in batch: [b]%d t[/b]   ·   Concentrate going to the reactor: [b]%d t[/b]\nHelium-3 in the concentrate: [b]%d ppb[/b] (parts per billion)" % [toneladas, concentrado, ppb]
 	malla.value_changed.connect(func(_v): _actualizar.call())
 	for interruptor in [magnetico, electro, centrifugo]:
 		interruptor.toggled.connect(func(_v): _actualizar.call())
-	_preparar_accion("Clasificar", func():
+	_preparar_accion("Sort", func():
 		if malla.value > 150:
-			_avisar("La malla deja pasar granos grandes. Bájala a 150 µm o menos.")
+			_avisar("The mesh lets big grains through. Lower it to 150 µm or less.")
 		elif not (magnetico.button_pressed and electro.button_pressed):
-			_avisar("Enciende el separador magnético y el electrostático.")
+			_avisar("Turn on the magnetic and electrostatic separators.")
 		else:
-			await _trabajar("Tamizando y separando los granos finos...", 3.0)
-			_terminar_etapa("¡Concentrado listo! Ahora solo se calienta la parte rica en helio-3."))
+			await _trabajar("Sieving and separating the fine grains...", 3.0)
+			_terminar_etapa("Concentrate ready! Now only the helium-3-rich part gets heated."))
 
 
 # --- Etapa 4: calentamiento ------------------------------------------------------------
 
 func _armar_calentar() -> void:
-	_explicar("El concentrado entra al horno. Entre 700 y 1.000 °C los granos sueltan los gases que guardaban: helio-3, helio-4, hidrógeno, nitrógeno y otros. Todavía no es helio-3 puro: es una mezcla.")
-	var temperatura := _deslizador("Temperatura del horno", 20, 1400, 20, " °C")
+	_explicar("The concentrate goes into the furnace. Between 700 and 1,000 °C the grains release the gases they held: helium-3, helium-4, hydrogen, nitrogen and others. It is not pure helium-3 yet: it is a mixture.")
+	var temperatura := _deslizador("Furnace temperature", 20, 1400, 20, " °C")
 	var fuente := OptionButton.new()
-	for opcion in ["Concentradores solares (espejos que juntan la luz del Sol)", "Electricidad de los paneles solares", "Reactor nuclear pequeño de la base"]:
+	for opcion in ["Solar concentrators (mirrors that focus sunlight)", "Electricity from solar panels", "Small nuclear reactor at the base"]:
 		fuente.add_item(opcion)
 	fuente.add_theme_font_size_override("font_size", 19)
-	_fila("Energía", fuente)
+	_fila("Energy", fuente)
 	_actualizar = func():
 		var gas := clampf((temperatura.value - 300.0) / 600.0, 0.0, 1.0) * 100.0
-		_datos.text = "Gas liberado del concentrado: [b]%d %%[/b]" % gas
+		_datos.text = "Gas released from the concentrate: [b]%d %%[/b]" % gas
 	temperatura.value_changed.connect(func(_v): _actualizar.call())
-	_preparar_accion("Calentar", func():
+	_preparar_accion("Heat", func():
 		var t := temperatura.value
 		if t < 700:
-			_avisar("A %d °C los granos casi no sueltan gas. Sube a entre 700 y 1.000 °C." % t)
+			_avisar("At %d °C the grains release almost no gas. Raise it to 700-1,000 °C." % t)
 		elif t > 1000:
-			_avisar("¡Demasiado! Arriba de 1.000 °C el regolito empieza a fundirse y se desperdicia energía. Baja a 700-1.000 °C.")
+			_avisar("Too much! Above 1,000 °C the regolith starts to melt and energy is wasted. Lower it to 700-1,000 °C.")
 		else:
 			planta.calentar_reactor(4.5)
-			await _trabajar("Calentando a %d °C con %s..." % [t, fuente.get_item_text(fuente.selected).split(" (")[0].to_lower()], 4.5)
-			_terminar_etapa("Gases liberados. Ahora hay que atraparlos antes de que se escapen al vacío."))
+			await _trabajar("Heating to %d °C with %s..." % [t, fuente.get_item_text(fuente.selected).split(" (")[0].to_lower()], 4.5)
+			_terminar_etapa("Gases released. Now they must be captured before they escape into the vacuum."))
 
 
 # --- Etapa 5: captura de gases ------------------------------------------------------------
 
 func _armar_capturar() -> void:
-	_explicar("La Luna no tiene aire: si los gases salen, se pierden en el vacío. Por eso se capturan en un sistema cerrado y se limpian en orden: filtrar, comprimir y enfriar.")
+	_explicar("The Moon has no air: if the gases get out, they are lost in the vacuum. So they are captured in a closed system and cleaned in order: filter, compress and cool.")
 	var paso := [0]
 	var mezclas := [
-		"Polvo: [b]sí[/b]   ·   Presión: [b]0,1 bar[/b]\nHidrógeno [b]64 %[/b] · Helio-4 [b]22 %[/b] · Nitrógeno y otros [b]14 %[/b] · Helio-3 [b]0,01 %[/b]",
-		"Polvo: [b]filtrado[/b]   ·   Presión: [b]0,1 bar[/b]\nHidrógeno [b]64 %[/b] · Helio-4 [b]22 %[/b] · Nitrógeno y otros [b]14 %[/b] · Helio-3 [b]0,01 %[/b]",
-		"Polvo: [b]filtrado[/b]   ·   Presión: [b]50 bar[/b] (comprimido)\nHidrógeno [b]64 %[/b] · Helio-4 [b]22 %[/b] · Nitrógeno y otros [b]14 %[/b] · Helio-3 [b]0,01 %[/b]",
-		"Enfriado a [b]-250 °C[/b]: el hidrógeno y el nitrógeno se vuelven líquido y se separan. El helio sigue siendo gas.\nCorriente de helio: Helio-4 [b]99,96 %[/b] · Helio-3 [b]0,04 %[/b]\n[color=#73ff8c]Hidrógeno guardado: sirve para hacer agua y combustible en la base.[/color]",
+		"Dust: [b]yes[/b]   ·   Pressure: [b]0.1 bar[/b]\nHydrogen [b]64 %[/b] · Helium-4 [b]22 %[/b] · Nitrogen and others [b]14 %[/b] · Helium-3 [b]0.01 %[/b]",
+		"Dust: [b]filtered[/b]   ·   Pressure: [b]0.1 bar[/b]\nHydrogen [b]64 %[/b] · Helium-4 [b]22 %[/b] · Nitrogen and others [b]14 %[/b] · Helium-3 [b]0.01 %[/b]",
+		"Dust: [b]filtered[/b]   ·   Pressure: [b]50 bar[/b] (compressed)\nHydrogen [b]64 %[/b] · Helium-4 [b]22 %[/b] · Nitrogen and others [b]14 %[/b] · Helium-3 [b]0.01 %[/b]",
+		"Cooled to [b]-250 °C[/b]: hydrogen and nitrogen turn liquid and separate. Helium stays a gas.\nHelium stream: Helium-4 [b]99.96 %[/b] · Helium-3 [b]0.04 %[/b]\n[color=#73ff8c]Hydrogen saved: it is used to make water and fuel at the base.[/color]",
 	]
 	_actualizar = func(): _datos.text = mezclas[paso[0]]
 	var fila := HBoxContainer.new()
 	fila.add_theme_constant_override("separation", 12)
 	_caja.add_child(fila)
-	var nombres := ["1. Filtrar polvo", "2. Comprimir", "3. Enfriar"]
-	var trabajos := ["Filtrando el polvo lunar...", "Comprimiendo la mezcla de gases...", "Enfriando hasta -250 °C..."]
+	var nombres := ["1. Filter dust", "2. Compress", "3. Cool"]
+	var trabajos := ["Filtering lunar dust...", "Compressing the gas mixture...", "Cooling to -250 °C..."]
 	for i in 3:
 		_boton(fila, nombres[i], func():
 			if _ocupado:
 				return
 			if paso[0] != i:
-				_avisar("Ese paso no va ahora. El orden es: filtrar, comprimir y enfriar." if paso[0] < i else "Ese paso ya está hecho.")
+				_avisar("That step is not next. The order is: filter, compress and cool." if paso[0] < i else "That step is already done.")
 				return
 			await _trabajar(trabajos[i], 2.0)
 			paso[0] += 1
 			_actualizar.call()
 			if paso[0] == 3:
-				_terminar_etapa("¡Helio capturado! Pero el helio-3 sigue mezclado con muchísimo helio-4.")
+				_terminar_etapa("Helium captured! But the helium-3 is still mixed with a lot of helium-4.")
 			else:
-				_avisar("Listo. Sigue con el paso %d." % (paso[0] + 1), VERDE))
+				_avisar("Done. Continue with step %d." % (paso[0] + 1), VERDE))
 
 
 # --- Etapa 6: separación isotópica --------------------------------------------------------
 
 func _armar_separar() -> void:
-	_explicar("El helio-3 y el helio-4 son el mismo elemento (isótopos): ningún filtro los separa. Pero el helio-3 hierve a -270 °C y el helio-4 a -269 °C. En una destilación criogénica muy fría, el helio-3 se evapora primero. Repitiendo el paso varias veces se llega a helio-3 casi puro.")
+	_explicar("Helium-3 and helium-4 are the same element (isotopes): no filter can separate them. But helium-3 boils at -270 °C and helium-4 at -269 °C. In a very cold cryogenic distillation, helium-3 evaporates first. Repeating the step several times gives almost pure helium-3.")
 	var pureza := [0.04, 1.0, 12.0, 55.0, 92.0, 99.9]
 	var paso := [0]
 	_actualizar = func():
-		_datos.text = "Temperatura de la columna: [b]-271 °C[/b] (2 grados sobre el cero absoluto)\nPureza del helio-3: [b]%s %%[/b]   ·   Etapas hechas: [b]%d de 5[/b]" % [str(pureza[paso[0]]).replace(".", ","), paso[0]]
-	_preparar_accion("Hacer una etapa de destilación", func():
-		await _trabajar("Destilando a -271 °C...", 1.6)
+		_datos.text = "Column temperature: [b]-271 °C[/b] (2 degrees above absolute zero)\nHelium-3 purity: [b]%s %%[/b]   ·   Stages done: [b]%d of 5[/b]" % [str(pureza[paso[0]]), paso[0]]
+	_preparar_accion("Run a distillation stage", func():
+		await _trabajar("Distilling at -271 °C...", 1.6)
 		paso[0] += 1
 		_actualizar.call()
 		if paso[0] >= 5:
-			_terminar_etapa("¡Helio-3 al 99,9 %! Listo para envasar.")
+			_terminar_etapa("Helium-3 at 99.9%! Ready to pack.")
 		else:
-			_avisar("La pureza subió. Repite: cada etapa separa un poco más.", VERDE))
+			_avisar("Purity went up. Repeat: each stage separates a little more.", VERDE))
 
 
 # --- Etapa 7: almacenamiento ------------------------------------------------------------
 
 func _armar_almacenar() -> void:
-	_explicar("El helio-3 puro se guarda en cápsulas con control de presión y temperatura para que no se escape. Después se lleva a la nave de ascenso para volver a la Tierra.")
-	var presion := _deslizador("Presión de llenado", 10, 400, 10, " bar")
+	_explicar("Pure helium-3 is stored in capsules with pressure and temperature control so it does not escape. Then it goes to the ascent ship to return to Earth.")
+	var presion := _deslizador("Filling pressure", 10, 400, 10, " bar")
 	var cantidad: int = planta.lote
 	_actualizar = func():
-		_datos.text = "Cápsulas de este lote: [b]%d[/b]   ·   Presión: [b]%d bar[/b]" % [cantidad, presion.value]
+		_datos.text = "Capsules in this batch: [b]%d[/b]   ·   Pressure: [b]%d bar[/b]" % [cantidad, presion.value]
 	presion.value_changed.connect(func(_v): _actualizar.call())
-	_preparar_accion("Envasar", func():
+	_preparar_accion("Pack", func():
 		if presion.value < 150:
-			_avisar("Con tan poca presión cabe muy poco helio-3. Súbela a entre 150 y 300 bar.")
+			_avisar("With so little pressure very little helium-3 fits. Raise it to 150-300 bar.")
 		elif presion.value > 300:
-			_avisar("¡Peligro! Las cápsulas aguantan hasta 300 bar. Baja la presión.")
+			_avisar("Danger! The capsules hold up to 300 bar. Lower the pressure.")
 		else:
-			await _trabajar("Llenando las cápsulas a %d bar..." % presion.value, 2.5)
-			_terminar_etapa("¡%d cápsulas listas! Salen por la esclusa." % cantidad))
+			await _trabajar("Filling the capsules at %d bar..." % presion.value, 2.5)
+			_terminar_etapa("%d capsules ready! They come out through the airlock." % cantidad))
 
 
 # --- Piezas del panel ------------------------------------------------------------
@@ -422,7 +422,7 @@ func _armar_consola_3d() -> void:
 	(pantalla.material_override as StandardMaterial3D).emission_enabled = true
 	(pantalla.material_override as StandardMaterial3D).emission = Color(0.1, 0.35, 0.7)
 	_letrero = Label3D.new()
-	_letrero.text = "ETAPA %d\n%s" % [etapa, String(Planta.NOMBRES[etapa]).to_upper()]
+	_letrero.text = "STAGE %d\n%s" % [etapa, String(Planta.NOMBRES[etapa]).to_upper()]
 	_letrero.font_size = 40
 	_letrero.pixel_size = 0.0018
 	_letrero.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

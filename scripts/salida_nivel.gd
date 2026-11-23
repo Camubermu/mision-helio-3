@@ -17,9 +17,9 @@ func _al_entrar(cuerpo: Node3D) -> void:
 	if not Interactuable.es_jugador(cuerpo):
 		return
 	if Juego.helio3 < helio3_necesario:
-		Juego.mostrar_mensaje("Necesitas %d de helio-3 para seguir" % helio3_necesario)
+		Juego.mostrar_mensaje("You need %d helium-3 to continue" % helio3_necesario)
 		return
 	if necesita_energia_llena and Juego.energia < Juego.ENERGIA_MAX:
-		Juego.mostrar_mensaje("Primero recarga el reactor")
+		Juego.mostrar_mensaje("Refuel the reactor first")
 		return
 	Juego.cambiar_nivel(siguiente_nivel)
