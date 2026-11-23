@@ -11,7 +11,7 @@ Se arrastran desde el panel *Sistema de archivos* hasta tu escena.
 4. Guarda (Cmd+S / Ctrl+S) → GitHub Desktop → **Commit** → **Push**.
 
 > No edites las plantillas ni las piezas de las carpetas `scenes/objetos`, `scenes/ui`, `scenes/nave` ni `player`.
-> Si las cambias, cambian en **todos** los niveles del equipo. Si quieres algo distinto, pídeselo a Camilo.
+> Si las cambias, cambian en **todos** los niveles del equipo. Si quieres algo distinto, pídeselo al líder del equipo.
 
 Para mover, girar o cambiar el tamaño de una pieza, selecciónala y usa las herramientas de arriba
 (**W** mover, **E** girar, **R** escalar), o cambia los números en el **Inspector**.
@@ -30,7 +30,7 @@ Para mover, girar o cambiar el tamaño de una pieza, selecciónala y usa las her
 
 | Pieza | Archivo | Qué hace | Lo que puedes cambiar en el Inspector |
 | --- | --- | --- | --- |
-| Jugador | `player/player.tscn` | El astronauta en primera persona (hecho por JustPatrox) | `speed` (velocidad) |
+| Jugador | `player/player.tscn` | El astronauta en primera persona | `speed` (velocidad) |
 | HUD | `scenes/ui/hud.tscn` | Muestra combustible, energía, regolito y helio-3 | `mostrar_mira` |
 | Gravedad | `scenes/objetos/zona_gravedad.tscn` | Gravedad dentro de la caja | `gravedad`: Luna 1.62, Tierra 9.8 |
 | Roca de regolito | `scenes/objetos/deposito_regolito.tscn` | Con **E** se excava y da regolito | `excavaciones`, `regolito_por_excavacion` |
